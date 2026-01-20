@@ -1,0 +1,42 @@
+PABLO ENTERPRISE SOFTWARE LICENSE AGREEMENT
+
+Copyright (c) 2025 Pablo Offline AI LLC
+
+By installing this software, you agree to the following terms:
+
+1. LICENSE GRANT
+   You are granted a non-exclusive license to use Pablo Enterprise for 
+   personal or commercial purposes on any computers you own or control.
+
+2. RESTRICTIONS
+   You may not redistribute, sublicense, or sell this software without 
+   written permission from Pablo Offline AI LLC.
+
+3. NO WARRANTY
+   THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. 
+   PABLO OFFLINE AI LLC IS NOT LIABLE FOR ANY DAMAGES ARISING FROM 
+   THE USE OF THIS SOFTWARE.
+
+4. AI DISCLAIMER
+   This software uses artificial intelligence. AI-generated content may 
+   contain errors. You are responsible for verifying any AI outputs 
+   before relying on them. Do not use AI outputs as professional 
+   medical, legal, or financial advice.
+
+5. PRIVACY
+   Pablo Enterprise processes all data locally on your computer. No 
+   personal data is collected or transmitted to external servers.
+
+6. THIRD-PARTY COMPONENTS
+   This software includes open-source components (llama.cpp, .NET 
+   Runtime, etc.) which are subject to their respective licenses.
+
+7. TERMINATION
+   This license terminates if you violate any terms. Upon termination, 
+   you must uninstall the software.
+
+For full Terms of Service and Privacy Policy, visit:
+https://github.com/SkrimpFisher-spec/pablo-legal
+
+Pablo Offline AI LLC
+Email: PabloOfflineAI@proton.me

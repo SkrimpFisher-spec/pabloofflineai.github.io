@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo AI - Private, Offline AI Assistant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        
+        header { text-align: center; padding: 60px 0; }
+        h1 { font-size: 3rem; color: #00d4ff; margin-bottom: 10px; }
+        .tagline { font-size: 1.4rem; color: #ccc; margin-bottom: 30px; }
+        
+        .badges { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 30px 0; }
+        .badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid #00d4ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .downloads {
+            display: flex; gap: 20px; justify-content: center; 
+            flex-wrap: wrap; margin: 50px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn-primary { background: #00d4ff; color: #1a1a2e; }
+        .btn-secondary { background: #333; color: #fff; border: 1px solid #555; }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        .feature {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 12px;
+        }
+        .feature h3 { color: #00d4ff; margin-bottom: 10px; }
+        .feature p { color: #aaa; line-height: 1.6; }
+        
+        .note {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 3px solid #ffc107;
+            padding: 15px 20px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #333;
+            margin-top: 60px;
+        }
+        footer a { color: #00d4ff; margin: 0 15px; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .copyright { color: #666; margin-top: 20px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pablo AI</h1>
+            <p class="tagline">Safe. Private. Secure. AI.</p>
+            <div class="badges">
+                <span class="badge">100% Offline</span>
+                <span class="badge">No Cloud</span>
+                <span class="badge">No Subscription</span>
+                <span class="badge">Your Data Stays Yours</span>
+            </div>
+        </header>
+
+        <div class="downloads">
+            <a href="https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/latest" class="btn btn-primary">
+                Download for Windows
+            </a>
+            <!-- Uncomment when Play Store is live
+            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.briefing" class="btn btn-secondary">
+                Get Android App
+            </a>
+            -->
+        </div>
+
+        <div class="note">
+            <strong>How it works:</strong> Download Pablo Enterprise (free) on your Windows PC. 
+            All AI processing runs locally on your hardware. The optional Android companion app 
+            connects to your PC over your local network.
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <h3>Completely Private</h3>
+                <p>No data ever leaves your computer. No accounts, no cloud, no tracking. Your conversations are yours alone.</p>
+            </div>
+            <div class="feature">
+                <h3>Works Offline</h3>
+                <p>Once installed, Pablo works without internet. Perfect for sensitive work or unreliable connections.</p>
+            </div>
+            <div class="feature">
+                <h3>One-Time Purchase</h3>
+                <p>No subscriptions. No API fees. Pay once for the Android app, use forever.</p>
+            </div>
+            <div class="feature">
+                <h3>Smart Home Control</h3>
+                <p>Control TP-Link Kasa devices with natural language. "Turn off the living room lights."</p>
+            </div>
+            <div class="feature">
+                <h3>Knowledge Base</h3>
+                <p>2 million curated entities for fact-checking and enhanced responses.</p>
+            </div>
+            <div class="feature">
+                <h3>Auto-Configures</h3>
+                <p>Detects your hardware (NVIDIA, AMD, CPU) and downloads the right AI backend automatically.</p>
+            </div>
+        </div>
+
+        <footer>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="mailto:PabloOfflineAI@proton.me">Contact</a>
+            <p class="copyright">&copy; 2026 Pablo Offline AI LLC</p>
+        </footer>
+    </div>
+</body>
+</html>

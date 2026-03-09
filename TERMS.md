@@ -212,8 +212,8 @@ This Agreement constitutes the entire agreement between you and Pablo Offline AI
 
 **Pablo Offline AI LLC**
 
-- Email: PabloOfflineAI@proton.me
-- Website: https://pablooffline.com
+- Email: contact@pablooffline.com
+- Website: https://www.pablooffline.com 
 
 ---
 

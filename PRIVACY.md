@@ -218,8 +218,8 @@ Continued use after changes constitutes acceptance.
 
 **Pablo Offline AI LLC**
 
-- Email: PabloOfflineAI@proton.me
-- Website: https://pablooffline.com
+- Email: contact@pablooffline.com
+- Website: https://pablooffline.com](https://www.pablooffline.com/)
 
 ---
 

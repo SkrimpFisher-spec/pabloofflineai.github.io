@@ -1,42 +1,44 @@
-PABLO ENTERPRISE SOFTWARE LICENSE AGREEMENT
+# PABLO SOFTWARE LICENSE
 
-Copyright (c) 2025 Pablo Offline AI LLC
+**Copyright (c) 2025 Pablo Offline AI LLC**
 
-By installing this software, you agree to the following terms:
+This is proprietary software. See [TERMS.md](TERMS.md) for the full license agreement.
 
-1. LICENSE GRANT
-   You are granted a non-exclusive license to use Pablo Enterprise for 
-   personal or commercial purposes on any computers you own or control.
+---
 
-2. RESTRICTIONS
-   You may not redistribute, sublicense, or sell this software without 
-   written permission from Pablo Offline AI LLC.
+## Summary
 
-3. NO WARRANTY
-   THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. 
-   PABLO OFFLINE AI LLC IS NOT LIABLE FOR ANY DAMAGES ARISING FROM 
-   THE USE OF THIS SOFTWARE.
+- ✅ You may use this software for personal, educational, or commercial purposes
+- ✅ You may install on devices you own or control
+- ❌ You may NOT redistribute, sell, or sublicense
+- ❌ You may NOT reverse engineer or decompile
+- ❌ You may NOT extract or redistribute the AI models
 
-4. AI DISCLAIMER
-   This software uses artificial intelligence. AI-generated content may 
-   contain errors. You are responsible for verifying any AI outputs 
-   before relying on them. Do not use AI outputs as professional 
-   medical, legal, or financial advice.
+---
 
-5. PRIVACY
-   Pablo Enterprise processes all data locally on your computer. No 
-   personal data is collected or transmitted to external servers.
+## Third-Party Components
 
-6. THIRD-PARTY COMPONENTS
-   This software includes open-source components (llama.cpp, .NET 
-   Runtime, etc.) which are subject to their respective licenses.
+This software includes open-source components under their respective licenses:
 
-7. TERMINATION
-   This license terminates if you violate any terms. Upon termination, 
-   you must uninstall the software.
+| Component | License | Source |
+|-----------|---------|--------|
+| llama.cpp | MIT | https://github.com/ggerganov/llama.cpp |
+| .NET Runtime | MIT | https://github.com/dotnet/runtime |
+| SQLite | Public Domain | https://sqlite.org |
+| WPF/WinForms | MIT | https://github.com/dotnet/wpf |
 
-For full Terms of Service and Privacy Policy, visit:
-https://github.com/SkrimpFisher-spec/pablo-legal
+AI models are subject to their original licenses. Common model licenses include:
+- Llama models: Meta Community License
+- Qwen models: Apache 2.0 / Qwen License
+- Mistral models: Apache 2.0
 
-Pablo Offline AI LLC
-Email: PabloOfflineAI@proton.me
+Check individual model documentation for specific terms.
+
+---
+
+## Contact
+
+**Pablo Offline AI LLC**
+
+- Email: PabloOfflineAI@proton.me
+- Website: https://pablooffline.com

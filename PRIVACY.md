@@ -219,7 +219,7 @@ Continued use after changes constitutes acceptance.
 **Pablo Offline AI LLC**
 
 - Email: contact@pablooffline.com
-- Website: https://pablooffline.com](https://www.pablooffline.com/)
+- Website: https://www.pablooffline.com
 
 ---
 

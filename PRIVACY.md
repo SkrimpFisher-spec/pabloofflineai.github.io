@@ -45,7 +45,7 @@ Unlike cloud-based AI services, we do NOT collect:
 
 All AI processing occurs **entirely on your device**:
 
-- AI models run locally on your computer/phone
+- AI models run locally on your computer
 - Conversations are processed locally
 - No internet connection is required for core functionality
 - No data is sent to external servers

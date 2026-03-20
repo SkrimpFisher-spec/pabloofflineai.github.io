@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download | Pablo Offline AI</title>
+    <meta name="description" content="Download Pablo Offline AI for Windows and Android. Free desktop app, one-time purchase for mobile.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #0a0a0f;
+            --secondary: #12121a;
+            --accent: #00d4ff;
+            --accent-dim: rgba(0, 212, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: #8b8b9e;
+            --border: rgba(255, 255, 255, 0.08);
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        img { max-width: 100%; height: auto; }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo {
+            font-size: 1.5rem; font-weight: 700; color: var(--text);
+            text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo-icon {
+            width: 32px; height: 32px; background: var(--gradient-1);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+
+        /* Page Content */
+        .page { max-width: 900px; margin: 0 auto; padding: 8rem 1.5rem 4rem; }
+
+        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem;
+        }
+        .page-header h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .page-header p { color: var(--text-muted); font-size: 1.15rem; max-width: 550px; margin: 0 auto; }
+
+        /* Download Cards */
+        .download-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+
+        .download-card {
+            background: var(--secondary); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2.5rem; position: relative; overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .download-card:hover { border-color: rgba(0, 212, 255, 0.25); transform: translateY(-3px); }
+        .download-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--gradient-1);
+        }
+
+        .card-icon {
+            width: 56px; height: 56px; background: var(--accent-dim); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+        }
+        .card-icon svg { width: 28px; height: 28px; color: var(--accent); }
+
+        .download-card h2 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+        .download-card .platform { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 0.75rem; }
+        .download-card .price { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+        .download-card ul { list-style: none; margin-bottom: 2rem; }
+        .download-card ul li {
+            display: flex; align-items: center; gap: 0.6rem;
+            color: var(--text-muted); font-size: 0.9rem; padding: 0.4rem 0;
+        }
+        .download-card ul li svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.9rem 1.75rem; border-radius: 8px; font-size: 1rem; font-weight: 600;
+            text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; width: 100%;
+            justify-content: center;
+        }
+        .btn-primary { background: var(--gradient-1); color: var(--primary); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3); }
+        .btn-secondary {
+            background: transparent; color: var(--text); border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
+        .btn svg { width: 20px; height: 20px; }
+
+        /* Requirements */
+        .requirements {
+            background: var(--secondary); border: 1px solid var(--border);
+            border-radius: 16px; padding: 2.5rem; margin-bottom: 3rem;
+        }
+        .requirements h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text); }
+        .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .req-item h4 { font-size: 0.9rem; color: var(--accent); margin-bottom: 0.25rem; }
+        .req-item p { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* Version info */
+        .version-info { text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        .version-info a { color: var(--accent); text-decoration: none; }
+        .version-info a:hover { text-decoration: underline; }
+
+        /* Footer */
+        footer {
+            background: var(--secondary); border-top: 1px solid var(--border);
+            padding: 2rem 5%; text-align: center;
+        }
+        footer p { color: var(--text-muted); font-size: 0.85rem; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 1rem; font-size: 0.85rem; }
+        footer a:hover { color: var(--text); }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .download-cards { grid-template-columns: 1fr; }
+            .req-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="https://www.pablooffline.com" class="logo">
+            <div class="logo-icon">P</div>
+            Pablo
+        </a>
+        <ul class="nav-links">
+            <li><a href="https://www.pablooffline.com/#how-it-works">How It Works</a></li>
+            <li><a href="https://www.pablooffline.com/#security">Security</a></li>
+            <li><a href="https://www.pablooffline.com/#screenshots">Screenshots</a></li>
+        </ul>
+    </nav>
+
+    <div class="page">
+        <div class="page-header">
+            <h1>Download <span>Pablo</span></h1>
+            <p>Get started with your private AI in minutes. No account required, no data collected, ever.</p>
+        </div>
+
+        <div class="download-cards">
+            <!-- Desktop Card -->
+            <div class="download-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                </div>
+                <h2>Pablo Desktop</h2>
+                <p class="platform">Windows 10 / 11</p>
+                <p class="price">Free</p>
+                <ul>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Full AI runtime on your hardware
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Auto-detects NVIDIA, AMD, or CPU
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        2M entity knowledge base included
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Works completely offline
+                    </li>
+                </ul>
+                <a href="https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/latest" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Download for Windows
+                </a>
+            </div>
+
+            <!-- Android Card -->
+            <div class="download-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                        <line x1="12" y1="18" x2="12.01" y2="18"/>
+                    </svg>
+                </div>
+                <h2>Pablo Android</h2>
+                <p class="platform">Android 10+</p>
+                <p class="price">$14.99 — one-time purchase</p>
+                <ul>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        News, weather, and calendar briefings
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Chat with your AI from anywhere
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Connects securely via Tailscale VPN
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        No subscriptions, no accounts
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-secondary" style="opacity: 0.6; pointer-events: none;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;">
+                        <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                    </svg>
+                    Coming Soon on Google Play
+                </a>
+            </div>
+        </div>
+
+        <!-- System Requirements -->
+        <div class="requirements">
+            <h3>System Requirements — Desktop</h3>
+            <div class="req-grid">
+                <div class="req-item">
+                    <h4>Operating System</h4>
+                    <p>Windows 10 or Windows 11 (64-bit)</p>
+                </div>
+                <div class="req-item">
+                    <h4>RAM</h4>
+                    <p>16 GB minimum, 32 GB+ recommended</p>
+                </div>
+                <div class="req-item">
+                    <h4>GPU (recommended)</h4>
+                    <p>NVIDIA RTX 3060+ (6 GB VRAM) or AMD equivalent. CPU-only mode also supported.</p>
+                </div>
+                <div class="req-item">
+                    <h4>Storage</h4>
+                    <p>10 GB free for app + models. SSD recommended.</p>
+                </div>
+            </div>
+        </div>
+
+        <p class="version-info">
+            Looking for older versions or release notes? Visit <a href="https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases" target="_blank">GitHub Releases</a>.
+        </p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Pablo Offline AI LLC. All rights reserved.</p>
+        <div style="margin-top: 1rem;">
+            <a href="https://www.pablooffline.com/privacy.html">Privacy Policy</a>
+            <a href="https://www.pablooffline.com/terms.html">Terms of Service</a>
+            <a href="https://www.pablooffline.com/license.html">License</a>
+        </div>
+    </footer>
+</body>
+</html>

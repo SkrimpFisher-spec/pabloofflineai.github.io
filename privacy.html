@@ -41,12 +41,12 @@
         <hr>
 
         <h2>SUMMARY</h2>
-        <p><strong>We do not collect, store, or transmit any of your data.</strong> Everything stays on your device.</p>
+        <p><strong>We do not collect or store your personal data on company servers.</strong> By default, your data stays on your devices.</p>
         <hr>
 
         <h2>1. INTRODUCTION</h2>
-        <p>Pablo Offline AI LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how our software—Pablo Enterprise (Windows) and Pablo Offline AI (Android)—handles your information.</p>
-        <p><strong>Our core principle: Your data never leaves your devices.</strong></p>
+        <p>Pablo Offline AI LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how our software - Pablo Desktop (Windows) and Pablo Mobile (Android) - handles your information.</p>
+        <p><strong>Our core principle: we do not collect your personal data on company servers.</strong></p>
         <hr>
 
         <h2>2. DATA WE DO NOT COLLECT</h2>
@@ -61,9 +61,9 @@
             <li>IP addresses</li>
             <li>Browsing history</li>
             <li>Contacts, photos, or files</li>
-            <li>Any data whatsoever</li>
+            <li>Your personal data on company-operated cloud servers</li>
         </ul>
-        <p><strong>We have no servers. We have no database of user information. We cannot access your data because it never reaches us.</strong></p>
+        <p><strong>We do not operate cloud services that store your personal content. We do not maintain a user database containing your conversations or prompts.</strong></p>
         <hr>
 
         <h2>3. HOW THE SOFTWARE WORKS</h2>
@@ -73,13 +73,14 @@
             <li>AI models run locally on your computer/phone</li>
             <li>Conversations are processed locally</li>
             <li>No internet connection is required for core functionality</li>
-            <li>No data is sent to external servers</li>
+            <li>Core functionality can run locally</li>
+            <li>Optional features may send data between your own devices or to third-party services you explicitly enable</li>
         </ul>
         <h3>3.2 Local Data Storage</h3>
         <p>The Software stores data only on your local device:</p>
         <ul>
-            <li><strong>Pablo Enterprise (Windows):</strong> Data stored in <code>%LocalAppData%\PabloEnterprise\</code></li>
-            <li><strong>Pablo Offline AI (Android):</strong> Data stored in app-private storage</li>
+            <li><strong>Pablo Desktop (Windows):</strong> Data stored in <code>%LocalAppData%\PabloEnterprise\</code></li>
+            <li><strong>Pablo Mobile (Android):</strong> Data stored in app-private storage</li>
         </ul>
         <p>This local data may include:</p>
         <ul>
@@ -88,7 +89,7 @@
             <li>Downloaded AI models</li>
             <li>Knowledge database</li>
         </ul>
-        <p><strong>This data never leaves your device unless you manually export it.</strong></p>
+        <p><strong>This data remains on your devices unless you enable optional network features.</strong></p>
         <hr>
 
         <h2>4. OPTIONAL FEATURES THAT MAY USE NETWORK</h2>
@@ -98,12 +99,12 @@
         <ul>
             <li>HuggingFace (huggingface.co) to download model files</li>
         </ul>
-        <p>These downloads do not transmit any personal data. Only standard HTTP requests are made.</p>
+        <p>These downloads do not send your prompts or conversation content to Pablo Offline AI LLC. Standard download requests are made to the provider.</p>
         <h3>4.2 Tailscale Integration (Optional)</h3>
         <p>If you enable Tailscale VPN for remote access:</p>
         <ul>
             <li>Tailscale handles the VPN connection</li>
-            <li>Pablo communicates only within your private Tailscale network</li>
+            <li>Pablo can communicate between your own devices within your private Tailscale network</li>
             <li>See Tailscale's privacy policy for their data practices</li>
         </ul>
         <h3>4.3 News/Weather Features (Android, Optional)</h3>
@@ -115,27 +116,21 @@
         </ul>
         <h3>4.4 Google Calendar Integration (Optional)</h3>
         <p>If you connect your Google Calendar through the Android app:</p>
-        <h3>4.4 Google Calendar Integration (Optional)</h3>
-        <p>If you connect your Google Calendar through the Pablo Offline AI Android app, the following applies:</p>
-
-        <p><strong>Data Accessed:</strong> Pablo requests read-only access to your Google Calendar using the <code>calendar.readonly</code> OAuth scope. This includes event titles, dates, times, descriptions, and calendar metadata. Pablo does not request write access and cannot modify your calendar.</p>
-
-        <p><strong>Data Usage:</strong> Calendar data is used solely to display your upcoming events in the Pablo briefing screen on your device. It is not analyzed, profiled, or processed for any purpose other than displaying your schedule to you.</p>
-
-        <p><strong>Data Sharing:</strong> Your Google Calendar data is never shared with Pablo Offline AI LLC, any third party, any advertising service, or any external server. Calendar data travels directly from Google's servers to your device. We do not operate any servers that receive, relay, or process your calendar data.</p>
-
-        <p><strong>Data Storage &amp; Protection:</strong> Calendar data is cached locally on your device and, if you use the optional Tailscale connection, on your personal Pablo Enterprise desktop server within your private network. No calendar data is stored on any server operated by Pablo Offline AI LLC. Local storage on Android uses the app's private storage directory, which is sandboxed by the Android operating system and inaccessible to other apps.</p>
-
-        <p><strong>Data Retention &amp; Deletion:</strong> Cached calendar data is refreshed each time the app syncs and is not retained beyond what is needed to display your current schedule. All cached calendar data is permanently deleted when you uninstall the app or clear app data. You can also revoke Pablo's access to your Google Calendar at any time by visiting <a href="https://myaccount.google.com/permissions" target="_blank">https://myaccount.google.com/permissions</a>, which immediately stops all further access.</p>
+        <ul>
+            <li>Pablo uses the calendar.readonly scope to read your event titles, times, and descriptions</li>
+            <li>Calendar data is cached locally on your device and your personal Pablo server only</li>
+            <li>Calendar data is never transmitted to Pablo Offline AI LLC</li>
+            <li>You can revoke access at any time via <a href="https://myaccount.google.com/permissions" target="_blank">https://myaccount.google.com/permissions</a></li>
+        </ul>
         <hr>
 
         <h2>5. WHAT WE CANNOT DO</h2>
-        <p>Because all processing is local:</p>
+        <p>Because we do not operate cloud processing for your conversations:</p>
         <ul>
             <li>We cannot read your conversations</li>
             <li>We cannot see what you ask the AI</li>
             <li>We cannot access your files</li>
-            <li>We cannot track your usage</li>
+            <li>We do not run ad/analytics tracking systems for your in-app activity</li>
             <li>We cannot sell your data (we don't have it)</li>
             <li>We cannot respond to law enforcement requests for your data (we don't have it)</li>
             <li>We cannot recover your data if you lose it</li>
@@ -176,24 +171,24 @@
         <hr>
 
         <h2>9. DATA RETENTION AND DELETION</h2>
-        <h3>9.1 We Retain Nothing</h3>
-        <p>We do not retain any user data because we do not collect any.</p>
+        <h3>9.1 Company Retention</h3>
+        <p>We do not retain your conversation content on company servers because we do not collect it there.</p>
         <h3>9.2 Local Data Deletion</h3>
         <p>To delete data stored locally on your device:</p>
         <p><strong>Windows:</strong></p>
         <ol>
-            <li>Uninstall Pablo Enterprise</li>
+            <li>Uninstall Pablo Desktop</li>
             <li>Delete: <code>%LocalAppData%\PabloEnterprise\</code></li>
         </ol>
         <p><strong>Android:</strong></p>
         <ol>
-            <li>Uninstall Pablo Offline AI</li>
+            <li>Uninstall Pablo Mobile</li>
             <li>All app data is automatically deleted</li>
         </ol>
         <hr>
 
         <h2>10. YOUR RIGHTS</h2>
-        <p>Because we don't collect your data:</p>
+        <p>Because we do not collect your personal data on company servers:</p>
         <ul>
             <li><strong>Right to Access:</strong> There's nothing to access</li>
             <li><strong>Right to Deletion:</strong> There's nothing to delete on our end</li>
@@ -237,15 +232,8 @@
         <hr>
 
         <h2>14. GOOGLE API SERVICES COMPLIANCE</h2>
-        <p>Pablo's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements. Specifically:</p>
-        <ul>
-            <li>We do <strong>not</strong> transfer Google user data to any third party.</li>
-            <li>We do <strong>not</strong> use Google user data for serving advertisements.</li>
-            <li>We do <strong>not</strong> use Google user data to train AI models or machine learning systems.</li>
-            <li>We do <strong>not</strong> allow humans to read Google user data, except where the user has given affirmative consent, where it is necessary for security purposes, or where it is required by law.</li>
-            <li>All other use of Google user data is limited to providing or improving the user-facing features that are visible and prominent in the application's user interface.</li>
-        </ul>
-        <p>For a complete description of how Pablo accesses, uses, stores, and deletes Google user data, see <strong>Section 4.4</strong> above.</p><hr>
+        <p>Pablo's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements. Specifically, we do not transfer Google user data to third parties, do not use it for advertising, and do not use it to train AI or ML models.</p>
+        <hr>
 
         <h2>15. JURISDICTION</h2>
         <p>This Privacy Policy is governed by the laws of the State of Florida, United States.</p>
@@ -260,7 +248,7 @@
                 <tr><td>Do you collect my data?</td><td><strong>No</strong></td></tr>
                 <tr><td>Do you track me?</td><td><strong>No</strong></td></tr>
                 <tr><td>Do you sell data?</td><td><strong>No</strong> (we have none to sell)</td></tr>
-                <tr><td>Where is my data?</td><td><strong>On your device only</strong></td></tr>
+                <tr><td>Where is my data?</td><td><strong>On your devices by default; optional features may contact third-party services you enable</strong></td></tr>
                 <tr><td>Can you see my conversations?</td><td><strong>No</strong></td></tr>
                 <tr><td>Do I need an account?</td><td><strong>No</strong></td></tr>
                 <tr><td>What happens if I uninstall?</td><td><strong>All local data is deleted</strong></td></tr>

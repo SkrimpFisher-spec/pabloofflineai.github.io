@@ -35,9 +35,9 @@
     <div class="container">
         <a href="https://www.pablooffline.com" class="back-link">&larr; Back to Pablo Offline AI</a>
 
-        <h1>PABLO SOFTWARE PRIVACY POLICY</h1>
-        <p><strong>Copyright (c) 2025 Pablo Offline AI LLC</strong></p>
-        <p><strong>Last Updated: March 2025</strong></p>
+        <h1>PRIVACY POLICY &mdash; PABLO DESKTOP AND PABLO MOBILE</h1>
+        <p><strong>Copyright (c) 2025&ndash;2026 Pablo Offline AI LLC</strong></p>
+        <p><strong>Last Updated: April 2026</strong></p>
         <hr>
 
         <h2>SUMMARY</h2>
@@ -45,7 +45,7 @@
         <hr>
 
         <h2>1. INTRODUCTION</h2>
-        <p>Pablo Offline AI LLC ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how our software - Pablo Desktop (Windows) and Pablo Mobile (Android) - handles your information.</p>
+        <p>Pablo Offline AI LLC (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) is committed to protecting your privacy. This Privacy Policy explains how <strong>Pablo Desktop</strong> (Windows) and <strong>Pablo Mobile</strong> (Android) handle your information.</p>
         <p><strong>Our core principle: we do not collect your personal data on company servers.</strong></p>
         <hr>
 
@@ -67,69 +67,65 @@
         <hr>
 
         <h2>3. HOW THE SOFTWARE WORKS</h2>
-        <h3>3.1 Local Processing</h3>
-        <p>All AI processing occurs <strong>entirely on your device</strong>:</p>
+        <h3>3.1 Pablo Desktop (Windows)</h3>
+        <p><strong>Pablo Desktop</strong> runs on your Windows PC. AI models and inference run <strong>on that PC</strong>. Chat, optional smart home control, optional briefings (news, weather, calendar), and local knowledge data are handled there. You can use many features without sending conversation content to Pablo Offline AI LLC; we do not host your AI in our cloud.</p>
+        <h3>3.2 Pablo Mobile (Android)</h3>
+        <p><strong>Pablo Mobile</strong> is a companion app. It connects over <strong>your own network</strong> (for example home Wi-Fi or an optional VPN such as Tailscale) to <strong>Pablo Desktop</strong>&rsquo;s API on your PC. When you use chat or briefings through Pablo Mobile, requests go to <strong>your</strong> Pablo Desktop instance, not to our company servers. If Pablo Desktop is unavailable, some screens may show limited or offline behavior by design.</p>
+        <p>Pablo Mobile does not run the full desktop AI stack on the phone; the PC is the primary runtime for the model when you use connected features.</p>
+        <h3>3.3 Local Data Storage</h3>
+        <p>Data is stored on your devices:</p>
         <ul>
-            <li>AI models run locally on your computer/phone</li>
-            <li>Conversations are processed locally</li>
-            <li>No internet connection is required for core functionality</li>
-            <li>Core functionality can run locally</li>
-            <li>Optional features may send data between your own devices or to third-party services you explicitly enable</li>
+            <li><strong>Pablo Desktop:</strong> By default, files live under <code>%LocalAppData%\PabloEnterprise\</code> (that folder name is created by the Windows installer and registry entry; you may choose a different data location in Pablo Desktop settings).</li>
+            <li><strong>Pablo Mobile:</strong> Settings, license data, and app state in Android app&ndash;private storage (see Google Play billing section for purchase-related items).</li>
         </ul>
-        <h3>3.2 Local Data Storage</h3>
-        <p>The Software stores data only on your local device:</p>
+        <p>Depending on how you use the products, local data may include:</p>
         <ul>
-            <li><strong>Pablo Desktop (Windows):</strong> Data stored in <code>%LocalAppData%\PabloEnterprise\</code></li>
-            <li><strong>Pablo Mobile (Android):</strong> Data stored in app-private storage</li>
+            <li>Conversation history and related memory (on the PC, when enabled)</li>
+            <li>App and API settings</li>
+            <li>Downloaded AI models and backends (Pablo Desktop)</li>
+            <li>Knowledge database files (Pablo Desktop)</li>
         </ul>
-        <p>This local data may include:</p>
-        <ul>
-            <li>Your conversation history (if enabled)</li>
-            <li>App settings and preferences</li>
-            <li>Downloaded AI models</li>
-            <li>Knowledge database</li>
-        </ul>
-        <p><strong>This data remains on your devices unless you enable optional network features.</strong></p>
+        <p><strong>We do not copy this content to company-operated servers as part of normal operation.</strong> Optional features may cause your devices or third-party services you enable to exchange data as described below.</p>
         <hr>
 
         <h2>4. OPTIONAL FEATURES THAT MAY USE NETWORK</h2>
-        <p>Some optional features require network connectivity:</p>
-        <h3>4.1 Model Downloads</h3>
-        <p>When you download AI models, the Software connects to:</p>
+        <p>Some optional features require network connectivity between your devices and/or third parties you configure:</p>
+        <h3>4.1 Model and Backend Downloads (Pablo Desktop)</h3>
+        <p>When you download AI models or related components, Pablo Desktop may connect to hosts such as:</p>
         <ul>
-            <li>HuggingFace (huggingface.co) to download model files</li>
+            <li>Hugging Face (huggingface.co) or other sources you choose</li>
         </ul>
-        <p>These downloads do not send your prompts or conversation content to Pablo Offline AI LLC. Standard download requests are made to the provider.</p>
-        <h3>4.2 Tailscale Integration (Optional)</h3>
-        <p>If you enable Tailscale VPN for remote access:</p>
+        <p>Those requests are standard downloads; they do not send your chat history to Pablo Offline AI LLC.</p>
+        <h3>4.2 Device-to-Device Access (Optional)</h3>
+        <p>If you use a VPN (for example Tailscale) so Pablo Mobile can reach Pablo Desktop remotely:</p>
         <ul>
-            <li>Tailscale handles the VPN connection</li>
-            <li>Pablo can communicate between your own devices within your private Tailscale network</li>
-            <li>See Tailscale's privacy policy for their data practices</li>
+            <li>The VPN provider handles tunneling according to their terms</li>
+            <li>Traffic stays between your devices on your setup; it is not routed through our company servers for AI</li>
+            <li>See your VPN provider&rsquo;s privacy policy</li>
         </ul>
-        <h3>4.3 News/Weather Features (Android, Optional)</h3>
-        <p>If you enable news or weather features:</p>
+        <h3>4.3 News and Weather (Optional)</h3>
+        <p>If you use briefing-style news or weather:</p>
         <ul>
-            <li>RSS feeds are fetched from public news sources</li>
-            <li>Weather data is fetched from weather APIs</li>
-            <li><strong>Your location is never automatically detected</strong> -- Pablo does not use GPS. If you manually enter coordinates via the location picker, those coordinates are sent directly from your device to the weather API (OpenWeatherMap) to retrieve local weather. Pablo Offline AI LLC never sees or stores your location.</li>
+            <li>Pablo Desktop may fetch RSS or similar feeds and, when you provide an API key, weather data from a provider such as OpenWeatherMap</li>
+            <li>Pablo Mobile typically retrieves briefing data <strong>from your Pablo Desktop API</strong> over your connection; the desktop is what usually contacts third-party news or weather endpoints</li>
+            <li><strong>Pablo Mobile does not use GPS for automatic location in this product flow.</strong> Location or coordinates you enter for weather are used to request forecasts from the weather provider you configured; Pablo Offline AI LLC does not receive that data as an intermediary</li>
         </ul>
-        <h3>4.4 Google Calendar Integration (Optional)</h3>
-        <p>If you connect your Google Calendar through the Android app:</p>
+        <h3>4.4 Google Calendar (Optional)</h3>
+        <p>If you connect Google Calendar (from Pablo Mobile, Pablo Desktop, or both, depending on your setup):</p>
         <ul>
-            <li>Pablo uses the calendar.readonly scope to read your event titles, times, and descriptions</li>
-            <li>Calendar data is cached locally on your device and your personal Pablo server only</li>
-            <li>Calendar data is never transmitted to Pablo Offline AI LLC</li>
-            <li>You can revoke access at any time via <a href="https://myaccount.google.com/permissions" target="_blank">https://myaccount.google.com/permissions</a></li>
+            <li>Access uses Google&rsquo;s documented scopes (for example read-only calendar access where applicable)</li>
+            <li>Event information is used to show briefings and context and is stored under your local Pablo Desktop data (and as needed for the app flow on your devices), not on our company servers</li>
+            <li>Calendar content is not sold or used for advertising by us</li>
+            <li>You can revoke Google access via <a href="https://myaccount.google.com/permissions" target="_blank">https://myaccount.google.com/permissions</a></li>
         </ul>
         <hr>
 
         <h2>5. WHAT WE CANNOT DO</h2>
-        <p>Because we do not operate cloud processing for your conversations:</p>
+        <p>Because we do not operate a cloud service that holds your conversations:</p>
         <ul>
-            <li>We cannot read your conversations</li>
-            <li>We cannot see what you ask the AI</li>
-            <li>We cannot access your files</li>
+            <li>We cannot read your conversations from our servers</li>
+            <li>We cannot see what you ask the AI on our servers</li>
+            <li>We cannot remotely access files on your devices</li>
             <li>We do not run ad/analytics tracking systems for your in-app activity</li>
             <li>We cannot sell your data (we don't have it)</li>
             <li>We cannot respond to law enforcement requests for your data (we don't have it)</li>
@@ -137,23 +133,23 @@
         </ul>
         <hr>
 
-        <h2>6. GOOGLE PLAY BILLING (Android Only)</h2>
-        <p>If you purchase the Android app through Google Play:</p>
+        <h2>6. GOOGLE PLAY BILLING (Pablo Mobile)</h2>
+        <p>If you purchase <strong>Pablo Mobile</strong> through Google Play:</p>
         <ul>
-            <li>Google handles the payment transaction</li>
-            <li>We receive a purchase token (a random identifier)</li>
-            <li>We do NOT receive your name, email, or payment details</li>
-            <li>See Google's privacy policy for their data practices</li>
+            <li>Google processes the payment</li>
+            <li>The app may store a purchase token and derived license information <strong>only on your Android device</strong> (for example in encrypted app storage) to unlock functionality</li>
+            <li>We do not receive your name, email, or full payment card details from that purchase in the app flow described here</li>
+            <li>See Google&rsquo;s privacy policy for data Google collects as the store operator</li>
         </ul>
         <hr>
 
         <h2>7. CHILDREN'S PRIVACY</h2>
-        <p>Our Software is not intended for children under 18. We do not knowingly collect any information from anyone, including children.</p>
+        <p><strong>Pablo Desktop</strong> and <strong>Pablo Mobile</strong> are not intended for children under 18. We do not knowingly collect any information from anyone, including children.</p>
         <hr>
 
         <h2>8. DATA SECURITY</h2>
         <h3>8.1 Your Responsibility</h3>
-        <p>Since all data is stored locally on your device, <strong>you are responsible for</strong>:</p>
+        <p>Because your primary AI data and history stay under your control (typically on the PC running Pablo Desktop), <strong>you are responsible for</strong>:</p>
         <ul>
             <li>Securing your device with passwords/biometrics</li>
             <li>Backing up your data</li>
@@ -163,10 +159,10 @@
         <h3>8.2 Our Approach</h3>
         <p>We minimize security risks by:</p>
         <ul>
-            <li>Not collecting data (can't breach what we don't have)</li>
-            <li>Processing everything locally</li>
-            <li>Not requiring accounts or logins</li>
-            <li>Not storing anything in the cloud</li>
+            <li>Not hosting your chat content on company servers</li>
+            <li>Keeping model inference on your own Windows PC when you use local models with Pablo Desktop (Pablo Mobile forwards to your desktop when connected)</li>
+            <li>Not requiring a Pablo account or login for core use</li>
+            <li>Not operating a central cloud archive of your conversations</li>
         </ul>
         <hr>
 
@@ -175,15 +171,15 @@
         <p>We do not retain your conversation content on company servers because we do not collect it there.</p>
         <h3>9.2 Local Data Deletion</h3>
         <p>To delete data stored locally on your device:</p>
-        <p><strong>Windows:</strong></p>
+        <p><strong>Pablo Desktop (Windows):</strong></p>
         <ol>
-            <li>Uninstall Pablo Desktop</li>
-            <li>Delete: <code>%LocalAppData%\PabloEnterprise\</code></li>
+            <li>Uninstall Pablo Desktop using Windows Settings or the installer</li>
+            <li>Remove remaining data if needed: default folder <code>%LocalAppData%\PabloEnterprise\</code>, or the custom data path you set in Pablo Desktop (see Windows Registry <code>HKCU\SOFTWARE\PabloEnterprise\DataPath</code> if you changed it)</li>
         </ol>
-        <p><strong>Android:</strong></p>
+        <p><strong>Pablo Mobile (Android):</strong></p>
         <ol>
             <li>Uninstall Pablo Mobile</li>
-            <li>All app data is automatically deleted</li>
+            <li>Android removes app-private data for that app</li>
         </ol>
         <hr>
 
@@ -205,14 +201,15 @@
                 <tr><th>Service</th><th>Purpose</th><th>Their Privacy Policy</th></tr>
             </thead>
             <tbody>
-                <tr><td>HuggingFace</td><td>Model downloads</td><td><a href="https://huggingface.co/privacy" target="_blank">https://huggingface.co/privacy</a></td></tr>
-                <tr><td>Google Play</td><td>App purchase</td><td><a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></td></tr>
-                <tr><td>Tailscale</td><td>VPN (optional)</td><td><a href="https://tailscale.com/privacy-policy" target="_blank">https://tailscale.com/privacy-policy</a></td></tr>
-                <tr><td>Google Calendar API</td><td>Calendar display (optional)</td><td><a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">https://developers.google.com/terms/api-services-user-data-policy</a></td></tr>
+                <tr><td>Hugging Face</td><td>Optional model downloads (Pablo Desktop)</td><td><a href="https://huggingface.co/privacy" target="_blank">https://huggingface.co/privacy</a></td></tr>
+                <tr><td>Google Play</td><td>Purchase of Pablo Mobile</td><td><a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></td></tr>
+                <tr><td>OpenWeatherMap (or similar)</td><td>Optional weather, when you add an API key (typically Pablo Desktop)</td><td><a href="https://openweathermap.org/privacy-policy" target="_blank">https://openweathermap.org/privacy-policy</a></td></tr>
+                <tr><td>Tailscale (or other VPN)</td><td>Optional remote link between your devices</td><td><a href="https://tailscale.com/privacy-policy" target="_blank">https://tailscale.com/privacy-policy</a></td></tr>
+                <tr><td>Google Calendar API</td><td>Optional calendar in briefings</td><td><a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">https://developers.google.com/terms/api-services-user-data-policy</a></td></tr>
             </tbody>
         </table>
         <h3>11.2 Third-Party AI Models</h3>
-        <p>AI models included with the Software are created by third parties. We do not control these models. See model documentation for their terms.</p>
+        <p>Model weights you install for Pablo Desktop come from third parties. We do not control those models&rsquo; behavior or licenses. See each model&rsquo;s documentation.</p>
         <hr>
 
         <h2>12. CHANGES TO THIS POLICY</h2>
@@ -232,7 +229,7 @@
         <hr>
 
         <h2>14. GOOGLE API SERVICES COMPLIANCE</h2>
-        <p>Pablo's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements. Specifically, we do not transfer Google user data to third parties, do not use it for advertising, and do not use it to train AI or ML models.</p>
+        <p>Our use of information received from Google APIs (for example Google Calendar, when you connect it) adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank">Google API Services User Data Policy</a>, including the Limited Use requirements. We do not transfer that Google user data to other third parties for their independent use, do not use it for advertising, and do not use it to train generalized AI or ML models.</p>
         <hr>
 
         <h2>15. JURISDICTION</h2>
@@ -257,7 +254,7 @@
         <p><strong>Your privacy is absolute. We built it that way.</strong></p>
 
         <hr>
-        <p style="font-size: 0.85rem; color: #8b8b9e;">&copy; 2025 Pablo Offline AI LLC. All rights reserved.</p>
+        <p style="font-size: 0.85rem; color: #8b8b9e;">&copy; 2025&ndash;2026 Pablo Offline AI LLC. All rights reserved.</p>
     </div>
 </body>
 </html>

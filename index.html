@@ -430,8 +430,16 @@
             align-items: center;
             justify-content: center;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .screenshot-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
         }
 
         .screenshot-card-content {
@@ -821,11 +829,11 @@
                 </svg>
                 Download for Windows 11
             </a>
-            <a href="#" class="btn btn-secondary">
+            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                 </svg>
-                Get Android App
+                Get Pablo Mobile
             </a>
         </div>
         <div class="trust-bar">
@@ -870,10 +878,6 @@
             </p>
         </div>
 
-        <div style="text-align: center; max-width: 900px; margin: 0 auto 3rem;">
-            <img src="pablo_hero_graphic.png" alt="Pablo Desktop sending data to Pablo Mobile" style="width: 100%; height: auto; border-radius: 12px; display: block;">
-        </div>
-        
         <div class="architecture">
             <div class="component-card">
                 <div class="component-icon">
@@ -1152,63 +1156,48 @@
             <p class="section-label">See It In Action</p>
             <h2 class="section-title">Designed for Simplicity</h2>
             <p class="section-subtitle">
-                Clean, intuitive interfaces that get out of your way and let you focus on what matters.
+                A few highlights from the desktop app and Pablo Mobile. Images are served from the project repository.
             </p>
         </div>
 
         <div class="screenshot-grid">
             <div class="screenshot-card">
                 <div class="screenshot-placeholder">
-                    <!-- Replace with: <img src="screenshot-desktop-chat.png" alt="Desktop Chat"> -->
-                    Screenshot: Desktop Chat Interface
+                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" alt="Pablo: local AI chat" loading="lazy" decoding="async">
                 </div>
                 <div class="screenshot-card-content">
-                    <h4>Intelligent Conversations</h4>
-                    <p>Chat naturally with your local AI. Ask questions, get explanations, brainstorm ideas.</p>
+                    <h4>Local AI chat</h4>
+                    <p>Conversations run on your hardware. Ask, reason, and iterate without sending prompts to a cloud model host.</p>
                 </div>
             </div>
 
             <div class="screenshot-card">
                 <div class="screenshot-placeholder">
-                    <!-- Replace with: <img src="screenshot-desktop-setup.png" alt="Easy Setup"> -->
-                    Screenshot: First-Run Wizard
+                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" alt="Pablo: smart home control" loading="lazy" decoding="async">
                 </div>
                 <div class="screenshot-card-content">
-                    <h4>Smart Model Setup</h4>
-                    <p>Our wizard detects your GPU and RAM, recommends compatible models, and downloads them with one click. Or bring your own.</p>
+                    <h4>Smart home</h4>
+                    <p>Control supported gear from natural language; built around adapters so more ecosystems can plug in over time.</p>
                 </div>
             </div>
 
             <div class="screenshot-card">
                 <div class="screenshot-placeholder">
-                    <!-- Replace with: <img src="screenshot-mobile-chat.png" alt="Mobile Chat"> -->
-                    Screenshot: Mobile App
+                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" alt="Pablo Mobile app" loading="lazy" decoding="async">
                 </div>
                 <div class="screenshot-card-content">
-                    <h4>Mobile Access</h4>
-                    <p>Connect from anywhere on your network. Full chat capabilities in your pocket.</p>
+                    <h4>Pablo Mobile</h4>
+                    <p>Android companion for chat and more; reach your desktop Pablo securely over your network (e.g. Tailscale).</p>
                 </div>
             </div>
 
             <div class="screenshot-card">
                 <div class="screenshot-placeholder">
-                    <!-- Replace with: <img src="screenshot-briefing.png" alt="Briefing"> -->
-                    Screenshot: Daily Briefing
+                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" alt="Pablo: document manager" loading="lazy" decoding="async">
                 </div>
                 <div class="screenshot-card-content">
-                    <h4>Daily Briefing</h4>
-                    <p>Get news, weather, and calendar updates from your own private AI stack.</p>
-                </div>
-            </div>
-
-            <div class="screenshot-card">
-                <div class="screenshot-placeholder">
-                    <!-- Replace with: <img src="screenshot-news-weather.png" alt="News & Weather"> -->
-                    Screenshot: News &amp; Weather
-                </div>
-                <div class="screenshot-card-content">
-                    <h4>Daily Briefings</h4>
-                    <p>Personalized news and weather updates delivered to your phone each morning.</p>
+                    <h4>Document manager</h4>
+                    <p>Bring your own files into the workflow so answers can stay grounded in what you actually keep on disk.</p>
                 </div>
             </div>
         </div>
@@ -1227,11 +1216,11 @@
                 </svg>
                 Download for Windows (Free)
             </a>
-            <a href="#" class="btn btn-secondary">
+            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                 </svg>
-                Get on Google Play
+                Get Pablo Mobile on Google Play
             </a>
         </div>
     </section>

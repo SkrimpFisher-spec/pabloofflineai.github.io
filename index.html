@@ -463,6 +463,70 @@
             border-bottom: none;
         }
 
+        /* Screenshot lightbox overlay */
+        .screenshot-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3.5rem 1.25rem 1.25rem;
+            background: rgba(10, 10, 15, 0.92);
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .screenshot-lightbox[hidden] {
+            display: none !important;
+        }
+        .screenshot-lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(18, 18, 26, 0.98);
+            color: var(--text);
+            font-size: 1.65rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10002;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .screenshot-lightbox-close:hover {
+            background: rgba(30, 30, 42, 0.98);
+            border-color: rgba(0, 212, 255, 0.35);
+        }
+        .screenshot-lightbox-close:focus {
+            outline: none;
+        }
+        .screenshot-lightbox-close:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .screenshot-lightbox-inner {
+            position: relative;
+            max-width: min(92vw, 1600px);
+            max-height: 88vh;
+            cursor: default;
+        }
+        .screenshot-lightbox-inner img {
+            max-width: 92vw;
+            max-height: 88vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+        }
+
         .screenshot-card-content {
             padding: 1.5rem;
         }
@@ -1177,13 +1241,13 @@
             <p class="section-label">See It In Action</p>
             <h2 class="section-title">Designed for Simplicity</h2>
             <p class="section-subtitle">
-                A few highlights from the desktop app and Pablo Mobile. Click any image to open it full size in a new tab.
+                A few highlights from the desktop app and Pablo Mobile. Click an image to enlarge it; click the dimmed area around the image, the X, or press Escape to close.
             </p>
         </div>
 
         <div class="screenshot-grid">
             <div class="screenshot-card">
-                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Local AI chat">
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Local AI chat">
                     <div class="screenshot-placeholder">
                         <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" alt="Pablo: local AI chat" loading="lazy" decoding="async">
                     </div>
@@ -1195,7 +1259,7 @@
             </div>
 
             <div class="screenshot-card">
-                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Smart home">
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Smart home">
                     <div class="screenshot-placeholder">
                         <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" alt="Pablo: smart home control" loading="lazy" decoding="async">
                     </div>
@@ -1207,7 +1271,7 @@
             </div>
 
             <div class="screenshot-card">
-                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Pablo Mobile">
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Pablo Mobile">
                     <div class="screenshot-placeholder">
                         <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" alt="Pablo Mobile app" loading="lazy" decoding="async">
                     </div>
@@ -1219,7 +1283,7 @@
             </div>
 
             <div class="screenshot-card">
-                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Document manager">
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Document manager">
                     <div class="screenshot-placeholder">
                         <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" alt="Pablo: document manager" loading="lazy" decoding="async">
                     </div>
@@ -1298,4 +1362,72 @@
             <div class="footer-legal">
                 <a href="https://www.pablooffline.com/privacy.html" target="_blank">Privacy Policy</a>
                 <a href="https://www.pablooffline.com/terms.html" target="_blank">Terms of Service</a>
-                <a href="https://www.pablooffline.com/license.html
+                <a href="https://www.pablooffline.com/license.html" target="_blank">License</a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="screenshotLightbox" class="screenshot-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged screenshot" aria-hidden="true" hidden>
+        <button type="button" class="screenshot-lightbox-close" aria-label="Close">&times;</button>
+        <div class="screenshot-lightbox-inner">
+            <img id="screenshotLightboxImg" src="" alt="">
+        </div>
+    </div>
+    <script>
+    (function () {
+        var lb = document.getElementById('screenshotLightbox');
+        if (!lb) return;
+        var lbImg = document.getElementById('screenshotLightboxImg');
+        var closeBtn = lb.querySelector('.screenshot-lightbox-close');
+        var lastFocus = null;
+
+        function openLightbox(href, altText) {
+            lastFocus = document.activeElement;
+            lbImg.src = href;
+            lbImg.alt = altText || '';
+            lb.hidden = false;
+            lb.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            closeBtn.focus();
+        }
+
+        function closeLightbox() {
+            lb.hidden = true;
+            lb.setAttribute('aria-hidden', 'true');
+            lbImg.removeAttribute('src');
+            lbImg.alt = '';
+            document.body.style.overflow = '';
+            if (lastFocus && typeof lastFocus.focus === 'function') {
+                lastFocus.focus();
+            }
+            lastFocus = null;
+        }
+
+        document.querySelectorAll('a.screenshot-fullsize-link').forEach(function (a) {
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                var thumb = a.querySelector('img');
+                openLightbox(a.getAttribute('href'), thumb ? thumb.getAttribute('alt') : '');
+            });
+        });
+
+        lb.addEventListener('click', function (e) {
+            if (e.target === lb) {
+                closeLightbox();
+            }
+        });
+
+        closeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !lb.hidden) {
+                closeLightbox();
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

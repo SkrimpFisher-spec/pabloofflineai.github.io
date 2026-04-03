@@ -442,6 +442,27 @@
             display: block;
         }
 
+        a.screenshot-fullsize-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border-bottom: 1px solid var(--border);
+            cursor: zoom-in;
+        }
+        a.screenshot-fullsize-link:focus {
+            outline: none;
+        }
+        a.screenshot-fullsize-link:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        a.screenshot-fullsize-link:hover .screenshot-placeholder img {
+            opacity: 0.92;
+        }
+        a.screenshot-fullsize-link .screenshot-placeholder {
+            border-bottom: none;
+        }
+
         .screenshot-card-content {
             padding: 1.5rem;
         }
@@ -1156,15 +1177,17 @@
             <p class="section-label">See It In Action</p>
             <h2 class="section-title">Designed for Simplicity</h2>
             <p class="section-subtitle">
-                A few highlights from the desktop app and Pablo Mobile. Images are served from the project repository.
+                A few highlights from the desktop app and Pablo Mobile. Click any image to open it full size in a new tab.
             </p>
         </div>
 
         <div class="screenshot-grid">
             <div class="screenshot-card">
-                <div class="screenshot-placeholder">
-                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" alt="Pablo: local AI chat" loading="lazy" decoding="async">
-                </div>
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Local AI chat">
+                    <div class="screenshot-placeholder">
+                        <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Intelligent%20Conversation.png" alt="Pablo: local AI chat" loading="lazy" decoding="async">
+                    </div>
+                </a>
                 <div class="screenshot-card-content">
                     <h4>Local AI chat</h4>
                     <p>Conversations run on your hardware. Ask, reason, and iterate without sending prompts to a cloud model host.</p>
@@ -1172,9 +1195,11 @@
             </div>
 
             <div class="screenshot-card">
-                <div class="screenshot-placeholder">
-                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" alt="Pablo: smart home control" loading="lazy" decoding="async">
-                </div>
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Smart home">
+                    <div class="screenshot-placeholder">
+                        <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Smart%20Home.png" alt="Pablo: smart home control" loading="lazy" decoding="async">
+                    </div>
+                </a>
                 <div class="screenshot-card-content">
                     <h4>Smart home</h4>
                     <p>Control supported gear from natural language; built around adapters so more ecosystems can plug in over time.</p>
@@ -1182,9 +1207,11 @@
             </div>
 
             <div class="screenshot-card">
-                <div class="screenshot-placeholder">
-                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" alt="Pablo Mobile app" loading="lazy" decoding="async">
-                </div>
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Pablo Mobile">
+                    <div class="screenshot-placeholder">
+                        <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Mobile%20App.png" alt="Pablo Mobile app" loading="lazy" decoding="async">
+                    </div>
+                </a>
                 <div class="screenshot-card-content">
                     <h4>Pablo Mobile</h4>
                     <p>Android companion for chat and more; reach your desktop Pablo securely over your network (e.g. Tailscale).</p>
@@ -1192,9 +1219,11 @@
             </div>
 
             <div class="screenshot-card">
-                <div class="screenshot-placeholder">
-                    <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" alt="Pablo: document manager" loading="lazy" decoding="async">
-                </div>
+                <a href="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" class="screenshot-fullsize-link" target="_blank" rel="noopener noreferrer" aria-label="Open full size: Document manager">
+                    <div class="screenshot-placeholder">
+                        <img src="https://raw.githubusercontent.com/SkrimpFisher-spec/pabloofflineai.github.io/main/Document%20Manager.png" alt="Pablo: document manager" loading="lazy" decoding="async">
+                    </div>
+                </a>
                 <div class="screenshot-card-content">
                     <h4>Document manager</h4>
                     <p>Bring your own files into the workflow so answers can stay grounded in what you actually keep on disk.</p>

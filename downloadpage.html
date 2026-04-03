@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download | Pablo Offline AI</title>
-    <meta name="description" content="Download Pablo Offline AI for Windows and Android. Free desktop app, one-time purchase for mobile.">
+    <meta name="description" content="Download Pablo Enterprise for Windows and Pablo Mobile for Android (Google Play). Free desktop; one-time purchase for the mobile companion.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -125,6 +125,20 @@
         .version-info a { color: var(--accent); text-decoration: none; }
         .version-info a:hover { text-decoration: underline; }
 
+        .windows-smartscreen {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--accent);
+        }
+        .windows-smartscreen h3 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--text); }
+        .windows-smartscreen p, .windows-smartscreen li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
+        .windows-smartscreen ol { margin: 0.75rem 0 0 1.25rem; }
+        .windows-smartscreen li { margin-bottom: 0.5rem; }
+        .windows-smartscreen .note { font-size: 0.85rem; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); }
+
         /* Footer */
         footer {
             background: var(--secondary); border-top: 1px solid var(--border);
@@ -192,12 +206,14 @@
                         Works completely offline
                     </li>
                 </ul>
-                <a href="https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/download/OfflineAI/PabloEnterprise-Setup-1.0.0.exe" class="btn btn-primary">
+                <!-- When you ship a new installer, update the filename in the URL below to match the asset on your Latest GitHub Release. -->
+                <a href="https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/latest/download/PabloEnterprise-Setup-1.0.9.exe" class="btn btn-primary">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                     </svg>
-                    Download for Windows
+                    Download for Windows (v1.0.9)
                 </a>
+                <p class="version-info" style="margin-top: 1rem;">Installer: <code style="color: var(--text-muted); font-size: 0.8rem;">PabloEnterprise-Setup-1.0.9.exe</code></p>
             </div>
 
             <!-- Android Card -->
@@ -208,8 +224,8 @@
                         <line x1="12" y1="18" x2="12.01" y2="18"/>
                     </svg>
                 </div>
-                <h2>Pablo Android</h2>
-                <p class="platform">Android 10+</p>
+                <h2>Pablo Mobile</h2>
+                <p class="platform">Android 10+ (Google Play)</p>
                 <p class="price">$14.99 — one-time purchase</p>
                 <ul>
                     <li>
@@ -229,13 +245,24 @@
                         No subscriptions, no accounts
                     </li>
                 </ul>
-                <a href="#" class="btn btn-secondary" style="opacity: 0.6; pointer-events: none;">
+                <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px;">
                         <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                     </svg>
-                    Coming Soon on Google Play
+                    Get it on Google Play
                 </a>
             </div>
+        </div>
+
+        <div class="windows-smartscreen">
+            <h3>Windows SmartScreen and &ldquo;Unknown publisher&rdquo;</h3>
+            <p>You may see a blue <strong>Windows protected your PC</strong> screen the first time you run the installer. That happens when Windows does not yet recognize the file or the app is not signed with a commercial <strong>code signing certificate</strong>. It does not mean the download is corrupt.</p>
+            <p><strong>If you trust this download</strong> (you got it from this site or our official GitHub release):</p>
+            <ol>
+                <li>Click <strong>More info</strong> (if shown).</li>
+                <li>Click <strong>Run anyway</strong>.</li>
+            </ol>
+            <p class="note">To show a verified publisher name and reduce SmartScreen warnings over time, we need to <strong>sign the installer with an Authenticode certificate</strong> from a trusted CA (and use a timestamp server when signing). That is a paid yearly certificate plus a one-time setup in your build pipeline (e.g. Inno Setup + <code>signtool</code>). Download page tweaks cannot remove this warning; signing the <code>.exe</code> does.</p>
         </div>
 
         <!-- System Requirements -->
@@ -267,7 +294,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 Pablo Offline AI LLC. All rights reserved.</p>
+        <p>&copy; 2026 Pablo Offline AI LLC. All rights reserved.</p>
         <div style="margin-top: 1rem;">
             <a href="https://www.pablooffline.com/privacy.html">Privacy Policy</a>
             <a href="https://www.pablooffline.com/terms.html">Terms of Service</a>

@@ -7,6 +7,7 @@
     <meta name="description" content="Download Pablo Desktop for Windows. One-time $14.99 (Pablo Mobile on Google Play) unlocks the full Desktop + Android experience: specialists, memory, RAG, briefings, smart home, widgets, local API. No subscription.">
     <meta name="keywords" content="download offline ai, pablo offline ai download, private ai assistant download, local ai windows, offline ai windows">
     <link rel="canonical" href="https://www.pablooffline.com/downloadpage.html">
+    <meta name="theme-color" content="#f8fafc">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Download Pablo Offline AI — Windows + Android">
@@ -17,160 +18,197 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #0a0a0f;
-            --secondary: #12121a;
-            --accent: #00d4ff;
-            --accent-dim: rgba(0, 212, 255, 0.1);
-            --text: #ffffff;
-            --text-muted: #8b8b9e;
-            --border: rgba(255, 255, 255, 0.08);
-            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --text-soft: #94a3b8;
+            --accent: #0c8bce;
+            --accent-dim: rgba(12, 139, 206, 0.12);
+            --glass: rgba(255, 255, 255, 0.55);
+            --glass-strong: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-outline: rgba(15, 23, 42, 0.06);
+            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 8px 32px rgba(15, 23, 42, 0.07);
+            --shadow-lg: 0 20px 50px rgba(15, 23, 42, 0.09);
+            --blur: blur(28px) saturate(160%);
+            --radius: 20px;
+            --radius-sm: 14px;
         }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; color-scheme: light; }
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--primary);
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.55;
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse 120% 90% at 50% -25%, rgba(186, 230, 253, 0.65) 0%, transparent 58%),
+                radial-gradient(ellipse 70% 50% at 105% 5%, rgba(224, 242, 254, 0.85) 0%, transparent 52%),
+                linear-gradient(168deg, #f8fafc 0%, #eef2f7 50%, #e8edf3 100%);
+            pointer-events: none;
         }
         img { max-width: 100%; height: auto; }
 
-        /* Navigation */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
         }
         .logo {
-            font-size: 1.5rem; font-weight: 700; color: var(--text);
+            font-size: 1.35rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text);
             text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
         }
         .logo-icon {
-            width: 32px; height: 32px; background: var(--gradient-1);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 1rem;
+            width: 34px; height: 34px; background: var(--gradient-1);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem; color: #fff;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
         }
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
         .nav-links a:hover { color: var(--text); }
 
-        /* Page Content */
-        .page { max-width: 900px; margin: 0 auto; padding: 8rem 1.5rem 4rem; }
+        .page { max-width: 920px; margin: 0 auto; padding: clamp(6rem, 14vh, 8rem) 1.5rem clamp(3rem, 8vw, 4rem); }
 
-        .page-header { text-align: center; margin-bottom: 4rem; }
+        .page-header { text-align: center; margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
         .page-header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 1rem;
+            font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 600; letter-spacing: -0.03em; margin-bottom: 0.75rem;
         }
         .page-header h1 span {
             background: var(--gradient-1);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        .page-header p { color: var(--text-muted); font-size: 1.15rem; max-width: 550px; margin: 0 auto; }
+        .page-header p { color: var(--text-muted); font-size: 1.05rem; max-width: 28rem; margin: 0 auto; line-height: 1.55; }
 
-        /* Download Cards */
-        .download-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+        .download-cards { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 3vw, 1.75rem); margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
 
         .download-card {
-            background: var(--secondary); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2.5rem; position: relative; overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: clamp(1.75rem, 4vw, 2.25rem);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
-        .download-card:hover { border-color: rgba(0, 212, 255, 0.25); transform: translateY(-3px); }
+        .download-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
         .download-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: var(--gradient-1);
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.45), transparent);
         }
 
         .card-icon {
-            width: 56px; height: 56px; background: var(--accent-dim); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+            width: 52px; height: 52px; background: var(--accent-dim); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.15rem;
         }
-        .card-icon svg { width: 28px; height: 28px; color: var(--accent); }
+        .card-icon svg { width: 26px; height: 26px; color: var(--accent); }
 
-        .download-card h2 { font-size: 1.4rem; margin-bottom: 0.25rem; }
-        .download-card .platform { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-bottom: 0.75rem; }
-        .download-card .price { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .download-card h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+        .download-card .platform { color: var(--accent); font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .download-card .price { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.15rem; line-height: 1.45; }
 
-        .download-card ul { list-style: none; margin-bottom: 2rem; }
+        .download-card ul { list-style: none; margin-bottom: 1.5rem; }
         .download-card ul li {
-            display: flex; align-items: center; gap: 0.6rem;
-            color: var(--text-muted); font-size: 0.9rem; padding: 0.4rem 0;
+            display: flex; align-items: flex-start; gap: 0.55rem;
+            color: var(--text-muted); font-size: 0.84rem; padding: 0.35rem 0; line-height: 1.45;
         }
-        .download-card ul li svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+        .download-card ul li svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; margin-top: 0.2rem; }
 
         .btn {
             display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.9rem 1.75rem; border-radius: 8px; font-size: 1rem; font-weight: 600;
-            text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; width: 100%;
+            padding: 0.9rem 1.5rem; border-radius: 999px; font-size: 0.95rem; font-weight: 600;
+            text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: none; width: 100%;
             justify-content: center;
         }
-        .btn-primary { background: var(--gradient-1); color: var(--primary); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3); }
-        .btn-secondary {
-            background: transparent; color: var(--text); border: 1px solid var(--border);
+        .btn-primary {
+            background: var(--gradient-1);
+            color: #fff;
+            box-shadow: 0 6px 22px rgba(14, 165, 233, 0.28);
         }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.2); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(14, 165, 233, 0.32); }
         .btn svg { width: 20px; height: 20px; }
 
-        /* Requirements */
         .requirements {
-            background: var(--secondary); border: 1px solid var(--border);
-            border-radius: 16px; padding: 2.5rem; margin-bottom: 3rem;
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: clamp(1.75rem, 4vw, 2.25rem);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
         }
-        .requirements h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text); }
-        .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .req-item h4 { font-size: 0.9rem; color: var(--accent); margin-bottom: 0.25rem; }
-        .req-item p { color: var(--text-muted); font-size: 0.85rem; }
+        .requirements h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); letter-spacing: -0.02em; }
+        .req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .req-item h4 { font-size: 0.78rem; font-weight: 600; color: var(--accent); margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        .req-item p { color: var(--text-muted); font-size: 0.84rem; line-height: 1.45; }
 
-        /* Version info */
-        .version-info { text-align: center; color: var(--text-muted); font-size: 0.85rem; }
-        .version-info a { color: var(--accent); text-decoration: none; }
+        .version-info { text-align: center; color: var(--text-soft); font-size: 0.82rem; }
+        .version-info a { color: var(--accent); text-decoration: none; font-weight: 500; }
         .version-info a:hover { text-decoration: underline; }
+        .version-info code { color: var(--text-muted); font-size: 0.78rem; background: rgba(255,255,255,0.6); padding: 0.15rem 0.4rem; border-radius: 6px; }
 
         .pricing-banner {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem 2rem;
-            margin-bottom: 2.5rem;
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 1.35rem 1.75rem;
+            margin-bottom: 2rem;
             text-align: center;
-            border-left: 4px solid var(--accent);
+            box-shadow: var(--shadow-md);
         }
-        .pricing-banner h2 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text); }
-        .pricing-banner p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; max-width: 640px; margin: 0 auto; }
-        .pricing-banner strong { color: var(--text); }
+        .pricing-banner h2 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.65rem; }
+        .pricing-banner p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; max-width: 36rem; margin: 0 auto; }
+        .pricing-banner strong { color: var(--text); font-weight: 600; }
 
         .windows-smartscreen {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem 2.5rem;
-            margin-bottom: 3rem;
-            border-left: 4px solid var(--accent);
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 1.75rem 1.85rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-sm);
         }
-        .windows-smartscreen h3 { font-size: 1.15rem; margin-bottom: 1rem; color: var(--text); }
-        .windows-smartscreen p, .windows-smartscreen li { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.75rem; }
-        .windows-smartscreen ol { margin: 0.75rem 0 0 1.25rem; }
-        .windows-smartscreen li { margin-bottom: 0.5rem; }
+        .windows-smartscreen h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); letter-spacing: -0.02em; }
+        .windows-smartscreen p, .windows-smartscreen li { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 0.65rem; line-height: 1.55; }
+        .windows-smartscreen ol { margin: 0.65rem 0 0 1.15rem; }
+        .windows-smartscreen li { margin-bottom: 0.4rem; }
 
-        /* Footer */
         footer {
-            background: var(--secondary); border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-top: 1px solid var(--glass-border);
             padding: 2rem 5%; text-align: center;
         }
-        footer p { color: var(--text-muted); font-size: 0.85rem; }
-        footer a { color: var(--text-muted); text-decoration: none; margin: 0 1rem; font-size: 0.85rem; }
-        footer a:hover { color: var(--text); }
+        footer p { color: var(--text-muted); font-size: 0.82rem; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 0.85rem; font-size: 0.82rem; font-weight: 500; }
+        footer a:hover { color: var(--accent); }
 
-        /* Responsive */
         @media (max-width: 700px) {
             .download-cards { grid-template-columns: 1fr; }
             .req-grid { grid-template-columns: 1fr; }
@@ -196,12 +234,12 @@
     <div class="page">
         <div class="page-header">
             <h1>Download <span>Pablo</span></h1>
-            <p>Get started with your private AI in minutes. No telemetry and no cloud model host for your chats.</p>
+            <p>Private AI on your PC. No telemetry. No cloud model host for your chats.</p>
         </div>
 
         <div class="pricing-banner">
-            <h2>Pricing in one sentence</h2>
-            <p><strong>$14.99 one-time</strong> for <strong>Pablo Mobile</strong> on Google Play unlocks the <strong>full Desktop + Android</strong> experience we ship today. <strong>No subscription.</strong> Download the Windows installer here anytime; activation pairs with your mobile purchase.</p>
+            <h2>Pricing</h2>
+            <p><strong>$14.99 once</strong> on Google Play for Pablo Mobile unlocks <strong>Desktop + Android</strong>. No subscription. Grab the Windows installer below anytime.</p>
         </div>
 
         <div class="download-cards">
@@ -242,7 +280,7 @@
                     </svg>
                     Download for Windows (v1.0.9)
                 </a>
-                <p class="version-info" style="margin-top: 1rem;">Installer: <code style="color: var(--text-muted); font-size: 0.8rem;">PabloEnterprise-Setup-1.0.9.exe</code></p>
+                <p class="version-info" style="margin-top: 1rem;">Installer: <code>PabloEnterprise-Setup-1.0.9.exe</code></p>
             </div>
 
             <!-- Android Card -->

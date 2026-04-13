@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase complete — Pablo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: Outfit, system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1.25rem; color: #0f172a; line-height: 1.5; }
+        h1 { font-size: 1.6rem; }
+        #key-section { display: none; margin-top: 1.5rem; }
+        #license-key { font-family: ui-monospace, Consolas, monospace; word-break: break-all; background: #f1f5f9; padding: 1rem; border-radius: 8px; font-size: 0.9rem; }
+        button { margin-top: 0.75rem; margin-right: 0.5rem; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #0c8bce; background: #fff; color: #0c8bce; cursor: pointer; font-weight: 600; }
+        button.primary { background: #0c8bce; color: #fff; }
+        a { color: #0c8bce; }
+    </style>
+</head>
+<body>
+    <h1>Thank you</h1>
+    <p id="status">Confirming your payment...</p>
+    <div id="key-section">
+        <p>Your license key (save a copy):</p>
+        <div id="license-key"></div>
+        <button type="button" class="primary" id="copy-btn">Copy key</button>
+        <button type="button" id="download-btn">Download as .txt</button>
+    </div>
+    <p style="margin-top:2rem;"><a href="index.html">Home</a> · <a href="downloadpage.html">Download Desktop</a></p>
+
+    <script>
+    const WORKER_URL = "https://pablo-license.pablooffline.workers.dev";
+
+    async function pollForLicense() {
+        if (!WORKER_URL || !WORKER_URL.trim()) {
+            document.getElementById("status").textContent =
+                "Set WORKER_URL in purchase-complete.html to your deployed Cloudflare Worker URL, then publish this page again.";
+            return;
+        }
+        const sessionId = new URLSearchParams(window.location.search).get("session_id");
+        if (!sessionId) {
+            document.getElementById("status").textContent = "No session found. If you completed payment, check your email or contact support.";
+            return;
+        }
+        document.getElementById("status").textContent = "Confirming your payment...";
+        for (var i = 0; i < 40; i++) {
+            try {
+                var res = await fetch(WORKER_URL.replace(/\/$/, "") + "/fulfill?session_id=" + encodeURIComponent(sessionId));
+                var data = await res.json();
+                if (data.status === "confirmed" && data.licenseKey) {
+                    document.getElementById("status").textContent = "Payment confirmed.";
+                    document.getElementById("license-key").textContent = data.licenseKey;
+                    document.getElementById("key-section").style.display = "block";
+                    return;
+                }
+            } catch (e) { /* retry */ }
+            await new Promise(function (r) { setTimeout(r, 3000); });
+        }
+        document.getElementById("status").textContent = "Still processing. Refresh in a minute or contact support.";
+    }
+
+    document.getElementById("copy-btn").addEventListener("click", function () {
+        var k = document.getElementById("license-key").textContent;
+        if (!k) return;
+        navigator.clipboard.writeText(k).then(function () {
+            document.getElementById("copy-btn").textContent = "Copied";
+        });
+    });
+
+    document.getElementById("download-btn").addEventListener("click", function () {
+        var k = document.getElementById("license-key").textContent;
+        if (!k) return;
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([k], { type: "text/plain" }));
+        a.download = "pablo-license-key.txt";
+        a.click();
+    });
+
+    window.addEventListener("load", pollForLicense);
+    </script>
+</body>
+</html>

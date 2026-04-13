@@ -199,6 +199,7 @@
         @media (prefers-reduced-motion: reduce) {
             .btn-primary:hover,
             .btn-secondary:hover,
+            .btn-silver:hover,
             .screenshot-card:hover,
             .download-card:hover,
             .security-card:hover { transform: none; }
@@ -273,6 +274,48 @@
         .btn-secondary:hover {
             background: #fff;
             transform: translateY(-2px);
+        }
+
+        /* Primary buy CTA with subtitle */
+        .btn-cta-buy {
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+            padding-top: 0.85rem;
+            padding-bottom: 0.85rem;
+        }
+
+        .btn-cta-buy .btn-buy-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-cta-buy .btn-buy-sub {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            opacity: 0.92;
+            line-height: 1.2;
+        }
+
+        /* Metallic silver secondary download buttons */
+        .btn-silver {
+            background: linear-gradient(180deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%);
+            color: #333;
+            border: 1px solid #999;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1);
+        }
+
+        .btn-silver:hover {
+            background: linear-gradient(180deg, #f2f2f2 0%, #d4d4d4 50%, #c4c4c4 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+        }
+
+        .btn-silver .btn-icon {
+            color: #333;
+            flex-shrink: 0;
         }
 
         .btn-icon {
@@ -1221,23 +1264,26 @@
             A private AI assistant that lives on your computer, not in the cloud — so nothing you say ever leaves your home. Write emails, summarize documents, plan your day, control your lights, and get daily news and weather briefings, all without a subscription. Grab the phone app and take it with you.
         </p>
         <div class="hero-ctas">
-            <a href="buy.html" class="btn btn-primary">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
-                </svg>
-                Buy Pablo Desktop License — $14.99
+            <a href="buy.html" class="btn btn-primary btn-cta-buy">
+                <span class="btn-buy-line">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                    </svg>
+                    Buy Pablo Desktop License — $14.99
+                </span>
+                <span class="btn-buy-sub">One-time. Never expires.</span>
             </a>
-            <a href="downloadpage.html" class="btn btn-primary">
+            <a href="downloadpage.html" class="btn btn-silver">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                 </svg>
-                Download for Windows 11
+                Download for Windows
             </a>
-            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-silver" target="_blank" rel="noopener noreferrer">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                 </svg>
-                Get Pablo Mobile — Free
+                Download for Android — Free
             </a>
         </div>
         <div class="trust-bar">
@@ -1722,19 +1768,26 @@
         <h2>Start on your PC</h2>
         <p>Download the Windows installer for free, buy a license to unlock the full app, and get the free Android companion from Play.</p>
         <div class="cta-buttons">
-            <a href="buy.html" class="btn btn-primary">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
-                </svg>
-                Buy Pablo Desktop License — $14.99
+            <a href="buy.html" class="btn btn-primary btn-cta-buy">
+                <span class="btn-buy-line">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
+                    </svg>
+                    Buy Pablo Desktop License — $14.99
+                </span>
+                <span class="btn-buy-sub">One-time. Never expires.</span>
             </a>
-            <a href="downloadpage.html" class="btn btn-secondary">
+            <a href="downloadpage.html" class="btn btn-silver">
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                    <line x1="8" y1="21" x2="16" y2="21"/>
-                    <line x1="12" y1="17" x2="12" y2="21"/>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                 </svg>
                 Download for Windows
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-silver" target="_blank" rel="noopener noreferrer">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                </svg>
+                Download for Android — Free
             </a>
         </div>
         </div>

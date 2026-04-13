@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pablo Offline AI — Private AI Assistant for Windows | Smart Home, Calendar, Briefings</title>
-    <meta name="description" content="Pablo is a private AI stack on your PC: specialist routing, on-device memory, local knowledge graph RAG, documents, briefings, smart home, Android widgets, and a local API. No cloud model host; one-time unlock.">
+    <meta name="description" content="Pablo is a customizable private AI stack on Windows: bring any GGUF your PC can run, route to specialists (code, vision, wellness, creative), plus memory, RAG, briefings, smart home, Android companion, local API. One-time unlock.">
     <meta name="keywords" content="offline ai, private ai assistant, local ai, smart home ai, offline ai assistant windows, privacy ai, secure ai, pablo offline ai, ai without cloud, encrypted ai assistant">
     <link rel="canonical" href="https://www.pablooffline.com/">
     <meta name="theme-color" content="#f8fafc">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Pablo Offline AI — Private AI That Never Leaves Your Device">
-    <meta property="og:description" content="Private AI on your PC: specialist routing, on-device memory, local RAG, briefings, smart home, Android widgets, local API. No cloud model host; one-time unlock.">
+    <meta property="og:description" content="Customizable local AI: your GGUFs, per-specialist models, memory, RAG, briefings, smart home, Android, API. No cloud model host; one-time unlock.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.pablooffline.com/">
     <meta property="og:site_name" content="Pablo Offline AI">
@@ -196,39 +196,7 @@
             filter: blur(2px);
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            padding: 0.45rem 1.1rem;
-            border-radius: 999px;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: var(--accent);
-            margin-bottom: clamp(1.5rem, 4vw, 2.25rem);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 7px;
-            height: 7px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 2.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.55; transform: scale(0.92); }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-            .hero-badge::before { animation: none; }
             .btn-primary:hover,
             .btn-secondary:hover,
             .screenshot-card:hover,
@@ -710,11 +678,50 @@
             padding-bottom: 0.5rem;
         }
 
-        .model-source-abbr {
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
+        .model-source-icon img {
+            width: 38px;
+            height: 38px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .models-ecosystem-note {
+            margin-top: 1.75rem;
+            font-size: 0.72rem;
+            color: var(--text-soft);
+            line-height: 1.45;
+            max-width: 32rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .models-ecosystem-note a {
             color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .models-ecosystem-note a:hover {
+            text-decoration: underline;
+        }
+
+        .models-usecases {
+            margin-top: clamp(2rem, 5vw, 2.75rem);
+            text-align: center;
+        }
+
+        .models-usecases-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.85rem;
+        }
+
+        .models-usecases .chip-row {
+            justify-content: center;
+            margin-top: 0;
         }
 
         /* Security Section */
@@ -917,6 +924,14 @@
             flex-direction: column;
             align-items: center;
             gap: 0.65rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        a.model-source:hover {
+            transform: translateY(-3px);
+            opacity: 0.92;
         }
 
         .model-source-icon {
@@ -1188,12 +1203,9 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-badge">
-            <span>Offline. Local. Yours.</span>
-        </div>
         <h1>Private AI that never leaves <span>your device</span></h1>
         <p class="hero-subtitle">
-            Specialists, memory, and local RAG on your PC. Briefings, calendar, smart home, your files, and an Android companion. Your models. No cloud host. No subscription.
+            A fully customizable local stack: drop in any GGUF your PC can run, assign different models per specialist (code, vision, wellness, creative, and more), then layer memory, RAG, briefings, calendar, smart home, and files. Android companion included. No cloud model host. No subscription.
         </p>
         <div class="hero-ctas">
             <a href="downloadpage.html" class="btn btn-primary">
@@ -1262,13 +1274,14 @@
                 </div>
                 <h3>Pablo Desktop</h3>
                 <p class="platform">Windows</p>
-                <p class="lede">The engine: your models, specialists, memory, knowledge graph, smart home, and a local API.</p>
+                <p class="lede">You choose the weights: from small fast models on CPU to large GPU runs, plus a different checkpoint per specialist when you want it.</p>
                 <div class="chip-row" aria-label="Desktop highlights">
                     <span class="chip">7 specialists</span>
+                    <span class="chip">Per-role models</span>
                     <span class="chip">2M-entity RAG</span>
                     <span class="chip">Encrypted memory</span>
                     <span class="chip">Kasa + API :5177</span>
-                    <span class="chip">GGUF / guided setup</span>
+                    <span class="chip">GGUF / wizard</span>
                     <span class="chip">$14.99 unlock</span>
                 </div>
             </div>
@@ -1321,7 +1334,7 @@
                     <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
                 </svg>
                 <h4>Multi-specialist routing</h4>
-                <p>Core, Vision, Coder, Wellness, Creative, Summarizer, Curator: each role can use its own model and port. Load on demand when VRAM is tight.</p>
+                <p>Core, Vision, Coder, Wellness, Creative, Summarizer, Curator: route by intent. Point Coder at a code-tuned model, Vision at a multimodal checkpoint, Creative at something looser, all without shipping prompts to a shared cloud chat.</p>
             </div>
 
             <div class="security-card">
@@ -1533,6 +1546,11 @@
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
             </div>
             <div class="comparison-row">
+                <div>Pick model size for your hardware; different weights per specialist</div>
+                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
+            </div>
+            <div class="comparison-row">
                 <div>On-device memory and local knowledge grounding</div>
                 <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
@@ -1561,7 +1579,7 @@
             <p class="section-label">Bring Your Own AI</p>
             <h2 class="section-title">Your Models. Your Rules.</h2>
             <p class="section-subtitle">
-                Wizard or drop-in GGUF. Your hardware, your pick.
+                Size models to your machine: lean for battery-friendly laptops, large when you have VRAM. Mix and match specialists without vendor lock-in.
             </p>
         </div>
 
@@ -1569,11 +1587,11 @@
             <div class="models-split">
                 <div class="models-split-card">
                     <h4>Guided</h4>
-                    <p>First-run wizard reads GPU and RAM, suggests a model, one click to download.</p>
+                    <p>Wizard reads GPU and RAM, recommends a sane default, then you can swap every specialist later.</p>
                 </div>
                 <div class="models-split-card">
                     <h4>BYO</h4>
-                    <p>Drop in any compatible GGUF. Swap anytime for code, creative, or analysis workloads.</p>
+                    <p>Any compatible GGUF from public hubs. Rebind Coder to a code model, Vision to a multimodal build, Core to a fast generalist.</p>
                 </div>
             </div>
 
@@ -1581,25 +1599,38 @@
             <p style="color: var(--text-muted); font-size: 1.02rem; font-weight: 500;">compatible models in public repos</p>
 
             <div class="model-sources">
-                <div class="model-source">
-                    <div class="model-source-icon"><span class="model-source-abbr">HF</span></div>
+                <a class="model-source" href="https://huggingface.co/models" target="_blank" rel="noopener noreferrer">
+                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/huggingface.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
                     <span>Hugging Face</span>
-                </div>
-                <div class="model-source">
-                    <div class="model-source-icon"><span class="model-source-abbr">LL</span></div>
+                </a>
+                <a class="model-source" href="https://ai.meta.com/llama/" target="_blank" rel="noopener noreferrer">
+                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/meta.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
                     <span>Meta Llama</span>
-                </div>
-                <div class="model-source">
-                    <div class="model-source-icon"><span class="model-source-abbr">MI</span></div>
+                </a>
+                <a class="model-source" href="https://mistral.ai/" target="_blank" rel="noopener noreferrer">
+                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/mistralai.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
                     <span>Mistral AI</span>
-                </div>
-                <div class="model-source">
-                    <div class="model-source-icon"><span class="model-source-abbr">QW</span></div>
+                </a>
+                <a class="model-source" href="https://github.com/QwenLM" target="_blank" rel="noopener noreferrer">
+                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/alibabacloud.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
                     <span>Qwen</span>
-                </div>
-                <div class="model-source">
-                    <div class="model-source-icon"><span class="model-source-abbr">GE</span></div>
+                </a>
+                <a class="model-source" href="https://ai.google.dev/gemma" target="_blank" rel="noopener noreferrer">
+                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/google.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
                     <span>Google Gemma</span>
+                </a>
+            </div>
+            <p class="models-ecosystem-note">Brand icons from <a href="https://github.com/simple-icons/simple-icons" target="_blank" rel="noopener noreferrer">Simple Icons</a> (CC0). Trademarks belong to their owners. Qwen is linked to its open ecosystem; tile uses the Alibaba Cloud mark as the closest standard glyph in the set.</p>
+
+            <div class="models-usecases">
+                <p class="models-usecases-label">What people tune it for</p>
+                <div class="chip-row" aria-label="Example use cases">
+                    <span class="chip">Ship-ready code reviews</span>
+                    <span class="chip">Screen + photo understanding</span>
+                    <span class="chip">Wellness and long-form planning</span>
+                    <span class="chip">Drafts, tone, and creative runs</span>
+                    <span class="chip">Briefings in your voice</span>
+                    <span class="chip">Smart home + API scripts</span>
                 </div>
             </div>
         </div>
@@ -1721,7 +1752,7 @@
 
         <details>
             <summary>What AI model does Pablo use?</summary>
-            <p>Pablo supports bring-your-own-model with any GGUF-compatible model. The default install includes Phi-3.5-mini (3.8B parameters), which runs efficiently on most modern hardware. You can swap in Llama, Mistral, Qwen, or any other compatible model.</p>
+            <p>Any GGUF-compatible weights you choose, sized to your CPU or GPU. The default install includes Phi-3.5-mini (3.8B) for a quick start. You can assign different models per specialist (for example a code-tuned model for Coder and a vision-capable build for Vision) and swap at any time.</p>
         </details>
 
         <details>
@@ -1793,7 +1824,7 @@
   "name": "Pablo Offline AI",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Windows 10, Windows 11",
-  "description": "A private AI assistant that runs on your Windows PC: multi-specialist routing, encrypted on-device memory, local knowledge graph RAG, document grounding, briefings, smart home, Android widgets, and a local HTTP API. No cloud model host, no subscription after one-time unlock.",
+  "description": "A customizable private AI environment on Windows: bring GGUF models sized to your hardware, assign different weights per specialist, plus encrypted memory, local knowledge graph RAG, documents, briefings, smart home, Android widgets, and local HTTP API. No cloud model host; one-time unlock.",
   "url": "https://www.pablooffline.com/",
   "downloadUrl": "https://www.pablooffline.com/downloadpage.html",
   "softwareVersion": "1.0.9",
@@ -1817,7 +1848,7 @@
     "Android companion with home-screen widgets",
     "Smart home control (TP-Link Kasa; adapter architecture)",
     "Local REST HTTP API on port 5177",
-    "Bring your own GGUF models",
+    "Bring your own GGUF models; scale to CPU or GPU; different models per specialist",
     "AES-256 encryption at rest",
     "No cloud model host, no telemetry, one-time purchase unlock"
   ]
@@ -1867,6 +1898,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "ChatGPT runs on cloud servers. Pablo runs on your own PC with local models, specialist routing, on-device memory, local RAG and file grounding, briefings, optional Google Calendar, smart home on your LAN, Android widgets, and a local API. Your chats are not uploaded for training."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What AI model does Pablo use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Any GGUF-compatible weights you choose, sized to your CPU or GPU, with optional different models per specialist. The default includes Phi-3.5-mini for a quick start; you can swap in Llama, Mistral, Qwen, Gemma, or other compatible models."
       }
     },
     {

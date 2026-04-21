@@ -779,6 +779,161 @@
             margin-top: 0;
         }
 
+        /* Product tour carousel (feature highlights) */
+        .product-tour {
+            max-width: 920px;
+            margin: 0 auto clamp(2.5rem, 6vw, 3.5rem);
+            padding: 0 0.5rem;
+        }
+
+        .product-tour-inner {
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .product-tour-viewport {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-tour-track {
+            display: flex;
+            transition: transform 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
+            will-change: transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .product-tour-track {
+                transition: none;
+            }
+        }
+
+        .product-tour-slide {
+            flex: 0 0 100%;
+            min-width: 0;
+            padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.35rem, 4vw, 2.5rem);
+            box-sizing: border-box;
+        }
+
+        .product-tour-kicker {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .product-tour-slide h3 {
+            font-size: clamp(1.45rem, 3.2vw, 1.85rem);
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 0.85rem;
+            max-width: 32rem;
+        }
+
+        .product-tour-slide p {
+            color: var(--text-muted);
+            font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+            line-height: 1.65;
+            max-width: 38rem;
+            text-wrap: pretty;
+        }
+
+        .product-tour-footnote {
+            margin-top: 1rem;
+            font-size: 0.72rem;
+            color: var(--text-soft);
+            line-height: 1.45;
+            max-width: 36rem;
+        }
+
+        .product-tour-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0.85rem 1rem 1.15rem;
+            border-top: 1px solid var(--glass-outline);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .product-tour-nav {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        .product-tour-nav:hover:not(:disabled) {
+            background: #fff;
+            border-color: rgba(14, 165, 233, 0.35);
+        }
+
+        .product-tour-nav:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .product-tour-nav svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .product-tour-dots {
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: min(100%, 14rem);
+        }
+
+        .product-tour-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            background: var(--ice);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .product-tour-dot[aria-current="true"] {
+            background: var(--accent);
+            transform: scale(1.15);
+        }
+
+        .product-tour-dot:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .product-tour-hint {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            padding: 0 1rem 1rem;
+            margin: 0;
+        }
+
         /* Security Section */
         .security {
             background: transparent;
@@ -1248,6 +1403,7 @@
         </a>
         <ul class="nav-links">
             <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#product-tour">Tour</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#security">Security</a></li>
             <li><a href="#screenshots">Screenshots</a></li>
@@ -1390,6 +1546,62 @@
             <p class="section-subtitle">
                 Same privacy story: nothing here needs a cloud model host.
             </p>
+        </div>
+
+        <div class="product-tour" id="product-tour" aria-roledescription="carousel" aria-label="Pablo product highlights">
+            <div class="product-tour-inner">
+                <div class="product-tour-viewport">
+                    <div class="product-tour-track" id="productTourTrack">
+                        <article class="product-tour-slide" aria-label="Slide 1 of 7">
+                            <p class="product-tour-kicker">Why Pablo</p>
+                            <h3>The assistant that finally remembers the plot.</h3>
+                            <p>Most AI feels sharp for thirty seconds—then it forgets. Pablo is built for <strong>structure first</strong>: durable memory, grounded retrieval, and context that is assembled with intent so answers stay anchored to <em>your</em> life, not a generic internet median.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 2 of 7">
+                            <p class="product-tour-kicker">Depth</p>
+                            <h3>One runtime. Layers of context.</h3>
+                            <p>Calendar, weather, smart home, documents, and briefings can feed the same conversation—without turning every question into a firehose of unrelated personal data. When you are focused on a file, Pablo can keep the rest of the stack out of the way.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 3 of 7">
+                            <p class="product-tour-kicker">Memory</p>
+                            <h3>A cortex you can watch grow.</h3>
+                            <p>Pablo stores what you teach it as a <strong>structured memory graph</strong>—ideas linked by associations—so recall can feel like connecting dots, not keyword roulette. On desktop you can see memory scale in real time.</p>
+                            <p class="product-tour-footnote">&ldquo;Cortex&rdquo; is our name for structured on-device memory; it is software architecture, not a claim of sentience.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 4 of 7">
+                            <p class="product-tour-kicker">Experts</p>
+                            <h3>Specialists for real work—not one jack-of-all-trades.</h3>
+                            <p>Route vision, code, wellness, creative writing, summarization, and more through <strong>purpose-tuned roles</strong>, each with its own model when you want. Your hardware sets the pace; Pablo respects VRAM and load strategy.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 5 of 7">
+                            <p class="product-tour-kicker">Day one</p>
+                            <h3>Briefings that meet you at the door.</h3>
+                            <p>News from sources you care about, weather, and optional calendar context—pulled together locally so your phone and desktop stay in sync with <strong>your</strong> day, not an ad-driven feed.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 6 of 7">
+                            <p class="product-tour-kicker">Reliability</p>
+                            <h3>Self-monitoring you can read at a glance.</h3>
+                            <p>Pablo tracks health signals and error patterns so the stack can <strong>notice trouble early</strong> and respond within safety tiers—closer to a calm ops copilot than a chatbot performing confidence.</p>
+                            <p class="product-tour-footnote">We use &ldquo;consciousness&rdquo; in-engine for this self-monitoring layer; it is not philosophical AI consciousness.</p>
+                        </article>
+                        <article class="product-tour-slide" aria-label="Slide 7 of 7">
+                            <p class="product-tour-kicker">Ownership</p>
+                            <h3>Your desk. Your models. Your data.</h3>
+                            <p><strong>No subscription.</strong> Encrypted stores for sensitive memories, local HTTP API for your LAN, and a free Android companion that talks to the same brain. Download the Windows installer, unlock desktop with a one-time license, and you are done renting your attention to a tab.</p>
+                        </article>
+                    </div>
+                </div>
+                <div class="product-tour-controls">
+                    <button type="button" class="product-tour-nav" id="productTourPrev" aria-label="Previous highlight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div class="product-tour-dots" id="productTourDots" role="tablist" aria-label="Slides"></div>
+                    <button type="button" class="product-tour-nav" id="productTourNext" aria-label="Next highlight">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+                <p class="product-tour-hint">Click next or use the dots—keyboard arrows work when this card is focused.</p>
+            </div>
         </div>
 
         <div class="security-grid">
@@ -1853,6 +2065,7 @@
                 <h5>Product</h5>
                 <ul>
                     <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#product-tour">Tour</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#security">Security</a></li>
                     <li><a href="#screenshots">Screenshots</a></li>
@@ -2058,4 +2271,63 @@
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && !lb.hidden) {
-       
+                closeLightbox();
+            }
+        });
+    })();
+    </script>
+
+    <script>
+    (function () {
+        var track = document.getElementById('productTourTrack');
+        var prevBtn = document.getElementById('productTourPrev');
+        var nextBtn = document.getElementById('productTourNext');
+        var dotsHost = document.getElementById('productTourDots');
+        var root = document.getElementById('product-tour');
+        if (!track || !prevBtn || !nextBtn || !dotsHost || !root) return;
+
+        var slides = track.querySelectorAll('.product-tour-slide');
+        var n = slides.length;
+        var i = 0;
+
+        function go(index) {
+            i = ((index % n) + n) % n;
+            track.style.transform = 'translateX(' + (-i * 100) + '%)';
+            var dots = dotsHost.querySelectorAll('.product-tour-dot');
+            dots.forEach(function (d, j) {
+                d.setAttribute('aria-current', j === i ? 'true' : 'false');
+                d.setAttribute('tabindex', j === i ? '0' : '-1');
+            });
+        }
+
+        for (var j = 0; j < n; j++) {
+            (function (index) {
+                var b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'product-tour-dot';
+                b.setAttribute('aria-label', 'Go to slide ' + (index + 1) + ' of ' + n);
+                b.addEventListener('click', function () { go(index); });
+                dotsHost.appendChild(b);
+            })(j);
+        }
+
+        prevBtn.addEventListener('click', function () { go(i - 1); });
+        nextBtn.addEventListener('click', function () { go(i + 1); });
+
+        root.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                go(i - 1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                go(i + 1);
+            }
+        });
+
+        root.setAttribute('tabindex', '0');
+        go(0);
+    })();
+    </script>
+</body>
+</html>
+

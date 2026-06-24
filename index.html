@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pablo Offline AI: Private Local AI Environment for Windows</title>
-    <meta name="description" content="Pablo is a private local AI environment on Windows—not a single bundled chatbot. Plug in any GGUF model your PC can run, route work to specialists, and keep memory, RAG, briefings, smart home, and a local API on your hardware. Free Windows download; one-time license unlocks the full desktop app; Android companion is free.">
-    <meta name="keywords" content="local ai environment, offline ai, private ai, bring your own model, gguf, local ai windows, smart home ai, pablo offline ai, ai without cloud, encrypted ai memory">
+    <title>Pablo Offline AI: Private AI Chat on Your Windows PC</title>
+    <meta name="description" content="Pablo is AI chat that runs on your computer—not on someone else's servers. Ask questions, get answers, remember context, control smart home, and use a free Android companion. No account. No subscription. Free Windows download; one-time license unlocks the full app.">
+    <meta name="keywords" content="offline ai chat, private ai assistant, ai on your computer, windows ai chat, smart home ai, pablo offline ai, no subscription ai, encrypted ai memory">
     <link rel="canonical" href="https://www.pablooffline.com/">
     <meta name="theme-color" content="#f8fafc">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Pablo Offline AI: Your Local AI Environment">
-    <meta property="og:description" content="A private Windows environment for local AI: your choice of GGUF models, specialist routing, memory, RAG, briefings, smart home, Android companion, local API. No cloud model host; free download; one-time license unlocks desktop; Android free.">
+    <meta property="og:title" content="Pablo Offline AI: AI Chat on Your PC">
+    <meta property="og:description" content="Works like online AI chat—but runs on your Windows PC. Your conversations stay private. No account, no subscription. Free download; one-time license unlocks the full desktop app; there's even an Android app.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.pablooffline.com/">
     <meta property="og:site_name" content="Pablo Offline AI">
@@ -226,8 +226,24 @@
             font-weight: 400;
             color: var(--text-muted);
             max-width: 36rem;
-            margin-bottom: clamp(2rem, 5vw, 2.75rem);
+            margin-bottom: clamp(1rem, 3vw, 1.35rem);
             line-height: 1.65;
+        }
+
+        .hero-plain {
+            font-size: clamp(1.02rem, 2vw, 1.12rem);
+            font-weight: 500;
+            color: var(--text);
+            max-width: 34rem;
+            margin: 0 auto clamp(2rem, 5vw, 2.75rem);
+            line-height: 1.55;
+            padding: 0.85rem 1.15rem;
+            background: var(--glass-strong);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
         }
 
         .hero-ctas {
@@ -1414,10 +1430,11 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Pablo Offline AI <span>Your local AI environment</span></h1>
+        <h1>AI chat on <span>your own computer</span></h1>
         <p class="hero-subtitle">
-            Pablo is not one fixed AI model in the cloud. It is a private system on your Windows PC that runs the models you choose, routes work to the right specialist, and wraps everything in memory, documents, briefings, and smart-home control. Nothing you say leaves your home. No subscription. Optional Android companion when you want your desk on the go.
+            Pablo works like the big online AI services you have already seen—except it runs entirely on your Windows PC. Your conversations stay on your machine. No account to sign up for. No monthly bill.
         </p>
+        <p class="hero-plain">Private assistant at home—not a website that stores everything you type on someone else's servers.</p>
         <div class="hero-ctas">
             <a href="buy.html" class="btn btn-primary btn-cta-buy">
                 <span class="btn-buy-line">
@@ -1438,7 +1455,7 @@
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                 </svg>
-                Download for Android (free)
+                Download for Android
             </a>
         </div>
         <div class="trust-bar">
@@ -1446,7 +1463,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                <span>End-to-End Privacy</span>
+                <span>Stays Private</span>
             </div>
             <div class="trust-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1468,7 +1485,7 @@
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
-                <span>Your Data Stays Local</span>
+                <span>Stays On Your PC</span>
             </div>
         </div>
     </section>
@@ -1477,10 +1494,10 @@
     <section class="how-it-works" id="how-it-works">
         <div class="section-header">
             <p class="section-label">How It Works</p>
-            <h2 class="section-title">A local environment, not a single model</h2>
+            <h2 class="section-title">Your PC does the thinking</h2>
             <p class="section-subtitle">
-                <strong>Pablo Desktop</strong> is the runtime on Windows: orchestration, memory, documents, briefing services, and model loading live where you have wall power and real headroom. You pick compatible GGUF weights (Llama, Mistral, Qwen, Phi, and more) and assign them per specialist. Pablo is the environment around those models, not a vendor-locked brain.<br><br>
-                <strong>Pablo Mobile</strong> for Android (free on Google Play) is a light companion: chat, widgets, and briefings from the Pablo already running on your PC over your private network, without cloning the whole stack on your phone.
+                <strong>Pablo Desktop</strong> is the app on Windows. You chat, it answers—using AI models that run on your hardware, not in a data center. It also remembers what you tell it, searches your documents, pulls your weather and calendar, and can control smart-home gear. You pick which AI models to use (Llama, Mistral, Qwen, and more).<br><br>
+                <strong>Pablo Mobile</strong> (free on Google Play) is the Android app: chat, home-screen widgets, and briefings on your phone—powered by the Pablo running on your PC. Use it at home or away. Your phone is not a second AI in the cloud; it is your pocket window into the one on your desk.
             </p>
         </div>
 
@@ -1495,11 +1512,11 @@
                 </div>
                 <h3>Pablo Desktop</h3>
                 <p class="platform">Windows</p>
-                <p class="lede">Pablo Desktop is a local AI environment sized to your hardware. Drop in the GGUF models you want, route coding, vision, wellness, and creative work to different specialists, and keep encrypted memory, a large on-device knowledge base, your documents, and smart-home control in one private stack. Requires a one-time $14.99 license. Download is free. Buy your license at <a href="https://www.pablooffline.com/buy.html">pablooffline.com/buy.html</a>.</p>
+                <p class="lede">Pablo Desktop is AI chat and more, sized to your computer. Pick the AI models you want, use different strengths for coding, photos, writing, and wellness, and keep your memories, documents, fact-checking library, and smart-home control in one private app. Requires a one-time $14.99 license. Download is free. Buy your license at <a href="https://www.pablooffline.com/buy.html">pablooffline.com/buy.html</a>.</p>
                 <div class="chip-row" aria-label="Desktop highlights">
                     <span class="chip">Your choice of models</span>
                     <span class="chip">Experts for each task</span>
-                    <span class="chip">Local knowledge base</span>
+                    <span class="chip">Built-in fact library</span>
                     <span class="chip">Your files, on-device</span>
                     <span class="chip">Encrypted memory</span>
                     <span class="chip">Smart home ready</span>
@@ -1526,12 +1543,12 @@
                 </div>
                 <h3>Pablo Mobile</h3>
                 <p class="platform">Android &middot; free add-on</p>
-                <p class="lede">Free on Google Play when you want it: chat, widgets, and briefings from the Pablo already running on your PC with a private link to your own machine, no cloud middleman. Companion to your licensed desktop.</p>
+                <p class="lede">Free on Google Play: chat with Pablo from your phone, check weather and news at a glance, and get daily briefings—all from the Pablo already running on your PC. Works at home or when you are out and about.</p>
                 <div class="chip-row" aria-label="Mobile highlights">
-                    <span class="chip">Home widgets</span>
-                    <span class="chip">Briefings</span>
-                    <span class="chip">Optional Calendar</span>
-                    <span class="chip">Tailscale</span>
+                    <span class="chip">Home-screen widgets</span>
+                    <span class="chip">Daily briefings</span>
+                    <span class="chip">Optional calendar</span>
+                    <span class="chip">Chat from anywhere</span>
                     <span class="chip">Free app</span>
                 </div>
             </div>
@@ -1542,9 +1559,9 @@
     <section class="feature-showcase" id="features">
         <div class="section-header">
             <p class="section-label">Capabilities</p>
-            <h2 class="section-title">One runtime. Many jobs.</h2>
+            <h2 class="section-title">One app. Lots you can do.</h2>
             <p class="section-subtitle">
-                Same privacy story: nothing here needs a cloud model host.
+                Same privacy story: your words stay on your computer, not on a company server.
             </p>
         </div>
 
@@ -1555,23 +1572,23 @@
                         <article class="product-tour-slide" aria-label="Slide 1 of 7">
                             <p class="product-tour-kicker">Why Pablo</p>
                             <h3>An environment that remembers the plot.</h3>
-                            <p>Most AI feels sharp for thirty seconds, then it forgets. Pablo is built as a <strong>local system</strong>: durable memory, grounded retrieval, and context assembled with intent, so answers stay anchored to <em>your</em> life, not a generic internet median, no matter which model you plug in.</p>
+                            <p>Most AI forgets you five minutes later. Pablo <strong>remembers what matters</strong>, checks facts before guessing, and keeps answers tied to <em>your</em> life—not a generic internet average—no matter which AI model you choose.</p>
                         </article>
                         <article class="product-tour-slide" aria-label="Slide 2 of 7">
                             <p class="product-tour-kicker">Depth</p>
-                            <h3>One runtime. Layers of context.</h3>
-                            <p>Calendar, weather, smart home, documents, and briefings can feed the same conversation, without turning every question into a firehose of unrelated personal data. When you are focused on a file, Pablo can keep the rest of the stack out of the way.</p>
+                            <h3>Everything in one conversation.</h3>
+                            <p>Calendar, weather, smart home, documents, and briefings can all feed the same chat—without dumping your whole life into every reply. Focus on one file, and Pablo keeps the rest out of the way.</p>
                         </article>
                         <article class="product-tour-slide" aria-label="Slide 3 of 7">
                             <p class="product-tour-kicker">Memory</p>
                             <h3>A cortex you can watch grow.</h3>
-                            <p>Pablo stores what you teach it as a <strong>structured memory graph</strong>, ideas linked by associations, so recall can feel like connecting dots, not keyword roulette. On desktop you can see memory scale in real time.</p>
+                            <p>Pablo stores what you teach it as <strong>connected memories</strong>—ideas linked together—so recall feels natural, not random keyword search. On desktop you can watch your memory grow over time.</p>
                             <p class="product-tour-footnote">&ldquo;Cortex&rdquo; is our name for structured on-device memory; it is software architecture, not a claim of sentience.</p>
                         </article>
                         <article class="product-tour-slide" aria-label="Slide 4 of 7">
                             <p class="product-tour-kicker">Experts</p>
-                            <h3>Specialists for real work, not one jack-of-all-trades.</h3>
-                            <p>Route vision, code, wellness, creative writing, summarization, and more through <strong>purpose-tuned roles</strong>, each with its own model when you want. Your hardware sets the pace; Pablo respects VRAM and load strategy.</p>
+                            <h3>Different strengths for different jobs.</h3>
+                            <p>Use one AI for photos, another for code, another for long writing—<strong>modes built for the task</strong>, each with the model you want. Pablo picks what fits and respects what your computer can handle.</p>
                         </article>
                         <article class="product-tour-slide" aria-label="Slide 5 of 7">
                             <p class="product-tour-kicker">Day one</p>
@@ -1581,13 +1598,13 @@
                         <article class="product-tour-slide" aria-label="Slide 6 of 7">
                             <p class="product-tour-kicker">Reliability</p>
                             <h3>Self-monitoring you can read at a glance.</h3>
-                            <p>Pablo tracks health signals and error patterns so the stack can <strong>notice trouble early</strong> and respond within safety tiers, closer to a calm ops copilot than a chatbot performing confidence.</p>
+                            <p>Pablo tracks its own health so it can <strong>spot trouble early</strong> and recover calmly—more like a helpful co-pilot than a chatbot faking confidence.</p>
                             <p class="product-tour-footnote">We use &ldquo;consciousness&rdquo; in-engine for this self-monitoring layer; it is not philosophical AI consciousness.</p>
                         </article>
                         <article class="product-tour-slide" aria-label="Slide 7 of 7">
                             <p class="product-tour-kicker">Ownership</p>
                             <h3>Your desk. Your models. Your data.</h3>
-                            <p><strong>No subscription.</strong> Encrypted stores for sensitive memories, local HTTP API for your LAN, and a free Android companion that talks to the same brain. Download the Windows installer, unlock desktop with a one-time license, and you are done renting your attention to a tab.</p>
+                            <p><strong>No subscription.</strong> Encrypted storage for sensitive memories, plus an Android app to chat with your PC from anywhere. Download the Windows installer and unlock with a one-time license—you are done renting your attention to a browser tab.</p>
                         </article>
                     </div>
                 </div>
@@ -1610,8 +1627,8 @@
                     <circle cx="12" cy="12" r="3"/>
                     <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
                 </svg>
-                <h4>Multi-specialist routing</h4>
-                <p>Pablo is a model-agnostic environment: swap in several specialized models for coding, creative writing, vision, and more. The orchestrator picks the right backend for each job.</p>
+                <h4>Right AI for each job</h4>
+                <p>Pablo works with many AI models. Swap in different ones for coding, creative writing, understanding photos, and more—Pablo picks the right fit for each question.</p>
             </div>
 
             <div class="security-card">
@@ -1651,8 +1668,8 @@
                     <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
                     <line x1="12" y1="18" x2="12.01" y2="18"/>
                 </svg>
-                <h4>Android widgets</h4>
-                <p>Put weather, calendar, news, and a quick-command shortcut right on your phone's home screen. Everything talks to your PC over your private network. Glance down and you're caught up.</p>
+                <h4>Widgets on your phone</h4>
+                <p>Weather, calendar, news, and quick commands on your Android home screen—pulled from the Pablo on your PC. Glance down and you are caught up.</p>
             </div>
 
             <div class="security-card">
@@ -1660,8 +1677,8 @@
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                     <polyline points="9 22 9 12 15 12 15 22"/>
                 </svg>
-                <h4>Smart home on your LAN</h4>
-                <p>Tell Pablo to turn off the lights, dim the kitchen, or flip a smart plug, and it happens instantly over your home network. Works with TP-Link Kasa today, with more brands on the way. No cloud voice assistant listening in.</p>
+                <h4>Smart home at home</h4>
+                <p>Tell Pablo to turn off the lights, dim the kitchen, or flip a smart plug—it happens on your home network. Works with TP-Link Kasa today, with more brands on the way. No cloud voice assistant listening in.</p>
                 <div class="command-examples">
                     Turn off the living room lights.<br>
                     Dim the kitchen to 40%.<br>
@@ -1676,7 +1693,7 @@
                     <line x1="9" y1="15" x2="15" y2="15"/>
                 </svg>
                 <h4>Your documents</h4>
-                <p>Add files from disk; index and search stay local so you are not uploading sensitive PDFs to an online service.</p>
+                <p>Add files from your computer; search stays on your machine—you are not uploading sensitive PDFs to a website.</p>
             </div>
 
             <div class="security-card">
@@ -1684,8 +1701,8 @@
                     <polyline points="16 18 22 12 16 6"/>
                     <polyline points="8 6 2 12 8 18"/>
                 </svg>
-                <h4>Local API</h4>
-                <p>REST on port 5177: chat, health, briefings, smart home. Same surface the Android app uses across your LAN.</p>
+                <h4>Android app, anywhere</h4>
+                <p>Chat with Pablo from your phone—at home on the couch or away on the road. The Android app talks to your PC, not to our servers.</p>
             </div>
         </div>
     </section>
@@ -1696,7 +1713,7 @@
             <p class="section-label">Security First</p>
             <h2 class="section-title">Built to stay private</h2>
             <p class="section-subtitle">
-                Encryption, zero telemetry, and installs that keep working without our servers.
+                Encryption, no spying, and an app that keeps working even if we disappear tomorrow.
             </p>
         </div>
 
@@ -1716,7 +1733,7 @@
                     <path d="M9 12l2 2 4-4"/>
                 </svg>
                 <h4>Zero Data Collection</h4>
-                <p>No telemetry. No analytics. No accounts. No tracking. We don't run servers that store your information, which means there's nothing to hack, nothing to subpoena, and nothing to sell. We literally can't see your data.</p>
+                <p>No tracking. No analytics. No accounts. We do not run servers that store your chats, which means there is nothing to hack, nothing to subpoena, and nothing to sell. We literally cannot see your data.</p>
             </div>
 
             <div class="security-card">
@@ -1724,7 +1741,7 @@
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                 </svg>
                 <h4>Yours Forever</h4>
-                <p>Pablo runs on your hardware with no dependency on our company. If we shut down tomorrow, your AI keeps working. No license server to go dark, no subscription to expire, no update that bricks your install. Once it's yours, you own your access to AI. That also matters when cloud policies change, APIs are deprecated, or subscriptions shift under your feet: software you install and run locally stays on your terms.</p>
+                <p>Pablo runs on your computer with no dependency on our company. If we shut down tomorrow, your AI keeps working. No license server to go dark, no subscription to expire, no update that bricks your install. Once it is yours, you own your access to AI.</p>
             </div>
 
             <div class="security-card">
@@ -1752,7 +1769,7 @@
                     <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
                 </svg>
                 <h4>Works Without Internet</h4>
-                <p>Once installed, Pablo runs entirely offline. No internet required for conversations, memory, or smart home control. Disconnect completely and it still works. Perfect for air-gapped environments or anyone who simply doesn't want software phoning home.</p>
+                <p>Once installed, Pablo runs without internet. Chat, memory, and smart home control all work offline. Calendar and weather need a connection to refresh, but the AI itself never requires the cloud.</p>
             </div>
 
             <div class="security-card">
@@ -1780,9 +1797,9 @@
     <section class="comparison">
         <div class="section-header">
             <p class="section-label">Compare</p>
-            <h2 class="section-title">Pablo vs. Cloud AI Services</h2>
+            <h2 class="section-title">Your PC vs. a website</h2>
             <p class="section-subtitle">
-                Local stack versus a typical cloud chat.
+                Same idea—type and get answers. Different place where it happens.
             </p>
         </div>
 
@@ -1790,7 +1807,7 @@
             <div class="comparison-header">
                 <div>Feature</div>
                 <div>Pablo</div>
-                <div>Cloud AI</div>
+                <div>Online AI chat</div>
             </div>
             <div class="comparison-row">
                 <div>Data stays on your device</div>
@@ -1818,22 +1835,17 @@
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
             </div>
             <div class="comparison-row">
-                <div>Routed specialist roles (code, vision, wellness, and more)</div>
+                <div>Right AI for coding, photos, wellness, and more</div>
                 <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
             </div>
             <div class="comparison-row">
-                <div>Pick model size for your hardware; different weights per specialist</div>
+                <div>Pick AI models that fit your computer</div>
                 <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
             </div>
             <div class="comparison-row">
-                <div>On-device memory and local knowledge grounding</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Local-only HTTP API on your LAN (port 5177)</div>
+                <div>Remembers context and checks facts on your PC</div>
                 <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
                 <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
             </div>
@@ -1853,10 +1865,10 @@
     <!-- Models Section -->
     <section class="models">
         <div class="section-header">
-            <p class="section-label">Bring Your Own AI</p>
-            <h2 class="section-title">Your Models. Your Rules.</h2>
+            <p class="section-label">Pick your AI</p>
+            <h2 class="section-title">Your models. Your rules.</h2>
             <p class="section-subtitle">
-                Pablo is the environment; the models are yours. Size weights to your machine, mix specialists, and swap models without vendor lock-in.
+                Pablo is the app; the AI brains are yours. Pick models that fit your computer and swap them anytime.
             </p>
         </div>
 
@@ -1864,11 +1876,11 @@
             <div class="models-split">
                 <div class="models-split-card">
                     <h4>Guided</h4>
-                    <p>Wizard reads GPU and RAM, recommends a sane default, then you can swap every specialist later.</p>
+                    <p>Setup wizard reads your computer and recommends a good starting model. Change any of them later.</p>
                 </div>
                 <div class="models-split-card">
                     <h4>BYO</h4>
-                    <p>Any compatible GGUF from public hubs. Rebind Coder to a code model, Vision to a multimodal build, Core to a fast generalist.</p>
+                    <p>Download compatible AI models from public hubs. Use a code-focused model for programming, a vision model for photos, a fast one for everyday chat.</p>
                 </div>
             </div>
 
@@ -1907,7 +1919,7 @@
                     <span class="chip">Wellness and long-form planning</span>
                     <span class="chip">Drafts, tone, and creative runs</span>
                     <span class="chip">Briefings in your voice</span>
-                    <span class="chip">Smart home + API scripts</span>
+                    <span class="chip">Smart home and phone app</span>
                 </div>
             </div>
         </div>
@@ -1932,7 +1944,7 @@
                 </a>
                 <div class="screenshot-card-content">
                     <h4>Chat</h4>
-                    <p>On your hardware. No cloud model host.</p>
+                    <p>Runs on your PC. Nothing sent to a company server.</p>
                 </div>
             </div>
 
@@ -1944,7 +1956,7 @@
                 </a>
                 <div class="screenshot-card-content">
                     <h4>Smart home</h4>
-                    <p>Kasa today. Say it in plain language; it stays on your LAN.</p>
+                    <p>Kasa today. Say it in plain language—it stays in your home.</p>
                 </div>
             </div>
 
@@ -1956,7 +1968,7 @@
                 </a>
                 <div class="screenshot-card-content">
                     <h4>Mobile</h4>
-                    <p>Chat, briefings, widgets. Reach your PC over Tailscale or your LAN.</p>
+                    <p>Chat, briefings, and widgets on your phone—powered by the Pablo on your PC, at home or away.</p>
                 </div>
             </div>
 
@@ -1968,7 +1980,7 @@
                 </a>
                 <div class="screenshot-card-content">
                     <h4>Documents</h4>
-                    <p>Index locally. No upload to a hosted chat.</p>
+                    <p>Search your files on your computer—no upload to a website.</p>
                 </div>
             </div>
         </div>
@@ -1978,7 +1990,7 @@
     <section class="cta-section" id="download">
         <div class="cta-panel">
         <h2>Start on your PC</h2>
-        <p>Download Pablo Desktop v1.0.122 for free, buy a license to unlock the full local environment, and get the free Android companion from Play.</p>
+        <p>Download Pablo Desktop v1.0.124 for free, buy a license to unlock the full app, and get the Android app from Google Play.</p>
         <div class="cta-buttons">
             <a href="buy.html" class="btn btn-primary btn-cta-buy">
                 <span class="btn-buy-line">
@@ -1999,7 +2011,7 @@
                 <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                 </svg>
-                Download for Android (free)
+                Download for Android
             </a>
         </div>
         </div>
@@ -2011,12 +2023,12 @@
 
         <details>
             <summary>What is Pablo Offline AI?</summary>
-            <p>Pablo is a private local AI environment on Windows. It is not a single cloud model or chatbot: you choose compatible GGUF weights, and Pablo provides orchestration, specialist routing, encrypted memory, a bundled knowledge graph, your documents, briefings, smart home, and a local HTTP API around them. Unlike ChatGPT or Claude, there is no cloud model host for your chats and no account required for the core runtime. The installer is free; a one-time license unlocks the full desktop app. The Android companion is free. There is no subscription.</p>
+            <p>Pablo is AI chat for Windows that runs on your computer instead of on someone else's servers. You type questions and get answers—like popular online chat services—but your words stay on your PC. Pablo can also remember context, search your files, show briefings, control smart-home devices, and connect to a free Android app on your phone. No account required. The installer is free; a one-time license unlocks the full desktop app. The Android companion is free. No subscription.</p>
         </details>
 
         <details>
-            <summary>What are specialists?</summary>
-            <p>Specialists are purpose-tuned model slots (Core, Vision, Coder, Wellness, Creative, Summarizer, Curator). Pablo's orchestrator routes each request to the right role and model you configured, instead of one generic chat backend for everything.</p>
+            <summary>What are expert modes?</summary>
+            <p>Pablo can use different AI models for different jobs—everyday chat, coding, understanding photos, wellness, creative writing, and more. Instead of one generic chatbot for everything, Pablo sends each question to the mode that fits best.</p>
         </details>
 
         <details>
@@ -2026,22 +2038,22 @@
 
         <details>
             <summary>Can Pablo control my smart home?</summary>
-            <p>Pablo integrates with TP-Link Kasa smart home devices for light and thermostat control using natural language. Say "turn on the living room lights" and Pablo handles it locally on your network. Additional smart home platforms are planned.</p>
+            <p>Pablo integrates with TP-Link Kasa smart home devices. Say "turn on the living room lights" and Pablo handles it on your home network. More smart home brands are planned.</p>
         </details>
 
         <details>
-            <summary>How is Pablo different from ChatGPT?</summary>
-            <p>ChatGPT is a hosted model service. Pablo is your own environment on PC hardware: you pick the models, Pablo handles routing, memory, RAG, briefings, optional Google Calendar, smart home on your LAN, Android widgets, and a local API. Your chats are not uploaded for training.</p>
+            <summary>How is Pablo different from online AI chat?</summary>
+            <p>Online AI chat runs on company servers—you send your words out, they send answers back. Pablo runs on your Windows PC. The conversation never has to leave your house. You are not renting access month to month, and your chats are not used to train someone else's product. Pablo also does more than chat: documents, briefings, smart home, and a phone companion that talks to your PC.</p>
         </details>
 
         <details>
             <summary>What AI model does Pablo use?</summary>
-            <p>Pablo does not ship one locked-in brain. It runs any GGUF-compatible weights you choose, sized to your CPU or GPU. The default install includes Phi-3.5-mini (3.8B) to get started quickly. Assign different models per specialist (for example a code model for Coder and a vision build for Vision) and swap anytime.</p>
+            <p>Pablo does not ship one locked-in AI. You choose compatible models sized to your computer or graphics card. The default install includes Phi-3.5-mini to get started quickly. Use a code model for programming, a vision model for photos, and swap anytime.</p>
         </details>
 
         <details>
             <summary>Do I need a powerful GPU?</summary>
-            <p>No. Pablo auto-detects your hardware and configures for NVIDIA GPU acceleration (fastest), Intel with Vulkan, or CPU-only mode. A dedicated NVIDIA GPU with 4+ GB VRAM gives the best experience, but Pablo runs on any modern Windows PC.</p>
+            <p>No. Pablo figures out your computer automatically—NVIDIA graphics card (fastest), Intel, or CPU-only. A dedicated NVIDIA card with plenty of graphics memory gives the best experience, but Pablo runs on any modern Windows PC.</p>
         </details>
 
         <details>
@@ -2058,7 +2070,7 @@
                     <div class="logo-icon">P</div>
                     Pablo
                 </a>
-                <p>Private local AI environment on your hardware. Bring your own models. Built for people who believe their conversations should remain their own.</p>
+                <p>AI chat on your computer. Your conversations stay yours. No account. No subscription. Built for people who want answers without sending every word to a company server.</p>
             </div>
 
             <div class="footer-links">
@@ -2078,7 +2090,7 @@
                 <h5>Resources</h5>
                 <ul>
                     <li><a href="https://huggingface.co/models" target="_blank">AI Models</a></li>
-                    <li><a href="https://tailscale.com" target="_blank">Tailscale VPN</a></li>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" target="_blank">Android app</a></li>
                     <li><a href="/cdn-cgi/l/email-protection#9cccfdfef0f3d3fafaf0f5f2f9ddd5dceceef3e8f3f2b2f1f9">Support</a></li>
                 </ul>
             </div>
@@ -2109,10 +2121,10 @@
   "name": "Pablo Offline AI",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Windows 10, Windows 11",
-  "description": "A customizable private AI environment on Windows: bring GGUF models sized to your hardware, assign different weights per specialist, plus encrypted memory, local knowledge graph RAG, documents, briefings, smart home, Android widgets, and local HTTP API. No cloud model host; free installer; one-time license unlocks full desktop app; free Android companion.",
+  "description": "Private AI chat for Windows on your own computer: choose your AI models, encrypted memory, built-in fact library, documents, briefings, smart home, and an Android app to chat from anywhere. No company servers for your chats; free installer; one-time license unlocks the full desktop app.",
   "url": "https://www.pablooffline.com/",
-  "downloadUrl": "https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/download/V1.0.122/PabloEnterprise-Setup-1.0.122.exe",
-  "softwareVersion": "1.0.122",
+  "downloadUrl": "https://github.com/SkrimpFisher-spec/pabloofflineai.github.io/releases/download/V1.0.124/PabloEnterprise-Setup-1.0.124.exe",
+  "softwareVersion": "1.0.124",
   "author": {
     "@type": "Organization",
     "name": "Pablo Offline AI LLC",
@@ -2125,18 +2137,16 @@
     "url": "https://www.pablooffline.com/buy.html"
   },
   "featureList": [
-    "Model-agnostic local environment; bring your own GGUF weights",
-    "Multi-specialist routing (Core, Vision, Coder, Wellness, Creative, Summarizer, Curator)",
-    "Encrypted profile and conversation memory on local disk",
-    "Local knowledge graph and RAG (about two million entities, SQLite-backed)",
-    "Document manager and file-grounded answers",
-    "News, RSS, weather, and optional Google Calendar briefings",
-    "Android companion with home-screen widgets",
-    "Smart home control (TP-Link Kasa; adapter architecture)",
-    "Local REST HTTP API on port 5177",
-    "Bring your own GGUF models; scale to CPU or GPU; different models per specialist",
+    "Bring your own AI models; sized to your computer",
+    "Different AI strengths for chat, code, photos, writing, and wellness",
+    "Encrypted conversation memory on your PC",
+    "Built-in library of about two million facts for trustworthy answers",
+    "Document search without uploading files",
+    "News, weather, and optional Google Calendar briefings",
+    "Android app with home-screen widgets; chat from anywhere",
+    "Smart home control (TP-Link Kasa today)",
     "AES-256 encryption at rest",
-    "No cloud model host, no telemetry, one-time desktop license, free Android companion"
+    "No company servers for your chats, no tracking, one-time desktop license"
   ]
 }
     </script>
@@ -2151,15 +2161,15 @@
       "name": "What is Pablo Offline AI?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pablo is a private local AI environment on Windows. You choose compatible GGUF models; Pablo provides orchestration, specialist routing, encrypted on-device memory, local knowledge graph RAG, document grounding, briefings, smart home, Android widgets, and a local HTTP API. There is no cloud model host for your chats and no account required for the core runtime. The installer is free; a one-time license unlocks the full desktop app. The Android companion is free. There is no subscription."
+        "text": "Pablo is AI chat for Windows that runs on your computer instead of on someone else's servers. You type questions and get answers; your words stay on your PC. Pablo can remember context, search files, show briefings, control smart home, and connect to a free Android companion. No account required. The installer is free; a one-time license unlocks the full desktop app. No subscription."
       }
     },
     {
       "@type": "Question",
-      "name": "What are specialists?",
+      "name": "What are expert modes?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Specialists are purpose-tuned model slots such as Core, Vision, Coder, Wellness, Creative, Summarizer, and Curator. Pablo's orchestrator routes each request to the appropriate specialist and the model you assigned, instead of one generic chat backend."
+        "text": "Pablo can use different AI models for different jobs—everyday chat, coding, photos, wellness, creative writing, and more. Instead of one generic chatbot for everything, Pablo sends each question to the mode that fits best."
       }
     },
     {
@@ -2175,15 +2185,15 @@
       "name": "Can Pablo control my smart home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pablo integrates with TP-Link Kasa smart home devices for light and thermostat control using natural language. Additional smart home platforms are planned."
+        "text": "Pablo integrates with TP-Link Kasa smart home devices. Say turn on the living room lights and Pablo handles it on your home network. More smart home brands are planned."
       }
     },
     {
       "@type": "Question",
-      "name": "How is Pablo different from ChatGPT?",
+      "name": "How is Pablo different from online AI chat?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ChatGPT is a hosted model service. Pablo is your own environment on PC hardware with models you choose, specialist routing, on-device memory, local RAG and file grounding, briefings, optional Google Calendar, smart home on your LAN, Android widgets, and a local API. Your chats are not uploaded for training."
+        "text": "Online AI chat runs on company servers. Pablo runs on your Windows PC, so conversations do not have to leave your home. You pay once instead of subscribing monthly, and your chats are not used to train someone else's product. Pablo also includes documents, briefings, smart home, and a phone companion that talks to your PC."
       }
     },
     {
@@ -2191,7 +2201,7 @@
       "name": "What AI model does Pablo use?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pablo does not ship one locked-in model. It runs any GGUF-compatible weights you choose, sized to your CPU or GPU, with optional different models per specialist. The default includes Phi-3.5-mini for a quick start; you can swap in Llama, Mistral, Qwen, Gemma, or other compatible models."
+        "text": "Pablo does not ship one locked-in AI. You choose compatible models sized to your computer or graphics card. The default includes Phi-3.5-mini for a quick start; you can swap in Llama, Mistral, Qwen, Gemma, or other compatible models."
       }
     },
     {
@@ -2199,7 +2209,7 @@
       "name": "Do I need a powerful GPU?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Pablo auto-detects your hardware and configures for NVIDIA GPU acceleration, Intel with Vulkan, or CPU-only mode. A dedicated GPU gives the best experience, but Pablo runs on any modern Windows PC."
+        "text": "No. Pablo figures out your computer automatically. A dedicated graphics card gives the best experience, but Pablo runs on any modern Windows PC."
       }
     },
     {

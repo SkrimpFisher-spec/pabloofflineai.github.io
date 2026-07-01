@@ -49,8 +49,8 @@
         downloadIcs: function () {
             var title = cfg.eventTitle || "James & Jennifer's Wedding";
             var location = cfg.eventLocation || "2396 Juniper Creek Rd, Quincy, FL 32351";
-            var start = cfg.eventStartLocal || "20271017T163000";
-            var end = cfg.eventEndLocal || "20271017T230000";
+            var start = cfg.eventStartLocal || "20270207T153000";
+            var end = cfg.eventEndLocal || "20270207T230000";
             var tz = cfg.eventTimezone || "America/New_York";
             var ics = [
                 "BEGIN:VCALENDAR",

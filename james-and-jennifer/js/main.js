@@ -35,7 +35,7 @@
     }
 
     // Countdown
-    var weddingDate = new Date(cfg.weddingDate || "2027-02-07T16:30:00");
+    var weddingDate = new Date(cfg.weddingDate || "2027-02-07T15:30:00");
     var cdDays = document.getElementById("cdDays");
     var cdHours = document.getElementById("cdHours");
     var cdMins = document.getElementById("cdMins");

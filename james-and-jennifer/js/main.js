@@ -26,16 +26,16 @@
         }
     }
 
-    // Hero photo: remove no-photo class if hero.jpg loads
+    // Hero uses hero.png (floral); fallback keeps sage gradient if missing
     var heroBg = document.getElementById("heroBg");
     if (heroBg) {
         var img = new Image();
-        img.onload = function () { heroBg.classList.remove("no-photo"); };
-        img.src = "assets/hero.jpg";
+        img.onerror = function () { heroBg.classList.add("no-photo"); };
+        img.src = "assets/hero.png";
     }
 
     // Countdown
-    var weddingDate = new Date(cfg.weddingDate || "2027-10-17T16:30:00");
+    var weddingDate = new Date(cfg.weddingDate || "2027-02-07T16:30:00");
     var cdDays = document.getElementById("cdDays");
     var cdHours = document.getElementById("cdHours");
     var cdMins = document.getElementById("cdMins");

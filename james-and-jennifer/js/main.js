@@ -10,16 +10,19 @@
 
     window.weddingApi = { url: apiUrl };
 
-    // Particles
+    // Floating stars
     var particles = document.getElementById("particles");
     if (particles) {
-        for (var i = 0; i < 30; i++) {
-            var p = document.createElement("div");
-            p.className = "particle";
-            p.style.left = Math.random() * 100 + "%";
-            p.style.animationDuration = 8 + Math.random() * 12 + "s";
-            p.style.animationDelay = Math.random() * 10 + "s";
-            particles.appendChild(p);
+        for (var i = 0; i < 36; i++) {
+            var star = document.createElement("div");
+            star.className = "star";
+            var size = 5 + Math.random() * 7;
+            star.style.width = size + "px";
+            star.style.height = size + "px";
+            star.style.left = Math.random() * 100 + "%";
+            star.style.animationDuration = (10 + Math.random() * 14) + "s, " + (1.8 + Math.random() * 2.5) + "s";
+            star.style.animationDelay = (Math.random() * 12) + "s, " + (Math.random() * 2) + "s";
+            particles.appendChild(star);
         }
     }
 

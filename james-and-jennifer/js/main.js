@@ -34,25 +34,36 @@
         img.src = "assets/hero.png";
     }
 
-    // Countdown
-    var weddingDate = new Date(cfg.weddingDate || "2027-02-07T15:30:00");
+    // Countdown to Feb 7, 2027 (local midnight — start of wedding day)
+    function parseCountdownTarget() {
+        var dateStr = cfg.weddingDate || "2027-02-07";
+        var parts = dateStr.split("-");
+        var y = parseInt(parts[0], 10);
+        var m = parseInt(parts[1], 10) - 1;
+        var d = parseInt(parts[2], 10);
+        var h = typeof cfg.countdownHour === "number" ? cfg.countdownHour : 0;
+        var min = typeof cfg.countdownMinute === "number" ? cfg.countdownMinute : 0;
+        return new Date(y, m, d, h, min, 0, 0);
+    }
+
+    var weddingDate = parseCountdownTarget();
     var cdDays = document.getElementById("cdDays");
     var cdHours = document.getElementById("cdHours");
     var cdMins = document.getElementById("cdMins");
 
     function tickCountdown() {
         var now = new Date();
-        var diff = weddingDate - now;
+        var diff = weddingDate.getTime() - now.getTime();
         if (diff < 0) diff = 0;
         var days = Math.floor(diff / 86400000);
         var hours = Math.floor((diff % 86400000) / 3600000);
         var mins = Math.floor((diff % 3600000) / 60000);
-        if (cdDays) cdDays.textContent = days;
-        if (cdHours) cdHours.textContent = hours;
-        if (cdMins) cdMins.textContent = mins;
+        if (cdDays) cdDays.textContent = String(days);
+        if (cdHours) cdHours.textContent = String(hours);
+        if (cdMins) cdMins.textContent = String(mins);
     }
     tickCountdown();
-    setInterval(tickCountdown, 30000);
+    setInterval(tickCountdown, 60000);
 
     var deadlineEl = document.getElementById("rsvpDeadline");
     if (deadlineEl && cfg.rsvpDeadline) deadlineEl.textContent = cfg.rsvpDeadline;

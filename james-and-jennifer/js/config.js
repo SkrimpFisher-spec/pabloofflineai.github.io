@@ -5,7 +5,9 @@ window.WEDDING_CONFIG = {
     formSubmitEmail: "jamesandjenniferwoodrow@gmail.com",
     web3formsKey: "",
 
-    weddingDate: "2027-02-07T15:30:00",
+    weddingDate: "2027-02-07",
+    countdownHour: 0,
+    countdownMinute: 0,
     rsvpDeadline: "January 7, 2027",
     bride: "Jennifer",
     groom: "James",

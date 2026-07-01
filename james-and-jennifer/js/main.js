@@ -70,13 +70,11 @@
         reveals.forEach(function (el) { el.classList.add("visible"); });
     }
 
-    // FAQ accordion
-    document.querySelectorAll(".faq-question").forEach(function (btn) {
+    // FAQ accordion (single section)
+    document.querySelectorAll(".faq-item .faq-question").forEach(function (btn) {
         btn.addEventListener("click", function () {
             var item = btn.closest(".faq-item");
-            var open = item.classList.contains("open");
-            document.querySelectorAll(".faq-item.open").forEach(function (i) { i.classList.remove("open"); });
-            if (!open) item.classList.add("open");
+            item.classList.toggle("open");
         });
     });
 

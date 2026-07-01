@@ -23,6 +23,12 @@
     --sage-mid: #a3b89c;
     --sage-deep: #8fa888;
     --sage-text: #2f3d32;
+    --faded-sage: #eef4eb;
+    --faded-sage-deep: #e3ece0;
+    --faded-pink: #faf0ee;
+    --faded-pink-deep: #f5e6e3;
+    --faded-orange: #faf4ec;
+    --faded-orange-deep: #f5ebe0;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,6 +51,18 @@ a:hover { color: var(--gold); }
 
 .container { width: min(1120px, 92vw); margin: 0 auto; }
 .section { padding: 5rem 0; }
+
+.section-bg-sage {
+    background: linear-gradient(180deg, var(--faded-sage) 0%, var(--faded-sage-deep) 100%);
+}
+
+.section-bg-pink {
+    background: linear-gradient(180deg, var(--faded-pink) 0%, var(--faded-pink-deep) 100%);
+}
+
+.section-bg-orange {
+    background: linear-gradient(180deg, var(--faded-orange) 0%, var(--faded-orange-deep) 100%);
+}
 
 .section-label {
     font-size: 0.75rem;
@@ -422,7 +440,7 @@ a:hover { color: var(--gold); }
     line-height: 1.65;
 }
 
-.rsvp-section { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%); }
+.rsvp-section { background: linear-gradient(180deg, var(--faded-orange) 0%, var(--faded-orange-deep) 100%); }
 .rsvp-deadline { text-align: center; color: var(--charcoal-soft); margin-bottom: 2rem; }
 .rsvp-form { max-width: 640px; margin: 0 auto; }
 .form-group { margin-bottom: 1.25rem; }

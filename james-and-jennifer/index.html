@@ -292,7 +292,7 @@
 
 
 
-    <section class="section" id="story">
+    <section class="section section-bg-sage" id="story">
 
         <div class="container reveal">
 
@@ -302,7 +302,7 @@
 
             <div class="story-content">
 
-                <img src="assets/story.jpg" alt="Jennifer and James" class="story-photo" onerror="this.style.display='none'">
+                <img src="assets/story.jpg" alt="Jennifer and James" class="story-photo" hidden onerror="this.setAttribute('hidden',''); this.closest('.story-content')?.classList.add('story-content--text-only');" onload="this.removeAttribute('hidden'); this.closest('.story-content')?.classList.add('story-content--with-photo');">
 
                 <div class="story-text">
                     <p>If you asked us to describe our relationship in one word, it would be <em>team</em>.</p>

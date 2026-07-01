@@ -8,7 +8,7 @@ window.WEDDING_CONFIG = {
     weddingDate: "2027-02-07",
     countdownHour: 0,
     countdownMinute: 0,
-    rsvpDeadline: "January 7, 2027",
+    rsvpDeadline: "December 1, 2027",
     bride: "Jennifer",
     groom: "James",
     eventTitle: "James & Jennifer's Wedding",

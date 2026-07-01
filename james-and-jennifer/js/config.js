@@ -11,7 +11,7 @@ window.WEDDING_CONFIG = {
     rsvpDeadline: "December 1, 2027",
     bride: "Jennifer",
     groom: "James",
-    eventTitle: "James & Jennifer's Wedding",
+    eventTitle: "Jennifer & James's Wedding",
     eventLocation: "2396 Juniper Creek Rd, Quincy, FL 32351",
     eventDetails: "Ceremony at 3:30 PM at Juniper Creek Venue. Welcome drinks from 3:15 PM. Cocktail attire.",
     eventStart: "2027-02-07T20:30:00.000Z",

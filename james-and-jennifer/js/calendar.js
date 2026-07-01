@@ -26,7 +26,7 @@
 
     window.weddingCalendar = {
         googleUrl: function () {
-            var title = encodeURIComponent(cfg.eventTitle || "James & Jennifer's Wedding");
+            var title = encodeURIComponent(cfg.eventTitle || "Jennifer & James's Wedding");
             var start = formatGoogleUtc(cfg.eventStart || "2027-02-07T21:30:00.000Z");
             var end = formatGoogleUtc(cfg.eventEnd || "2027-02-08T04:00:00.000Z");
             var details = encodeURIComponent(cfg.eventDetails || "Ceremony at 4:30 PM. We cannot wait to celebrate with you!");
@@ -37,7 +37,7 @@
         },
 
         outlookUrl: function () {
-            var title = encodeURIComponent(cfg.eventTitle || "James & Jennifer's Wedding");
+            var title = encodeURIComponent(cfg.eventTitle || "Jennifer & James's Wedding");
             var start = new Date(cfg.eventStart || "2027-02-07T21:30:00.000Z").toISOString();
             var end = new Date(cfg.eventEnd || "2027-02-08T04:00:00.000Z").toISOString();
             var body = encodeURIComponent(cfg.eventDetails || "Ceremony at 4:30 PM.");
@@ -47,7 +47,7 @@
         },
 
         downloadIcs: function () {
-            var title = cfg.eventTitle || "James & Jennifer's Wedding";
+            var title = cfg.eventTitle || "Jennifer & James's Wedding";
             var location = cfg.eventLocation || "2396 Juniper Creek Rd, Quincy, FL 32351";
             var start = cfg.eventStartLocal || "20270207T153000";
             var end = cfg.eventEndLocal || "20270207T230000";
@@ -55,7 +55,7 @@
             var ics = [
                 "BEGIN:VCALENDAR",
                 "VERSION:2.0",
-                "PRODID:-//James and Jennifer Wedding//EN",
+                "PRODID:-//Jennifer and James Wedding//EN",
                 "BEGIN:VEVENT",
                 "UID:wedding-james-jennifer-2027@pablooffline.com",
                 "DTSTART;TZID=" + tz + ":" + start,

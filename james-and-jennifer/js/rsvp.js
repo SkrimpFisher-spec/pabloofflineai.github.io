@@ -34,7 +34,7 @@
 
     function formatRsvpText(p) {
         var lines = [
-            "Wedding RSVP — James & Jennifer",
+            "Wedding RSVP — Jennifer & James",
             "Submitted: " + new Date().toLocaleString(),
             "",
             "Name: " + p.firstName + " " + p.lastName,
@@ -96,7 +96,7 @@
                 _subject: "Wedding RSVP: " + p.firstName + " " + p.lastName + " — " + (p.attending ? "Attending" : "Declined"),
                 _template: "table",
                 _captcha: "false",
-                _autoresponse: "Thank you! Your RSVP for James & Jennifer's wedding on February 7, 2027 has been received. We can't wait to celebrate with you!"
+                _autoresponse: "Thank you! Your RSVP for Jennifer & James's wedding on February 7, 2027 has been received. We can't wait to celebrate with you!"
             })
         }).then(function (res) { return res.json(); })
           .then(function (data) {

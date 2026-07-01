@@ -168,8 +168,7 @@ a:hover { color: var(--gold); }
 }
 
 .icon-arrow,
-.faq-chevron,
-.dress-icon {
+.faq-chevron {
     display: block;
     width: 0.75rem !important;
     height: 0.75rem !important;
@@ -180,14 +179,6 @@ a:hover { color: var(--gold); }
     flex-shrink: 0;
 }
 
-.dress-icon {
-    width: 0.875rem !important;
-    height: 0.875rem !important;
-    max-width: 0.875rem !important;
-    max-height: 0.875rem !important;
-    color: var(--gold);
-}
-
 @media (min-width: 769px) {
     .icon-arrow,
     .faq-chevron {
@@ -195,13 +186,6 @@ a:hover { color: var(--gold); }
         height: 0.625rem !important;
         max-width: 0.625rem !important;
         max-height: 0.625rem !important;
-    }
-
-    .dress-icon {
-        width: 0.75rem !important;
-        height: 0.75rem !important;
-        max-width: 0.75rem !important;
-        max-height: 0.75rem !important;
     }
 }
 
@@ -316,9 +300,6 @@ a:hover { color: var(--gold); }
 }
 
 .dress-code {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     margin-top: 2rem;
     padding: 1.5rem;
     background: var(--warm-white);

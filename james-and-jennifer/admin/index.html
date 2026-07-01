@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Wedding Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+    <div id="loginScreen" class="admin-login">
+        <div class="glass-card" style="max-width:400px;margin:4rem auto;">
+            <h1 style="font-family:var(--font-serif);font-size:1.75rem;margin-bottom:1rem;">Wedding Admin</h1>
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" autocomplete="current-password">
+            </div>
+            <button type="button" class="btn-submit" id="loginBtn">Sign In</button>
+            <p class="form-error" id="loginError"></p>
+        </div>
+    </div>
+
+    <div id="dashboard" style="display:none;">
+        <header class="admin-header">
+            <h1>RSVP Dashboard</h1>
+            <div class="admin-actions">
+                <a href="#" class="admin-btn" id="exportCsv">Export CSV</a>
+                <a href="#" class="admin-btn" id="exportAddr">Export Addresses</a>
+                <button type="button" class="admin-btn outline" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <main class="admin-main container">
+            <div class="stat-grid" id="statGrid"></div>
+
+            <section class="admin-section">
+                <h2>Meal Totals</h2>
+                <div id="mealTotals" class="chip-row"></div>
+            </section>
+
+            <section class="admin-section" id="allergySection" style="display:none;">
+                <h2>Dietary Alerts</h2>
+                <div id="allergyList"></div>
+            </section>
+
+            <section class="admin-section">
+                <h2>Song Requests</h2>
+                <div id="songList"></div>
+            </section>
+
+            <section class="admin-section">
+                <h2>Guest List</h2>
+                <div class="table-wrap">
+                    <table id="guestTable"></table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -13,7 +13,7 @@ window.WEDDING_CONFIG = {
     groom: "James",
     eventTitle: "Jennifer & James's Wedding",
     eventLocation: "2396 Juniper Creek Rd, Quincy, FL 32351",
-    eventDetails: "Ceremony at 3:30 PM at Juniper Creek Venue. Welcome drinks from 3:15 PM. Cocktail attire.",
+    eventDetails: "Ceremony at 3:30 PM at Juniper Creek Venue. Guests are welcome at 3 PM. Cocktail attire.",
     eventStart: "2027-02-07T20:30:00.000Z",
     eventEnd: "2027-02-08T04:00:00.000Z",
     eventStartLocal: "20270207T153000",

@@ -293,37 +293,72 @@ a:hover { color: var(--gold); }
 
 .countdown-inner {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: clamp(1rem, 4vw, 2.5rem);
-    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.countdown-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.countdown-primary {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 0;
+    line-height: 1;
+}
+
+.countdown-num {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    line-height: 1;
+}
+
+.countdown-days-label {
+    font-family: var(--font-serif);
+    font-size: clamp(1.35rem, 4vw, 1.85rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+}
+
+.countdown-tagline {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-style: italic;
+    letter-spacing: 0.06em;
+    color: var(--gold-light);
+    opacity: 0.95;
+}
+
+.countdown-detail {
+    margin: 0.35rem 0 0;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    opacity: 0.72;
+}
+
+.countdown-detail-sep {
+    margin: 0 0.5rem;
+    opacity: 0.5;
 }
 
 .countdown-note {
-    flex-basis: 100%;
-    margin: 0.35rem 0 0;
+    margin: 0.5rem 0 0;
     font-family: var(--font-serif);
     font-size: var(--fs-small);
     font-style: italic;
     letter-spacing: 0.08em;
     color: var(--gold-light);
     opacity: 0.95;
-}
-
-.countdown-unit { display: flex; flex-direction: column; align-items: center; min-width: 4rem; }
-
-.countdown-num {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    line-height: 1;
-}
-
-.countdown-label {
-    font-size: var(--fs-xs);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-top: 0.25rem;
 }
 
 .glass-card {
@@ -559,7 +594,29 @@ a:hover { color: var(--gold); }
 }
 
 .rsvp-section { background: linear-gradient(180deg, var(--faded-orange) 0%, var(--faded-orange-deep) 100%); }
-.rsvp-deadline { text-align: center; color: var(--charcoal-soft); margin-bottom: 2rem; font-size: var(--fs-body); }
+
+.rsvp-intro {
+    text-align: center;
+    max-width: 34rem;
+    margin: 0 auto 1.25rem;
+}
+
+.rsvp-intro-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.85rem, 5.5vw, 2.65rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--charcoal);
+}
+
+.rsvp-intro-lede {
+    margin-top: 0.85rem;
+    font-size: var(--fs-body);
+    color: var(--charcoal-soft);
+    line-height: 1.65;
+}
+
+.rsvp-deadline { text-align: center; color: var(--charcoal-soft); margin-bottom: 2rem; font-size: var(--fs-small); }
 .rsvp-form { max-width: 640px; margin: 0 auto; }
 .form-group { margin-bottom: 1.25rem; }
 .form-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
@@ -627,6 +684,33 @@ textarea { min-height: 120px; resize: vertical; }
     border-radius: var(--radius-lg);
     border: 1px solid var(--glass-border);
     margin: 1.5rem 0;
+}
+
+.song-icon {
+    font-size: 1.75rem;
+    color: var(--gold);
+    margin-bottom: 0.65rem;
+    line-height: 1;
+}
+
+.song-prompt {
+    font-family: var(--font-serif);
+    font-size: clamp(1.15rem, 3.5vw, 1.35rem);
+    line-height: 1.45;
+    color: var(--charcoal);
+    margin-bottom: 0.25rem;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .btn-submit {
@@ -881,7 +965,7 @@ body.within-thirty-days .countdown-bar {
     .countdown-bar { padding: 1.25rem 0; }
 
     .countdown-num {
-        font-size: clamp(1.75rem, 6vw, 2rem);
+        font-size: clamp(2.1rem, 7vw, 2.75rem);
     }
 
     .form-row.two,

@@ -58,11 +58,29 @@
 
         <div class="container countdown-inner" id="countdown">
 
-            <div class="countdown-unit"><span class="countdown-num" id="cdDays">--</span><span class="countdown-label">Days</span></div>
+            <div class="countdown-hero">
 
-            <div class="countdown-unit"><span class="countdown-num" id="cdHours">--</span><span class="countdown-label">Hours</span></div>
+                <p class="countdown-primary">
 
-            <div class="countdown-unit"><span class="countdown-num" id="cdMins">--</span><span class="countdown-label">Minutes</span></div>
+                    <span class="countdown-num" id="cdDays">--</span>
+
+                    <span class="countdown-days-label" id="cdDaysLabel">Days</span>
+
+                </p>
+
+                <p class="countdown-tagline" id="countdownTagline">until we say &ldquo;I do&rdquo;</p>
+
+            </div>
+
+            <p class="countdown-detail" id="countdownDetail">
+
+                <span><span id="cdHours">--</span> hours</span>
+
+                <span class="countdown-detail-sep" aria-hidden="true">&middot;</span>
+
+                <span><span id="cdMins">--</span> minutes</span>
+
+            </p>
 
             <p class="countdown-note" id="countdownNote" hidden>One month to go</p>
 
@@ -226,7 +244,13 @@
 
             <p class="section-label">Respond</p>
 
-            <h2 class="section-title">RSVP</h2>
+            <div class="rsvp-intro">
+
+                <h2 class="rsvp-intro-title">We&rsquo;d Love To Celebrate With You</h2>
+
+                <p class="rsvp-intro-lede">Please let us know if you&rsquo;ll be joining us.</p>
+
+            </div>
 
             <p class="rsvp-deadline">Please respond by <strong id="rsvpDeadline">December 1, 2027</strong></p>
 
@@ -296,9 +320,11 @@
 
                 <div class="song-section meal-section">
 
-                    <p class="song-icon">&#9835;</p>
+                    <p class="song-icon" aria-hidden="true">&#9835;</p>
 
-                    <label for="song">I will dance if you play...</label>
+                    <p class="song-prompt">What&rsquo;s one song that guarantees<br>you&rsquo;ll hit the dance floor?</p>
+
+                    <label for="song" class="visually-hidden">Song request</label>
 
                     <input type="text" id="song" name="song" placeholder="Song title" style="margin-top:0.75rem;">
 

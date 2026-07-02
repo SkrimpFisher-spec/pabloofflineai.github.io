@@ -330,17 +330,23 @@ a:hover { color: var(--gold); }
 
 .countdown-units {
     display: flex;
+    flex-flow: row nowrap;
     justify-content: center;
-    align-items: flex-start;
-    gap: var(--countdown-unit-gap);
+    align-items: baseline;
+    gap: clamp(0.85rem, 3vw, 2.25rem);
     width: 100%;
+    max-width: 100%;
+    margin: 0;
 }
 
 .countdown-unit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: clamp(4rem, 10vw, 5.5rem);
+    display: inline-flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.35em;
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 
 .countdown-num {
@@ -352,16 +358,18 @@ a:hover { color: var(--gold); }
 }
 
 .countdown-label {
-    margin-top: clamp(0.25rem, 0.8vw, 0.45rem);
-    font-size: var(--fs-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.72;
-    line-height: 1.2;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(0.95rem, 0.75rem + 0.55vw, 1.15rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    opacity: 0.92;
+    line-height: 1;
 }
 
 .countdown-tagline {
-    margin: 0;
+    margin: clamp(0.35rem, 1vw, 0.55rem) 0 0;
     padding: 0 clamp(0.5rem, 2vw, 1rem);
     font-family: var(--font-serif);
     font-size: var(--countdown-tagline-size);
@@ -370,6 +378,8 @@ a:hover { color: var(--gold); }
     line-height: 1.35;
     letter-spacing: 0.04em;
     color: var(--gold-light);
+    text-align: center;
+    width: 100%;
 }
 
 .countdown-note {

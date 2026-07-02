@@ -300,79 +300,84 @@ a:hover { color: var(--gold); }
 .countdown-bar {
     background: var(--charcoal);
     color: var(--warm-white);
-    padding: 1rem 0;
+    padding: 1.1rem 0;
     text-align: center;
     transition: background 1.2s var(--ease), box-shadow 1.2s var(--ease);
 }
 
 .countdown-inner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.35rem;
+    display: grid;
+    justify-items: center;
+    gap: 0.2rem;
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 auto;
 }
 
-.countdown-hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.15rem;
-}
-
-.countdown-primary {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.45rem;
+.countdown-headline {
     margin: 0;
-    line-height: 1;
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 5.5vw, 2.35rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
 
 .countdown-num {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 6vw, 2.75rem);
-    line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 
 .countdown-days-label {
-    font-family: var(--font-serif);
-    font-size: clamp(1.35rem, 4vw, 1.85rem);
-    font-weight: 400;
-    letter-spacing: 0.04em;
+    margin-left: 0.35em;
 }
 
 .countdown-tagline {
     margin: 0;
+    padding: 0 0.5rem;
     font-family: var(--font-serif);
-    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-size: clamp(0.95rem, 2.8vw, 1.15rem);
     font-style: italic;
-    letter-spacing: 0.06em;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
     color: var(--gold-light);
-    opacity: 0.95;
 }
 
 .countdown-detail {
-    margin: 0.35rem 0 0;
-    font-size: var(--fs-xs);
-    letter-spacing: 0.12em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 0.45rem;
+    margin: 0.2rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     text-transform: lowercase;
-    opacity: 0.72;
+    line-height: 1.4;
+    opacity: 0.78;
+    white-space: nowrap;
+}
+
+.countdown-detail-part {
+    display: inline-block;
 }
 
 .countdown-detail-sep {
-    margin: 0 0.5rem;
-    opacity: 0.5;
+    opacity: 0.55;
+    line-height: 1;
 }
 
 .countdown-note {
-    margin: 0.5rem 0 0;
+    margin: 0.35rem 0 0;
     font-family: var(--font-serif);
     font-size: var(--fs-small);
     font-style: italic;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     color: var(--gold-light);
-    opacity: 0.95;
+    line-height: 1.35;
 }
 
 .glass-card {

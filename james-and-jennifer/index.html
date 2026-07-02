@@ -238,23 +238,23 @@
 
     <section class="section rsvp-section" id="rsvp">
 
-        <div class="container reveal">
+        <div class="container">
 
-            <p class="section-label">Respond</p>
-
-            <div class="rsvp-intro">
+            <header class="rsvp-welcome">
 
                 <h2 class="rsvp-intro-title">We&rsquo;d Love To Celebrate With You</h2>
 
                 <p class="rsvp-intro-lede">Please let us know if you&rsquo;ll be joining us.</p>
 
-            </div>
-
-            <p class="rsvp-deadline">Please respond by <strong id="rsvpDeadline">December 1, 2027</strong></p>
+            </header>
 
 
 
-            <form class="rsvp-form" id="rsvpForm" novalidate>
+            <div class="rsvp-form-panel reveal">
+
+                <p class="rsvp-deadline">Please respond by <strong id="rsvpDeadline">December 1, 2027</strong></p>
+
+                <form class="rsvp-form" id="rsvpForm" novalidate>
 
                 <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
 
@@ -346,7 +346,9 @@
 
                 <button type="submit" class="btn-submit" id="submitBtn">Submit RSVP</button>
 
-            </form>
+                </form>
+
+            </div>
 
         </div>
 

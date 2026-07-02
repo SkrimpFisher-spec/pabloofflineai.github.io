@@ -626,29 +626,52 @@ a:hover { color: var(--gold); }
 
 .rsvp-section { background: linear-gradient(180deg, var(--faded-orange) 0%, var(--faded-orange-deep) 100%); }
 
-.rsvp-intro {
+.rsvp-welcome {
     text-align: center;
-    max-width: 34rem;
-    margin: 0 auto 1.25rem;
+    max-width: clamp(20rem, 90vw, 38rem);
+    margin: 0 auto;
+    padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem) clamp(2.75rem, 7vw, 4.5rem);
 }
 
 .rsvp-intro-title {
     font-family: var(--font-serif);
-    font-size: clamp(1.85rem, 1.2rem + 2vw, 2.75rem);
+    font-size: clamp(2rem, 1.25rem + 2.8vw, 3rem);
     font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.12;
     color: var(--charcoal);
+    letter-spacing: 0.01em;
 }
 
 .rsvp-intro-lede {
-    margin-top: 0.85rem;
-    font-size: var(--fs-body);
+    margin-top: clamp(0.75rem, 2vw, 1.15rem);
+    font-size: clamp(1.05rem, 0.92rem + 0.45vw, 1.2rem);
     color: var(--charcoal-soft);
     line-height: 1.65;
+    max-width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.rsvp-deadline { text-align: center; color: var(--charcoal-soft); margin-bottom: 2rem; font-size: var(--fs-small); }
-.rsvp-form { max-width: 640px; margin: 0 auto; }
+.rsvp-form-panel {
+    max-width: clamp(320px, 92vw, 680px);
+    margin: 0 auto;
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    background: rgba(255, 252, 248, 0.72);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.rsvp-deadline {
+    text-align: center;
+    color: var(--charcoal-soft);
+    margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    font-size: var(--fs-small);
+}
+
+.rsvp-form { max-width: 100%; margin: 0; }
 .form-group { margin-bottom: 1.25rem; }
 .form-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 480px) {

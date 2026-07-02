@@ -13,8 +13,6 @@
     --glass-border: rgba(184, 149, 106, 0.25);
     --shadow: 0 8px 32px rgba(44, 40, 37, 0.08);
     --shadow-lg: 0 24px 64px rgba(44, 40, 37, 0.12);
-    --radius: 16px;
-    --radius-lg: 24px;
     --font-serif: "Cormorant Garamond", "Georgia", serif;
     --font-sans: "DM Sans", system-ui, sans-serif;
     --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -30,6 +28,18 @@
     --faded-orange: #faf4ec;
     --faded-orange-deep: #f5ebe0;
 
+    /* Fluid layout + ornament scale */
+    --divider-width: clamp(220px, 68vw, 480px);
+    --divider-gap: clamp(0.6rem, 2.5vw, 1.25rem);
+    --divider-pad-y: clamp(0.75rem, 2vw, 1.35rem);
+    --divider-line-height: max(1px, 0.07rem);
+    --divider-dot-size: clamp(0.3125rem, 1.1vw, 0.5625rem);
+    --icon-size: clamp(0.7rem, 2.2vw, 0.875rem);
+    --countdown-max-width: clamp(18rem, 88vw, 40rem);
+    --countdown-unit-gap: clamp(1.1rem, 5vw, 2.75rem);
+    --countdown-num-size: clamp(1.5rem, 5.5vw, 2.35rem);
+    --countdown-tagline-size: clamp(0.95rem, 2.8vw, 1.2rem);
+
     /* Mobile-first type scale (default = phones) */
     --fs-root: 112.5%;
     --fs-body: 1.125rem;
@@ -41,38 +51,54 @@
     --fs-hero-names: clamp(3.25rem, 13vw, 6.5rem);
     --fs-hero-tagline: clamp(0.9375rem, 2.8vw, 1rem);
     --fs-hero-date: clamp(1.375rem, 4vw, 1.75rem);
-    --fs-card-title: 2rem;
+    --fs-card-title: clamp(1.75rem, 5vw, 2rem);
     --fs-input: 1.0625rem;
     --lh-body: 1.7;
-    --section-py: 3.75rem;
+    --section-py: clamp(3.25rem, 8vw, 4.5rem);
     --container-width: 94vw;
-    --card-pad: 1.75rem;
+    --card-pad: clamp(1.5rem, 4vw, 2rem);
     --input-pad-y: 1rem;
     --input-pad-x: 1.125rem;
     --touch-min: 48px;
+    --radius: clamp(14px, 2vw, 16px);
+    --radius-lg: clamp(18px, 3vw, 24px);
 }
 
 @media (min-width: 768px) {
     :root {
-        --fs-root: 100%;
-        --fs-body: 1rem;
-        --fs-small: 0.95rem;
-        --fs-xs: 0.85rem;
-        --fs-label: 0.8rem;
-        --fs-section-title: clamp(2rem, 5vw, 3rem);
-        --fs-section-label: 0.75rem;
-        --fs-hero-names: clamp(3rem, 12vw, 6.5rem);
-        --fs-hero-tagline: clamp(0.85rem, 2.5vw, 1rem);
-        --fs-hero-date: clamp(1.25rem, 3vw, 1.75rem);
-        --fs-card-title: 1.75rem;
-        --fs-input: 1rem;
-        --lh-body: 1.6;
-        --section-py: 5rem;
-        --container-width: 92vw;
-        --card-pad: 2rem;
-        --input-pad-y: 0.85rem;
-        --input-pad-x: 1rem;
+        /* Root scales smoothly from tablet to large desktop */
+        --fs-root: clamp(100%, 0.62rem + 0.52vw, 118.75%);
+        --fs-body: clamp(1.0625rem, 0.94rem + 0.28vw, 1.1875rem);
+        --fs-small: clamp(0.98rem, 0.88rem + 0.18vw, 1.0625rem);
+        --fs-xs: clamp(0.8125rem, 0.72rem + 0.16vw, 0.9375rem);
+        --fs-label: clamp(0.78rem, 0.7rem + 0.14vw, 0.875rem);
+        --fs-section-title: clamp(2.25rem, 1.4rem + 2.4vw, 3.35rem);
+        --fs-section-label: clamp(0.72rem, 0.64rem + 0.14vw, 0.8125rem);
+        --fs-hero-names: clamp(3.5rem, 2rem + 5.5vw, 6.75rem);
+        --fs-hero-tagline: clamp(0.875rem, 0.72rem + 0.45vw, 1.05rem);
+        --fs-hero-date: clamp(1.3rem, 1rem + 0.9vw, 1.85rem);
+        --fs-card-title: clamp(1.65rem, 1.2rem + 1.1vw, 2.1rem);
+        --fs-input: clamp(1rem, 0.92rem + 0.2vw, 1.0625rem);
+        --lh-body: 1.65;
+        --section-py: clamp(4rem, 2.5rem + 3.5vw, 6.25rem);
+        --container-width: min(92vw, 1120px);
+        --card-pad: clamp(1.75rem, 1.2rem + 1.2vw, 2.35rem);
+        --input-pad-y: clamp(0.85rem, 0.7rem + 0.35vw, 1rem);
+        --input-pad-x: clamp(0.95rem, 0.8rem + 0.35vw, 1.125rem);
         --touch-min: auto;
+
+        --divider-width: clamp(280px, 34vw, 540px);
+        --divider-gap: clamp(0.75rem, 1.4vw, 1.5rem);
+        --divider-pad-y: clamp(0.9rem, 1.2vw, 1.65rem);
+        --divider-line-height: max(1px, 0.085rem);
+        --divider-dot-size: clamp(0.375rem, 0.28rem + 0.35vw, 0.625rem);
+        --icon-size: clamp(0.68rem, 0.42rem + 0.38vw, 0.9rem);
+        --countdown-max-width: clamp(26rem, 52vw, 42rem);
+        --countdown-unit-gap: clamp(1.75rem, 3.5vw, 3.75rem);
+        --countdown-num-size: clamp(1.85rem, 1.1rem + 1.6vw, 2.65rem);
+        --countdown-tagline-size: clamp(1rem, 0.82rem + 0.45vw, 1.25rem);
+        --radius: clamp(15px, 0.4rem + 0.45vw, 18px);
+        --radius-lg: clamp(20px, 0.75rem + 0.65vw, 28px);
     }
 }
 
@@ -119,25 +145,26 @@ a:hover { color: var(--gold); }
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 0.65rem;
-    width: min(260px, 72vw);
+    gap: var(--divider-gap);
+    width: var(--divider-width);
     margin: 0 auto;
-    padding: 0.9rem 0;
+    padding: var(--divider-pad-y) 0;
 }
 
 .section-divider-line {
     display: block;
-    height: 1px;
-    background: rgba(184, 149, 106, 0.32);
+    height: var(--divider-line-height);
+    background: rgba(184, 149, 106, 0.38);
 }
 
 .section-divider-dot {
     display: block;
-    width: 4px;
-    height: 4px;
+    width: var(--divider-dot-size);
+    height: var(--divider-dot-size);
     border-radius: 50%;
-    background: rgba(184, 149, 106, 0.45);
+    background: rgba(184, 149, 106, 0.55);
     flex-shrink: 0;
+    box-shadow: 0 0 0 clamp(2px, 0.35vw, 4px) rgba(184, 149, 106, 0.12);
 }
 
 .section-label {
@@ -223,7 +250,7 @@ a:hover { color: var(--gold); }
     position: relative;
     z-index: 2;
     color: var(--sage-text);
-    padding: 2rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
     text-shadow: 0 1px 16px rgba(255, 252, 248, 0.85);
 }
 
@@ -270,23 +297,13 @@ a:hover { color: var(--gold); }
 .icon-arrow,
 .faq-chevron {
     display: block;
-    width: 0.75rem !important;
-    height: 0.75rem !important;
-    min-width: 0.75rem;
-    min-height: 0.75rem;
-    max-width: 0.75rem !important;
-    max-height: 0.75rem !important;
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    min-width: var(--icon-size);
+    min-height: var(--icon-size);
+    max-width: var(--icon-size) !important;
+    max-height: var(--icon-size) !important;
     flex-shrink: 0;
-}
-
-@media (min-width: 769px) {
-    .icon-arrow,
-    .faq-chevron {
-        width: 0.625rem !important;
-        height: 0.625rem !important;
-        max-width: 0.625rem !important;
-        max-height: 0.625rem !important;
-    }
 }
 
 @keyframes bounce {
@@ -297,7 +314,7 @@ a:hover { color: var(--gold); }
 .countdown-bar {
     background: var(--charcoal);
     color: var(--warm-white);
-    padding: 1.1rem 0;
+    padding: clamp(0.95rem, 2vw, 1.35rem) 0;
     text-align: center;
     transition: background 1.2s var(--ease), box-shadow 1.2s var(--ease);
 }
@@ -305,9 +322,9 @@ a:hover { color: var(--gold); }
 .countdown-inner {
     display: grid;
     justify-items: center;
-    gap: 0.45rem;
+    gap: clamp(0.35rem, 1vw, 0.65rem);
     width: 100%;
-    max-width: 32rem;
+    max-width: var(--countdown-max-width);
     margin: 0 auto;
 }
 
@@ -315,7 +332,7 @@ a:hover { color: var(--gold); }
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: clamp(1.25rem, 5vw, 2.5rem);
+    gap: var(--countdown-unit-gap);
     width: 100%;
 }
 
@@ -323,19 +340,19 @@ a:hover { color: var(--gold); }
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 4.5rem;
+    min-width: clamp(4rem, 10vw, 5.5rem);
 }
 
 .countdown-num {
     font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 4.5vw, 2rem);
+    font-size: var(--countdown-num-size);
     font-weight: 400;
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
 .countdown-label {
-    margin-top: 0.35rem;
+    margin-top: clamp(0.25rem, 0.8vw, 0.45rem);
     font-size: var(--fs-xs);
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -345,9 +362,9 @@ a:hover { color: var(--gold); }
 
 .countdown-tagline {
     margin: 0;
-    padding: 0 0.5rem;
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
     font-family: var(--font-serif);
-    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+    font-size: var(--countdown-tagline-size);
     font-style: italic;
     font-weight: 400;
     line-height: 1.35;
@@ -394,7 +411,7 @@ a:hover { color: var(--gold); }
     margin-bottom: 1rem;
 }
 
-.detail-card .time { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.5rem; }
+.detail-card .time { font-size: clamp(1.1rem, 0.9rem + 0.5vw, 1.3rem); font-weight: 500; margin-bottom: 0.5rem; }
 .detail-card .venue { color: var(--charcoal-soft); font-size: var(--fs-small); }
 .detail-card .venue strong { display: block; color: var(--charcoal); margin-bottom: 0.25rem; }
 
@@ -418,7 +435,7 @@ a:hover { color: var(--gold); }
     font-weight: 500;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    padding: 0.55rem 0.9rem;
+    padding: clamp(0.45rem, 0.3rem + 0.35vw, 0.6rem) clamp(0.75rem, 0.5rem + 0.6vw, 1rem);
     border-radius: 999px;
     border: 1px solid var(--glass-border);
     background: rgba(184, 149, 106, 0.1);
@@ -434,7 +451,7 @@ a:hover { color: var(--gold); }
 
 .tag {
     font-size: var(--fs-xs);
-    padding: 0.45rem 0.85rem;
+    padding: clamp(0.35rem, 0.2rem + 0.3vw, 0.5rem) clamp(0.7rem, 0.45rem + 0.5vw, 0.95rem);
     background: rgba(184, 149, 106, 0.15);
     border-radius: 999px;
     color: var(--gold-dark);
@@ -460,9 +477,9 @@ a:hover { color: var(--gold); }
 
 .timeline {
     position: relative;
-    max-width: min(100%, 480px);
-    margin: 2rem auto 0;
-    padding-left: 2rem;
+    max-width: clamp(320px, 42vw, 520px);
+    margin: clamp(1.5rem, 3vw, 2rem) auto 0;
+    padding-left: clamp(1.5rem, 3vw, 2rem);
 }
 
 .timeline::before {
@@ -471,26 +488,26 @@ a:hover { color: var(--gold); }
     left: 6px;
     top: 0;
     bottom: 0;
-    width: 2px;
+    width: max(1px, 0.08rem);
     background: linear-gradient(to bottom, var(--gold-light), var(--gold));
 }
-
-.timeline-item { position: relative; padding-bottom: 2rem; transition: transform 0.35s var(--ease); }
 
 .timeline-item::before {
     content: "";
     position: absolute;
-    left: -2rem;
+    left: calc(-1 * clamp(1.5rem, 3vw, 2rem));
     top: 0.35rem;
-    width: 12px;
-    height: 12px;
+    width: clamp(0.6rem, 0.45rem + 0.35vw, 0.8rem);
+    height: clamp(0.6rem, 0.45rem + 0.35vw, 0.8rem);
     background: var(--gold);
     border-radius: 50%;
-    border: 2px solid var(--cream);
+    border: max(1px, 0.08rem) solid var(--cream);
     transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease);
 }
 
-.timeline-time { font-family: var(--font-serif); font-size: 1.2rem; color: var(--gold-dark); transition: color 0.35s var(--ease); }
+.timeline-time { font-family: var(--font-serif); font-size: clamp(1.05rem, 0.85rem + 0.55vw, 1.3rem); color: var(--gold-dark); transition: color 0.35s var(--ease); }
+.timeline-item { position: relative; padding-bottom: clamp(1.35rem, 2.5vw, 2rem); transition: transform 0.35s var(--ease); }
+
 .timeline-event { font-size: var(--fs-small); color: var(--charcoal-soft); transition: color 0.35s var(--ease); }
 
 .timeline-note {
@@ -565,11 +582,11 @@ a:hover { color: var(--gold); }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0;
+    padding: clamp(1rem, 0.75rem + 0.8vw, 1.35rem) 0;
     background: none;
     border: none;
     font-family: var(--font-serif);
-    font-size: 1.35rem;
+    font-size: clamp(1.15rem, 0.9rem + 0.65vw, 1.4rem);
     text-align: left;
     color: var(--charcoal);
     cursor: pointer;
@@ -585,7 +602,7 @@ a:hover { color: var(--gold); }
 .faq-entries { margin: 0; }
 .faq-entries dt {
     font-family: var(--font-serif);
-    font-size: 1.125rem;
+    font-size: clamp(1rem, 0.85rem + 0.45vw, 1.125rem);
     color: var(--charcoal);
     margin-top: 1rem;
 }
@@ -607,7 +624,7 @@ a:hover { color: var(--gold); }
 
 .rsvp-intro-title {
     font-family: var(--font-serif);
-    font-size: clamp(1.85rem, 5.5vw, 2.65rem);
+    font-size: clamp(1.85rem, 1.2rem + 2vw, 2.75rem);
     font-weight: 400;
     line-height: 1.15;
     color: var(--charcoal);
@@ -691,15 +708,15 @@ textarea { min-height: 120px; resize: vertical; }
 }
 
 .song-icon {
-    font-size: 1.75rem;
+    font-size: clamp(1.5rem, 1rem + 1vw, 2rem);
     color: var(--gold);
-    margin-bottom: 0.65rem;
+    margin-bottom: clamp(0.45rem, 1vw, 0.75rem);
     line-height: 1;
 }
 
 .song-prompt {
     font-family: var(--font-serif);
-    font-size: clamp(1.15rem, 3.5vw, 1.35rem);
+    font-size: clamp(1.1rem, 0.9rem + 0.65vw, 1.4rem);
     line-height: 1.45;
     color: var(--charcoal);
     margin-bottom: 0.25rem;
@@ -918,11 +935,12 @@ body.within-thirty-days .countdown-bar {
 
 .music-toggle {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: clamp(1rem, 2vw, 1.5rem);
+    right: clamp(1rem, 2vw, 1.5rem);
     z-index: 100;
-    width: 44px;
-    height: 44px;
+    width: clamp(2.75rem, 2rem + 1.5vw, 3.25rem);
+    height: clamp(2.75rem, 2rem + 1.5vw, 3.25rem);
+    font-size: clamp(1rem, 0.8rem + 0.5vw, 1.2rem);
     border-radius: 50%;
     border: 1px solid var(--glass-border);
     background: var(--glass);
@@ -984,29 +1002,31 @@ body.within-thirty-days .countdown-bar {
     }
 
     .confirmation-card h2 {
-        font-size: 1.75rem;
+        font-size: clamp(1.65rem, 5vw, 1.85rem);
     }
 
     .music-toggle {
-        width: 52px;
-        height: 52px;
-        font-size: 1.25rem;
+        width: clamp(3rem, 2.5rem + 2vw, 3.35rem);
+        height: clamp(3rem, 2.5rem + 2vw, 3.35rem);
+        font-size: clamp(1.1rem, 0.9rem + 0.8vw, 1.3rem);
     }
 }
 
 /* Desktop layout (tablets and up, >= 768px) */
 @media (min-width: 768px) {
-    .faq-question { font-size: 1.25rem; }
+    .details-grid { gap: clamp(1.25rem, 2vw, 2rem); }
 
-    .faq-entries dt { font-size: 1.05rem; }
+    .faq-single { max-width: clamp(640px, 62vw, 760px); }
 
-    .timeline { max-width: 400px; }
-
-    textarea { min-height: 100px; }
+    textarea { min-height: clamp(90px, 8vw, 120px); }
 
     .radio-option {
         font-size: var(--fs-small);
         min-height: auto;
-        padding: 1rem 1.25rem;
+        padding: clamp(0.85rem, 0.6rem + 0.6vw, 1.1rem) clamp(1rem, 0.75rem + 0.7vw, 1.35rem);
     }
+
+    .rsvp-form { max-width: clamp(560px, 52vw, 680px); }
+
+    .rsvp-intro { max-width: clamp(30rem, 48vw, 38rem); }
 }

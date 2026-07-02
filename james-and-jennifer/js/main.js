@@ -150,11 +150,13 @@
 
     var cdHours = document.getElementById("cdHours");
 
+    var cdHoursLabel = document.getElementById("cdHoursLabel");
+
     var cdMins = document.getElementById("cdMins");
 
-    var countdownTagline = document.getElementById("countdownTagline");
+    var cdMinsLabel = document.getElementById("cdMinsLabel");
 
-    var countdownDetail = document.getElementById("countdownDetail");
+    var countdownTagline = document.getElementById("countdownTagline");
 
     var countdownNote = document.getElementById("countdownNote");
 
@@ -164,17 +166,18 @@
         if (cdDaysLabel) {
             cdDaysLabel.textContent = days === 1 ? "Day" : "Days";
         }
+        if (cdHoursLabel) {
+            cdHoursLabel.textContent = hours === 1 ? "Hour" : "Hours";
+        }
+        if (cdMinsLabel) {
+            cdMinsLabel.textContent = mins === 1 ? "Minute" : "Minutes";
+        }
         if (countdownTagline) {
             if (days === 0 && hours === 0 && mins === 0) {
                 countdownTagline.textContent = "today we say \"I do\"";
-            } else if (days === 0) {
-                countdownTagline.textContent = "until we say \"I do\"";
             } else {
                 countdownTagline.textContent = "until we say \"I do\"";
             }
-        }
-        if (countdownDetail) {
-            countdownDetail.hidden = days === 0 && hours === 0 && mins === 0;
         }
     }
 
@@ -217,6 +220,8 @@
         if (cdHours) cdHours.textContent = String(hours);
 
         if (cdMins) cdMins.textContent = String(mins);
+
+        updateCountdownCopy(days, hours, mins);
 
         applyThirtyDayMood(days);
 

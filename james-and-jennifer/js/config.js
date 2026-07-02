@@ -6,8 +6,8 @@ window.WEDDING_CONFIG = {
     web3formsKey: "",
 
     weddingDate: "2027-02-07",
-    countdownHour: 0,
-    countdownMinute: 0,
+    countdownHour: 15,
+    countdownMinute: 30,
     rsvpDeadline: "December 1, 2027",
     bride: "Jennifer",
     groom: "James",

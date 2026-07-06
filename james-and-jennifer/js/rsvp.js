@@ -21,16 +21,22 @@
     var guestNameInput = document.getElementById("guestName");
 
     var guestFullName = "";
-    var guestAttending = null;
 
     function showError(el, msg) {
+        if (!el) return;
         el.textContent = msg;
         el.classList.add("visible");
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function clearError(el) {
+        if (!el) return;
         el.textContent = "";
         el.classList.remove("visible");
+    }
+
+    function stepIsVisible(step) {
+        return step && !step.classList.contains("rsvp-step--hidden");
     }
 
     function parseGuestName(full) {
@@ -45,6 +51,11 @@
 
     function readGuestName() {
         return guestFullName || (guestNameInput ? guestNameInput.value.trim() : "");
+    }
+
+    function getAttendingChoice() {
+        var checked = document.querySelector('input[name="attending"]:checked');
+        return checked ? checked.value : null;
     }
 
     function showStep(step) {
@@ -150,6 +161,7 @@
     }
 
     function showConfirmation(message, attending, guestNotified) {
+        if (!confirmation || !confirmMessage) return;
         confirmMessage.textContent = message;
         if (confirmEmailNote) {
             confirmEmailNote.textContent = guestNotified
@@ -167,27 +179,46 @@
     function buildPayload(attending) {
         var parsed = parseGuestName(readGuestName());
         var mealEl = document.querySelector('input[name="meal"]:checked');
+        var emailEl = document.getElementById("email");
+        var phoneEl = document.getElementById("phone");
+        var addressEl = document.getElementById("address");
+        var dietaryEl = document.getElementById("dietary");
+        var songEl = document.getElementById("song");
+        var artistEl = document.getElementById("artist");
+        var messageEl = document.getElementById("message");
 
         return {
             fullName: parsed.fullName,
             firstName: parsed.firstName,
             lastName: parsed.lastName,
-            email: attending ? document.getElementById("email").value.trim() : null,
-            phone: attending ? (document.getElementById("phone").value.trim() || null) : null,
-            addressLine: attending ? (document.getElementById("address").value.trim() || null) : null,
+            email: attending && emailEl ? emailEl.value.trim() : null,
+            phone: attending && phoneEl ? (phoneEl.value.trim() || null) : null,
+            addressLine: attending && addressEl ? (addressEl.value.trim() || null) : null,
             attending: attending,
             mealChoice: attending && mealEl ? mealEl.value : null,
-            dietaryRestrictions: attending ? (document.getElementById("dietary").value.trim() || null) : null,
-            songRequest: attending ? (document.getElementById("song").value.trim() || null) : null,
-            songArtist: attending ? (document.getElementById("artist").value.trim() || null) : null,
-            message: attending ? (document.getElementById("message").value.trim() || null) : null
+            dietaryRestrictions: attending && dietaryEl ? (dietaryEl.value.trim() || null) : null,
+            songRequest: attending && songEl ? (songEl.value.trim() || null) : null,
+            songArtist: attending && artistEl ? (artistEl.value.trim() || null) : null,
+            message: attending && messageEl ? (messageEl.value.trim() || null) : null
         };
+    }
+
+    function setSubmitting(triggerBtn, submitting) {
+        if (!triggerBtn) return;
+        triggerBtn.disabled = submitting;
+        if (submitBtn && triggerBtn === submitBtn) {
+            submitBtn.textContent = submitting ? "Sending..." : "Submit RSVP";
+        }
+        if (declineBtn && triggerBtn === declineBtn) {
+            declineBtn.textContent = submitting ? "Sending..." : "Send Regretful Decline";
+        }
     }
 
     function sendRsvp(attending, triggerBtn) {
         clearError(formError);
 
-        if (form.querySelector('[name="website"]').value) {
+        var honeypot = form.querySelector('[name="website"]');
+        if (honeypot && honeypot.value) {
             showConfirmation("Thank you!", true, false);
             return;
         }
@@ -204,7 +235,7 @@
             return;
         }
 
-        if (triggerBtn) triggerBtn.disabled = true;
+        setSubmitting(triggerBtn, true);
 
         deliverRsvp(payload)
             .then(function (result) {
@@ -220,7 +251,7 @@
                 showError(formError, err.message || "Submission failed.");
             })
             .finally(function () {
-                if (triggerBtn) triggerBtn.disabled = false;
+                setSubmitting(triggerBtn, false);
             });
     }
 
@@ -239,7 +270,6 @@
                 greetingEl.textContent = "Hello, " + parsed.firstName + "!";
             }
 
-            guestAttending = null;
             document.querySelectorAll('input[name="attending"]').forEach(function (r) {
                 r.checked = false;
             });
@@ -252,9 +282,8 @@
     document.querySelectorAll('input[name="attending"]').forEach(function (r) {
         r.addEventListener("change", function () {
             clearError(formError);
-            guestAttending = r.value;
 
-            if (r.value === "yes") {
+            if (this.value === "yes") {
                 setDeclineVisible(false);
                 showStep(stepDetails);
             } else {
@@ -266,7 +295,7 @@
 
     if (declineBtn) {
         declineBtn.addEventListener("click", function () {
-            if (guestAttending !== "no") {
+            if (getAttendingChoice() !== "no") {
                 showError(formError, "Please choose Regretfully Declines before sending.");
                 return;
             }
@@ -274,33 +303,34 @@
         });
     }
 
-    if (submitBtn) {
-        submitBtn.addEventListener("click", function () {
-            if (guestAttending !== "yes") {
-                showError(formError, "Please choose Happily Accepts and complete the form.");
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearError(formError);
+
+        if (stepIsVisible(stepDetails)) {
+            if (getAttendingChoice() !== "yes") {
+                showError(formError, "Please choose Happily Accepts before submitting.");
                 return;
             }
             sendRsvp(true, submitBtn);
-        });
-    }
+            return;
+        }
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-    });
-
-    form.addEventListener("keydown", function (e) {
-        if (e.key !== "Enter" || e.target.tagName === "TEXTAREA") return;
-
-        e.preventDefault();
-
-        if (guestNameInput && e.target === guestNameInput && continueBtn) {
+        if (stepIsVisible(stepName) && guestNameInput && guestNameInput.value.trim() && continueBtn) {
             continueBtn.click();
+            return;
+        }
+
+        if (stepIsVisible(stepAttendance)) {
+            showError(formError, "Please choose whether you'll be joining us.");
         }
     });
 
-    confirmation.addEventListener("click", function (e) {
-        if (e.target === confirmation) confirmation.classList.remove("visible");
-    });
+    if (confirmation) {
+        confirmation.addEventListener("click", function (e) {
+            if (e.target === confirmation) confirmation.classList.remove("visible");
+        });
+    }
 
     if (confirmClose) {
         confirmClose.addEventListener("click", function () {

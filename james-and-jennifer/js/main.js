@@ -361,31 +361,99 @@
 
 
 
-    // Music toggle
+    // Music — default on at 25% volume; loops; respects browser autoplay rules
 
     var musicBtn = document.getElementById("musicToggle");
 
     var bgMusic = document.getElementById("bgMusic");
 
+    var musicUnlockBound = false;
+
+    function setMusicPlaying(playing) {
+
+        if (!musicBtn) return;
+
+        musicBtn.style.color = playing ? "var(--gold)" : "";
+
+        musicBtn.setAttribute("aria-pressed", playing ? "true" : "false");
+
+    }
+
+    function tryStartMusic() {
+
+        if (!bgMusic) return;
+
+        bgMusic.volume = 0.25;
+
+        return bgMusic.play().then(function () {
+
+            setMusicPlaying(true);
+
+        }).catch(function () {});
+
+    }
+
+    function bindMusicUnlock() {
+
+        if (musicUnlockBound || !bgMusic) return;
+
+        musicUnlockBound = true;
+
+        function unlock() {
+
+            tryStartMusic().then(function () {
+
+                if (!bgMusic.paused) {
+
+                    document.removeEventListener("click", unlock);
+
+                    document.removeEventListener("keydown", unlock);
+
+                    document.removeEventListener("touchstart", unlock);
+
+                }
+
+            });
+
+        }
+
+        document.addEventListener("click", unlock);
+
+        document.addEventListener("keydown", unlock);
+
+        document.addEventListener("touchstart", unlock, { passive: true });
+
+    }
+
     if (musicBtn && bgMusic) {
+
+        bgMusic.volume = 0.25;
 
         musicBtn.addEventListener("click", function () {
 
             if (bgMusic.paused) {
 
-                bgMusic.play().catch(function () {});
-
-                musicBtn.style.color = "var(--gold)";
+                tryStartMusic();
 
             } else {
 
                 bgMusic.pause();
 
-                musicBtn.style.color = "";
+                setMusicPlaying(false);
 
             }
 
         });
+
+        tryStartMusic().then(function () {
+
+            if (bgMusic.paused) bindMusicUnlock();
+
+        });
+
+        bgMusic.addEventListener("play", function () { setMusicPlaying(true); });
+
+        bgMusic.addEventListener("pause", function () { setMusicPlaying(false); });
 
     }
 

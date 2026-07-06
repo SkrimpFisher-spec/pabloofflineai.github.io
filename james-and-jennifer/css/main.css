@@ -385,7 +385,8 @@ a:hover { color: var(--gold); }
     margin-bottom: 1rem;
 }
 
-.detail-card .time { font-size: clamp(1.1rem, 0.9rem + 0.5vw, 1.3rem); font-weight: 500; margin-bottom: 0.5rem; }
+.detail-card .time { font-size: clamp(1.1rem, 0.9rem + 0.5vw, 1.3rem); font-weight: 500; margin-bottom: 0.25rem; }
+.detail-card .time + .venue-detail { margin-top: 0; margin-bottom: 0.85rem; }
 .detail-card .venue { color: var(--charcoal-soft); font-size: var(--fs-small); }
 .detail-card .venue strong { display: block; color: var(--charcoal); margin-bottom: 0.25rem; }
 

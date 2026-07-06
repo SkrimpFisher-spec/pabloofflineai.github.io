@@ -1215,6 +1215,7 @@ body.within-thirty-days .countdown-bar {
 .btn-step { margin-top: 0.5rem; }
 
 #rsvpStepDetails .form-group:first-child { margin-top: 0.25rem; }
+#rsvpStepDetails .btn-submit { margin-top: 1.25rem; }
 
 @media (prefers-reduced-motion: reduce) {
     .hero-bg { animation: none; }

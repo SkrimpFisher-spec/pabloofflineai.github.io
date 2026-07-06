@@ -2,6 +2,8 @@
     "use strict";
 
     var form = document.getElementById("rsvpForm");
+    if (!form) return;
+
     var formError = document.getElementById("formError");
     var submitBtn = document.getElementById("submitBtn");
     var confirmation = document.getElementById("confirmation");
@@ -16,8 +18,7 @@
     var continueBtn = document.getElementById("rsvpContinueBtn");
     var greetingEl = document.getElementById("rsvpGreeting");
 
-    var guestFirstName = "";
-    var guestLastName = "";
+    var guestFullName = "";
 
     function showError(el, msg) {
         el.textContent = msg;
@@ -27,6 +28,16 @@
     function clearError(el) {
         el.textContent = "";
         el.classList.remove("visible");
+    }
+
+    function parseGuestName(full) {
+        var trimmed = full.trim();
+        var parts = trimmed.split(/\s+/).filter(Boolean);
+        return {
+            fullName: trimmed,
+            firstName: parts[0] || "",
+            lastName: parts.slice(1).join(" ")
+        };
     }
 
     function showStep(step) {
@@ -48,16 +59,17 @@
     if (continueBtn) {
         continueBtn.addEventListener("click", function () {
             clearError(formError);
-            guestFirstName = document.getElementById("firstName").value.trim();
-            guestLastName = document.getElementById("lastName").value.trim();
+            var nameInput = document.getElementById("guestName");
+            guestFullName = nameInput ? nameInput.value.trim() : "";
 
-            if (!guestFirstName || !guestLastName) {
-                showError(formError, "Please enter your first and last name.");
+            if (!guestFullName) {
+                showError(formError, "Please enter your name.");
                 return;
             }
 
+            var parsed = parseGuestName(guestFullName);
             if (greetingEl) {
-                greetingEl.textContent = "Hello, " + guestFirstName + "!";
+                greetingEl.textContent = "Hello, " + parsed.firstName + "!";
             }
 
             document.querySelectorAll('input[name="attending"]').forEach(function (r) {
@@ -84,11 +96,12 @@
     });
 
     function formatRsvpText(p) {
+        var displayName = p.fullName || (p.firstName + " " + p.lastName).trim();
         var lines = [
             "Wedding RSVP — Jennifer & James",
             "Submitted: " + new Date().toLocaleString(),
             "",
-            "Name: " + p.firstName + " " + p.lastName,
+            "Name: " + displayName,
             "Attendance: " + (p.attending ? "Happily Accepts" : "Regretfully Declines")
         ];
 
@@ -109,6 +122,7 @@
     }
 
     function deliverRsvp(p) {
+        var displayName = p.fullName || (p.firstName + " " + p.lastName).trim();
         var subjectSuffix = p.attending ? "Attending" : "Declined";
         var guestEmail = p.email || cfg.formSubmitEmail || "";
 
@@ -118,8 +132,8 @@
                 headers: { "Content-Type": "application/json", Accept: "application/json" },
                 body: JSON.stringify({
                     access_key: cfg.web3formsKey,
-                    subject: "RSVP: " + p.firstName + " " + p.lastName + " — " + subjectSuffix,
-                    from_name: p.firstName + " " + p.lastName,
+                    subject: "RSVP: " + displayName + " — " + subjectSuffix,
+                    from_name: displayName,
                     email: guestEmail,
                     phone: p.phone || "",
                     message: formatRsvpText(p)
@@ -139,10 +153,10 @@
         }
 
         var body = {
-            name: p.firstName + " " + p.lastName,
+            name: displayName,
             attending: p.attending ? "Happily Accepts" : "Regretfully Declines",
             message: formatRsvpText(p),
-            _subject: "Wedding RSVP: " + p.firstName + " " + p.lastName + " — " + subjectSuffix,
+            _subject: "Wedding RSVP: " + displayName + " — " + subjectSuffix,
             _template: "table",
             _captcha: "false"
         };
@@ -204,10 +218,13 @@
 
         var attending = attendingChoice === "yes";
         var mealEl = document.querySelector('input[name="meal"]:checked');
+        var nameInput = document.getElementById("guestName");
+        var parsed = parseGuestName(guestFullName || (nameInput ? nameInput.value : ""));
 
         var payload = {
-            firstName: guestFirstName || document.getElementById("firstName").value.trim(),
-            lastName: guestLastName || document.getElementById("lastName").value.trim(),
+            fullName: parsed.fullName,
+            firstName: parsed.firstName,
+            lastName: parsed.lastName,
             email: attending ? document.getElementById("email").value.trim() : null,
             phone: attending ? (document.getElementById("phone").value.trim() || null) : null,
             addressLine: attending ? (document.getElementById("address").value.trim() || null) : null,
@@ -219,7 +236,7 @@
             message: attending ? (document.getElementById("message").value.trim() || null) : null
         };
 
-        if (!payload.firstName || !payload.lastName) {
+        if (!payload.fullName) {
             showError(formError, "Please enter your name.");
             submitBtn.disabled = false;
             return;

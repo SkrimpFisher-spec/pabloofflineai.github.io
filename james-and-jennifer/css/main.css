@@ -970,55 +970,62 @@ body.within-thirty-days .countdown-bar {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .meal-section.hidden { display: none; }
 
-/* Section side ornaments — visible on wide screens only */
-.section-decorated {
+/* Botanical margin art — section-relative, true-alpha PNG */
+.decorative-section {
     position: relative;
     overflow: hidden;
+    padding-inline: clamp(0.875rem, 2.75vw, 2.75rem);
 }
 
-.section-decorated .container {
+.decorative-section > .container {
     position: relative;
-    z-index: 1;
+    z-index: 5;
 }
 
-.section-ornament {
-    display: none;
-    pointer-events: none;
+.botanical {
     position: absolute;
+    z-index: 0;
+    width: clamp(175px, 16vw, 295px);
+    height: auto;
+    opacity: 0.12;
+    pointer-events: none;
+    user-select: none;
+}
+
+.botanical-left {
+    left: clamp(1.25rem, 3vw, 2.25rem);
     top: 50%;
-    transform: translateY(-50%);
-    width: clamp(4rem, 8vw, 7rem);
-    height: clamp(14rem, 28vw, 22rem);
-    opacity: 0.22;
-    color: var(--gold);
-    background: url("../assets/ornament-floral.svg") center / contain no-repeat;
+    transform: translateX(-14%) translateY(-50%);
 }
 
-.section-ornament--left {
-    left: clamp(0.5rem, 2vw, 2.5rem);
+.botanical-right {
+    right: clamp(1.25rem, 3vw, 2.25rem);
+    top: 50%;
+    transform: translateX(14%) translateY(-50%) scaleX(-1);
 }
 
-.section-ornament--right {
-    right: clamp(0.5rem, 2vw, 2.5rem);
-    transform: translateY(-50%) scaleX(-1);
+#timeline .botanical {
+    opacity: 0.13;
+    width: clamp(262px, 24vw, 443px);
 }
 
-.section-ornament--warm { color: var(--gold-dark); opacity: 0.18; }
-.section-ornament--subtle { opacity: 0.14; }
-
-@media (min-width: 900px) {
-    .section-ornament { display: block; }
+#rsvp .botanical {
+    opacity: 0.1;
 }
 
-@media (min-width: 1200px) {
-    .section-ornament {
-        width: clamp(5rem, 6vw, 8rem);
-        height: clamp(16rem, 24vw, 26rem);
-        opacity: 0.26;
+#registry .botanical {
+    opacity: 0.11;
+}
+
+#story .botanical {
+    opacity: 0.15;
+    width: clamp(262px, 24vw, 443px);
+}
+
+@media (max-width: 1100px) {
+    .botanical {
+        display: none;
     }
-
-    .section-ornament--warm { opacity: 0.22; }
-    .section-ornament--subtle { opacity: 0.18; }
 }
 
 /* Lodging modal */
@@ -1222,7 +1229,7 @@ body.within-thirty-days .countdown-bar {
         box-shadow: 0 0 6px rgba(184, 149, 106, 0.35);
     }
 
-    .section-ornament { display: none; }
+    .botanical { display: none; }
 
     .reveal {
         opacity: 1;

@@ -176,7 +176,7 @@
             if (days === 0 && hours === 0 && mins === 0) {
                 countdownTagline.textContent = "today we say \"I do\"";
             } else {
-                countdownTagline.textContent = "until we say \"I do\"";
+                countdownTagline.textContent = "until we tie the knot";
             }
         }
     }
@@ -282,6 +282,80 @@
             item.classList.toggle("open");
 
         });
+
+    });
+
+
+
+    // Lodging modal
+
+    var lodgingModal = document.getElementById("lodgingModal");
+
+    var lodgingOpen = document.getElementById("lodgingOpen");
+
+    var lodgingOpenFaq = document.getElementById("lodgingOpenFaq");
+
+    var lodgingClose = document.getElementById("lodgingClose");
+
+    var lodgingBackdrop = document.getElementById("lodgingBackdrop");
+
+    var lodgingLastFocus = null;
+
+
+
+    function openLodgingModal() {
+
+        if (!lodgingModal) return;
+
+        lodgingLastFocus = document.activeElement;
+
+        lodgingModal.hidden = false;
+
+        document.body.style.overflow = "hidden";
+
+        if (lodgingClose) lodgingClose.focus();
+
+    }
+
+
+
+    function closeLodgingModal() {
+
+        if (!lodgingModal) return;
+
+        lodgingModal.hidden = true;
+
+        document.body.style.overflow = "";
+
+        if (lodgingLastFocus && lodgingLastFocus.focus) lodgingLastFocus.focus();
+
+    }
+
+
+
+    if (lodgingOpen) lodgingOpen.addEventListener("click", openLodgingModal);
+
+    if (lodgingOpenFaq) {
+
+        lodgingOpenFaq.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            openLodgingModal();
+
+        });
+
+    }
+
+    if (lodgingClose) lodgingClose.addEventListener("click", closeLodgingModal);
+
+    if (lodgingBackdrop) lodgingBackdrop.addEventListener("click", closeLodgingModal);
+
+
+
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape" && lodgingModal && !lodgingModal.hidden) closeLodgingModal();
 
     });
 

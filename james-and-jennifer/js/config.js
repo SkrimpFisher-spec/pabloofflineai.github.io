@@ -22,5 +22,6 @@ window.WEDDING_CONFIG = {
 
     venueName: "Juniper Creek Venue",
     venueUrl: "https://www.junipercreekvenue.com/about",
-    mapsDirectionsUrl: "https://www.google.com/maps/dir/?api=1&destination=2396+Juniper+Creek+Rd,+Quincy,+FL+32351"
+    mapsDirectionsUrl: "https://www.google.com/maps/dir/?api=1&destination=2396+Juniper+Creek+Rd,+Quincy,+FL+32351",
+    registryUrl: "https://www.amazon.com/wedding/share/thewoodrows"
 };

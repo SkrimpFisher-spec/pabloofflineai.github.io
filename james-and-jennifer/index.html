@@ -36,7 +36,7 @@
 
             <h1 class="hero-names">Jennifer<span class="hero-amp">&</span>James</h1>
 
-            <p class="hero-tagline">We&rsquo;re Getting Married</p>
+            <p class="hero-tagline">Ready to Tie the Knot</p>
 
             <p class="hero-date">February 7, 2027</p>
 
@@ -88,7 +88,7 @@
 
                 </div>
 
-                <p class="countdown-tagline" id="countdownTagline">until we say &ldquo;I do&rdquo;</p>
+                <p class="countdown-tagline" id="countdownTagline">until we tie the knot</p>
 
                 <p class="countdown-note" id="countdownNote" hidden>One month to go</p>
 
@@ -121,6 +121,7 @@
                         <div class="venue-links">
                             <a class="venue-link" href="https://www.junipercreekvenue.com/about" target="_blank" rel="noopener noreferrer">Venue website &amp; map</a>
                             <a class="venue-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=2396+Juniper+Creek+Rd,+Quincy,+FL+32351" target="_blank" rel="noopener noreferrer">Get directions</a>
+                            <button type="button" class="venue-link venue-link--btn" id="lodgingOpen" aria-haspopup="dialog">Lodging details</button>
                         </div>
                     </div>
 
@@ -163,14 +164,17 @@
 
             </div>
 
-            <p class="venue-note reveal">For out-of-town guests, two trusted hotels — Holiday Inn Express and Hampton Inn — are just minutes away, making it simple to celebrate and stay close.</p>
+            <p class="venue-note reveal">For out-of-town guests, three trusted hotels on Spooner Road are just minutes from the venue — with a complimentary shuttle to and from the celebration.</p>
 
         </div>
 
     </section>
 
 
-    <section class="section section-bg-pink" id="timeline">
+    <section class="section section-bg-pink section-decorated" id="timeline">
+
+        <div class="section-ornament section-ornament--left" aria-hidden="true"></div>
+        <div class="section-ornament section-ornament--right" aria-hidden="true"></div>
 
         <div class="container reveal">
 
@@ -205,7 +209,10 @@
     </section>
 
 
-    <section class="section rsvp-section" id="rsvp">
+    <section class="section section-decorated rsvp-section" id="rsvp">
+
+        <div class="section-ornament section-ornament--left section-ornament--warm" aria-hidden="true"></div>
+        <div class="section-ornament section-ornament--right section-ornament--warm" aria-hidden="true"></div>
 
         <div class="container">
 
@@ -227,35 +234,43 @@
 
                 <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
 
+                <div class="rsvp-step" id="rsvpStepName">
 
+                    <div class="form-row two">
 
-                <div class="form-row two">
+                        <div class="form-group"><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName" required autocomplete="given-name"></div>
 
-                    <div class="form-group"><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName" required></div>
+                        <div class="form-group"><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName" required autocomplete="family-name"></div>
 
-                    <div class="form-group"><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName" required></div>
+                    </div>
 
-                </div>
-
-                <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
-
-                <div class="form-group"><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone"></div>
-
-                <div class="form-group"><label for="address">Mailing Address</label><textarea id="address" name="address" rows="3" placeholder="Street, city, state, and ZIP"></textarea></div>
-
-
-
-                <div class="form-group">
-
-                    <label>Attendance</label>
-
-                    <label class="radio-option"><input type="radio" name="attending" value="yes" checked> Happily Accepts</label>
-
-                    <label class="radio-option"><input type="radio" name="attending" value="no"> Regretfully Declines</label>
+                    <button type="button" class="btn-submit btn-step" id="rsvpContinueBtn">Continue</button>
 
                 </div>
 
+                <div class="rsvp-step rsvp-step--hidden" id="rsvpStepAttendance">
 
+                    <p class="rsvp-greeting" id="rsvpGreeting"></p>
+
+                    <div class="form-group">
+
+                        <label>Will you be joining us?</label>
+
+                        <label class="radio-option"><input type="radio" name="attending" value="yes"> Happily Accepts</label>
+
+                        <label class="radio-option"><input type="radio" name="attending" value="no"> Regretfully Declines</label>
+
+                    </div>
+
+                </div>
+
+                <div class="rsvp-step rsvp-step--hidden" id="rsvpStepDetails">
+
+                <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email"></div>
+
+                <div class="form-group"><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone" autocomplete="tel"></div>
+
+                <div class="form-group"><label for="address">Mailing Address</label><textarea id="address" name="address" rows="3" placeholder="Street, city, state, and ZIP" autocomplete="street-address"></textarea></div>
 
                 <div class="form-group meal-section" id="mealSection">
 
@@ -311,9 +326,11 @@
 
 
 
+                </div>
+
                 <p class="form-error" id="formError"></p>
 
-                <button type="submit" class="btn-submit" id="submitBtn">Submit RSVP</button>
+                <button type="submit" class="btn-submit rsvp-step--hidden" id="submitBtn">Submit RSVP</button>
 
                 </form>
 
@@ -324,7 +341,38 @@
     </section>
 
 
-    <section class="section section-bg-sage" id="story">
+    <section class="section section-decorated" id="registry">
+
+        <div class="section-ornament section-ornament--left" aria-hidden="true"></div>
+        <div class="section-ornament section-ornament--right" aria-hidden="true"></div>
+
+        <div class="container reveal">
+
+            <h2 class="section-title">Registry</h2>
+
+            <div class="registry-card glass-card">
+
+                <p class="registry-lede">Your presence is the greatest gift. If you wish to honor us with something more, our registry is a lovely place to start.</p>
+
+                <a class="registry-link" href="https://www.amazon.com/wedding/share/thewoodrows" target="_blank" rel="noopener noreferrer">
+
+                    <span class="registry-link-label">View Our Registry</span>
+
+                    <span class="registry-link-sub">Amazon Wedding Registry</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="section section-bg-sage section-decorated" id="story">
+
+        <div class="section-ornament section-ornament--left" aria-hidden="true"></div>
+        <div class="section-ornament section-ornament--right" aria-hidden="true"></div>
 
         <div class="container reveal">
 
@@ -351,7 +399,10 @@
     </section>
 
 
-    <section class="section" id="faq">
+    <section class="section section-decorated" id="faq">
+
+        <div class="section-ornament section-ornament--left section-ornament--subtle" aria-hidden="true"></div>
+        <div class="section-ornament section-ornament--right section-ornament--subtle" aria-hidden="true"></div>
 
         <div class="container reveal">
 
@@ -385,7 +436,7 @@
 
                         <dt>Is there a hotel block?</dt>
 
-                        <dd>We don't have a formal room block. Holiday Inn Express and Hampton Inn in Quincy are just minutes from the venue and are convenient options for out-of-town guests.</dd>
+                        <dd>We don&rsquo;t have a formal room block, but three hotels on Spooner Road &mdash; Quality Inn, Holiday Inn Express, and Hampton Inn &mdash; are clustered together just minutes from the venue. We&rsquo;ll run a complimentary shuttle between this hotel group and Juniper Creek. See <button type="button" class="faq-inline-link" id="lodgingOpenFaq">lodging details</button> for addresses and typical rates.</dd>
 
                         <dt>Can I arrive early?</dt>
 
@@ -422,6 +473,66 @@
         <p class="footer-note">Your contact information is used only for wedding communications.</p>
 
     </footer>
+
+
+
+    <div class="lodging-modal" id="lodgingModal" role="dialog" aria-modal="true" aria-labelledby="lodgingTitle" hidden>
+
+        <div class="lodging-modal-backdrop" id="lodgingBackdrop"></div>
+
+        <div class="lodging-modal-card">
+
+            <button type="button" class="lodging-modal-close" id="lodgingClose" aria-label="Close lodging details">&times;</button>
+
+            <h2 class="lodging-modal-title" id="lodgingTitle">Lodging on Spooner Road</h2>
+
+            <p class="lodging-modal-intro">Three trusted hotels sit side by side on Spooner Road in Quincy &mdash; about a 10-minute drive from Juniper Creek Venue. We&rsquo;ll provide a <strong>complimentary shuttle</strong> between this hotel cluster and the celebration.</p>
+
+            <ul class="lodging-list">
+
+                <li class="lodging-item">
+
+                    <h3>Holiday Inn Express &amp; Suites Quincy I-10</h3>
+
+                    <p class="lodging-address">101 Spooner Rd, Quincy, FL 32351</p>
+
+                    <p class="lodging-rate">Typically <strong>$98&ndash;$140</strong> per night</p>
+
+                    <a class="lodging-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=101+Spooner+Rd,+Quincy,+FL+32351" target="_blank" rel="noopener noreferrer">View on map</a>
+
+                </li>
+
+                <li class="lodging-item">
+
+                    <h3>Hampton Inn Quincy</h3>
+
+                    <p class="lodging-address">165 Spooner Rd, Quincy, FL 32351</p>
+
+                    <p class="lodging-rate">Typically <strong>$95&ndash;$135</strong> per night</p>
+
+                    <a class="lodging-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=165+Spooner+Rd,+Quincy,+FL+32351" target="_blank" rel="noopener noreferrer">View on map</a>
+
+                </li>
+
+                <li class="lodging-item">
+
+                    <h3>Quality Inn Quincy &ndash; Tallahassee West</h3>
+
+                    <p class="lodging-address">75 Spooner Rd, Quincy, FL 32351</p>
+
+                    <p class="lodging-rate">Typically <strong>$85&ndash;$120</strong> per night</p>
+
+                    <a class="lodging-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=75+Spooner+Rd,+Quincy,+FL+32351" target="_blank" rel="noopener noreferrer">View on map</a>
+
+                </li>
+
+            </ul>
+
+            <p class="lodging-note">Rates vary by season and availability &mdash; book early for the best price. Shuttle schedule and pickup details will be shared closer to the wedding.</p>
+
+        </div>
+
+    </div>
 
 
 

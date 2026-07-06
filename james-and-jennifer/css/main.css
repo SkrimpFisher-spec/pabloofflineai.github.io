@@ -421,6 +421,17 @@ a:hover { color: var(--gold); }
     color: var(--gold-dark);
 }
 
+.venue-link--btn {
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.venue-link--btn:hover {
+    background: rgba(184, 149, 106, 0.2);
+}
+
 .detail-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 
 .tag {
@@ -959,6 +970,244 @@ body.within-thirty-days .countdown-bar {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .meal-section.hidden { display: none; }
 
+/* Section side ornaments — visible on wide screens only */
+.section-decorated {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-decorated .container {
+    position: relative;
+    z-index: 1;
+}
+
+.section-ornament {
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(4rem, 8vw, 7rem);
+    height: clamp(14rem, 28vw, 22rem);
+    opacity: 0.22;
+    color: var(--gold);
+    background: url("../assets/ornament-floral.svg") center / contain no-repeat;
+}
+
+.section-ornament--left {
+    left: clamp(0.5rem, 2vw, 2.5rem);
+}
+
+.section-ornament--right {
+    right: clamp(0.5rem, 2vw, 2.5rem);
+    transform: translateY(-50%) scaleX(-1);
+}
+
+.section-ornament--warm { color: var(--gold-dark); opacity: 0.18; }
+.section-ornament--subtle { opacity: 0.14; }
+
+@media (min-width: 900px) {
+    .section-ornament { display: block; }
+}
+
+@media (min-width: 1200px) {
+    .section-ornament {
+        width: clamp(5rem, 6vw, 8rem);
+        height: clamp(16rem, 24vw, 26rem);
+        opacity: 0.26;
+    }
+
+    .section-ornament--warm { opacity: 0.22; }
+    .section-ornament--subtle { opacity: 0.18; }
+}
+
+/* Lodging modal */
+.lodging-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.lodging-modal[hidden] { display: none; }
+
+.lodging-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(44, 40, 37, 0.72);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.lodging-modal-card {
+    position: relative;
+    width: min(100%, 34rem);
+    max-height: min(90vh, 42rem);
+    overflow-y: auto;
+    background: var(--warm-white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-lg);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.lodging-modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.85rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--charcoal-soft);
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.lodging-modal-close:hover { color: var(--charcoal); background: rgba(184, 149, 106, 0.1); }
+
+.lodging-modal-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 1rem + 1.2vw, 1.85rem);
+    color: var(--gold-dark);
+    margin-bottom: 0.75rem;
+    padding-right: 1.5rem;
+}
+
+.lodging-modal-intro {
+    font-size: var(--fs-small);
+    color: var(--charcoal-soft);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+}
+
+.lodging-list {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+}
+
+.lodging-item {
+    padding: 1rem 1.1rem;
+    background: var(--cream);
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+}
+
+.lodging-item h3 {
+    font-family: var(--font-serif);
+    font-size: clamp(1.05rem, 0.9rem + 0.4vw, 1.2rem);
+    font-weight: 500;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+}
+
+.lodging-address {
+    font-size: var(--fs-xs);
+    color: var(--charcoal-soft);
+    margin-bottom: 0.25rem;
+}
+
+.lodging-rate {
+    font-size: var(--fs-xs);
+    color: var(--charcoal-soft);
+    margin-bottom: 0.5rem;
+}
+
+.lodging-map-link {
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.lodging-note {
+    margin-top: 1.1rem;
+    font-size: var(--fs-xs);
+    color: var(--charcoal-soft);
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.faq-inline-link {
+    font: inherit;
+    color: var(--gold-dark);
+    background: none;
+    border: none;
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.faq-inline-link:hover { color: var(--gold); }
+
+/* Registry */
+.registry-card {
+    max-width: clamp(320px, 90vw, 36rem);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.registry-lede {
+    font-size: var(--fs-body);
+    color: var(--charcoal-soft);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.registry-link {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: clamp(1rem, 2.5vw, 1.35rem) clamp(1.75rem, 4vw, 2.5rem);
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(184, 149, 106, 0.12);
+    color: var(--gold-dark);
+    transition: background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.registry-link:hover {
+    background: rgba(184, 149, 106, 0.22);
+    color: var(--gold-dark);
+    transform: translateY(-2px);
+}
+
+.registry-link-label {
+    font-family: var(--font-serif);
+    font-size: clamp(1.15rem, 0.95rem + 0.5vw, 1.35rem);
+    letter-spacing: 0.04em;
+}
+
+.registry-link-sub {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+
+/* Progressive RSVP */
+.rsvp-step { transition: opacity 0.35s var(--ease); }
+.rsvp-step--hidden { display: none; }
+
+.rsvp-greeting {
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 0.95rem + 0.6vw, 1.45rem);
+    color: var(--charcoal);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.btn-step { margin-top: 0.5rem; }
+
+#rsvpStepDetails .form-group:first-child { margin-top: 0.25rem; }
+
 @media (prefers-reduced-motion: reduce) {
     .hero-bg { animation: none; }
 
@@ -972,6 +1221,8 @@ body.within-thirty-days .countdown-bar {
         animation: none;
         box-shadow: 0 0 6px rgba(184, 149, 106, 0.35);
     }
+
+    .section-ornament { display: none; }
 
     .reveal {
         opacity: 1;

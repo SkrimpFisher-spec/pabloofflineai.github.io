@@ -120,6 +120,11 @@ const TV_EXCLUDED_PATTERNS = [
     /lucha libre/i,
     /impact wrestling/i,
     /ring of honor/i,
+    /\broh\b/i,
+    /honorclub/i,
+    /honor club/i,
+    /on honorclub/i,
+    /glory by honor/i,
     /all elite wrestling/i,
     /professional wrestling/i,
     /\bwwf\b/i,
@@ -200,6 +205,8 @@ const TV_EXCLUDED_PATTERNS = [
     /centric\b/i,
     /bounce tv/i,
     /tv one originals/i,
+    /\bthe chi\b/i,
+    /^the chi$/i,
 
     // Law & Order franchise (every spin-off)
     /law & order/i,
@@ -336,15 +343,12 @@ const TV_EXCLUDED_PATTERNS = [
     /murder one/i,
     /murder, she wrote/i,
 
-    // Medical soaps & melodrama (Scrubs, The Pitt, House, ER-style stays)
+    // Medical soaps (Scrubs, The Pitt, House, ER-style stays)
     /grey'?s anatomy/i,
     /grays anatomy/i,
     /private practice/i,
     /station 19/i,
     /station nineteen/i,
-    /a million little things/i,
-    /new amsterdam\b/i,
-    /chicago hope/i,
 
     // Daytime & prime-time soap operas
     /general hospital/i,

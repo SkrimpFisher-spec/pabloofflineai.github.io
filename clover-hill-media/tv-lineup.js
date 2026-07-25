@@ -7,7 +7,7 @@ const TV_STATUS_LABELS = {
 const TV_LINEUP_TARGET = 12;
 
 // TMDB genre IDs — hardcoded exclusions at the API layer
-const TV_API_EXCLUDED_GENRES = '10763|10767|10762|80'; // News, Talk, Kids, Crime
+const TV_API_EXCLUDED_GENRES = '10763|10767|10762|80|10766'; // News, Talk, Kids, Crime, Soap
 
 // US TV content rating floor (TV-14 ≈ PG-13). Applied on every discover query.
 const TV_MIN_US_CERT = 'TV-14';
@@ -19,7 +19,7 @@ const TV_API_EXCLUDED_NETWORKS = '24|827|6891';
 const TV_API_EXCLUDED_COMPANIES = '3096|89210|210689|11964';
 
 // Hardcoded post-fetch exclusions (site policy, not user-configurable)
-const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762, 80]);
+const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762, 80, 10766]);
 const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
 const TV_ANIME_LANGUAGES = new Set(['ja', 'ko', 'zh', 'cn']);
 
@@ -334,7 +334,60 @@ const TV_EXCLUDED_PATTERNS = [
     /on the case/i,
     /american detective/i,
     /murder one/i,
-    /murder, she wrote/i
+    /murder, she wrote/i,
+
+    // Medical soaps & melodrama (Scrubs, The Pitt, House, ER-style stays)
+    /grey'?s anatomy/i,
+    /grays anatomy/i,
+    /private practice/i,
+    /station 19/i,
+    /station nineteen/i,
+    /a million little things/i,
+    /new amsterdam\b/i,
+    /chicago hope/i,
+
+    // Daytime & prime-time soap operas
+    /general hospital/i,
+    /days of our lives/i,
+    /young and the restless/i,
+    /bold and the beautiful/i,
+    /all my children/i,
+    /one life to live/i,
+    /as the world turns/i,
+    /guiding light/i,
+    /passions\b/i,
+    /port charles/i,
+    /the bay\b/i,
+    /beyond the gates/i,
+    /beyond the gate/i,
+    /dynasty\b/i,
+    /dallas\b/i,
+    /knots landing/i,
+    /melrose place/i,
+    /90210\b/i,
+    /beverly hills, 90210/i,
+    /peyton place/i,
+    /dark shadows/i,
+    /hollywood heights/i,
+    /the haves and the have nots/i,  // already have variant
+    /if loving you is wrong/i,       // already have
+    /the secret life of the american teenager/i,
+    /pretty little liars/i,
+    /gossip girl/i,
+    /riverdale\b/i,
+    /emmerdale/i,
+    /coronation street/i,
+    /eastenders/i,
+    /hollyoaks/i,
+    /home and away/i,
+    /neighbours\b/i,
+
+    // Telenovelas
+    /telenovela/i,
+    /telenovelas/i,
+    /novela\b/i,
+    /la rosa de guadalupe/i,
+    /rub[ií]?\s*icon/i
 ];
 
 const tvDetailCache = new Map();

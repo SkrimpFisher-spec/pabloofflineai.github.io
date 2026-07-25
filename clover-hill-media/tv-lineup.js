@@ -9,23 +9,28 @@ const TV_UPCOMING_MAX_DAYS = 180;
 const TV_UPCOMING_MIN_POPULARITY = 5;
 const TV_UPCOMING_MIN_OVERVIEW = 25;
 
-// Major US subscription streaming services (TMDB provider IDs, US region)
+// Major US streaming services — TMDB watch-provider IDs (US) + network IDs for upcoming
 const TV_STREAMING_TARGETS = [
-    { id: 8, label: 'Netflix' },
-    { id: 15, label: 'Hulu' },
-    { id: 350, label: 'Apple TV+' },
-    { id: 1899, label: 'Max' },
-    { id: 531, label: 'Paramount+' },
-    { id: 386, label: 'Peacock' },
-    { id: 337, label: 'Disney+' },
-    { id: 9, label: 'Prime Video' }
+    { providerId: 8, networkId: 213, label: 'Netflix' },
+    { providerId: 15, networkId: 453, label: 'Hulu' },
+    { providerId: 350, networkId: 2552, label: 'Apple TV+' },
+    { providerId: 1899, networkId: 49, label: 'Max' },
+    { providerId: 531, networkId: 4330, label: 'Paramount+' },
+    { providerId: 386, networkId: 3353, label: 'Peacock' },
+    { providerId: 337, networkId: 2739, label: 'Disney+' },
+    { providerId: 9, networkId: 1024, label: 'Prime Video' }
 ];
 
-const TV_STREAMING_PROVIDER_IDS = new Set(TV_STREAMING_TARGETS.map(t => t.id));
-const TV_STREAMING_PROVIDER_QUERY = TV_STREAMING_TARGETS.map(t => t.id).join('|');
+const TV_STREAMING_PROVIDER_IDS = new Set(TV_STREAMING_TARGETS.map(t => t.providerId));
+const TV_STREAMING_PROVIDER_QUERY = TV_STREAMING_TARGETS.map(t => t.providerId).join('|');
+const TV_STREAMING_NETWORK_IDS = new Set(TV_STREAMING_TARGETS.map(t => t.networkId));
+const TV_STREAMING_NETWORK_QUERY = TV_STREAMING_TARGETS.map(t => t.networkId).join('|');
 
 const TV_STREAMING_PROVIDER_LABELS = Object.fromEntries(
-    TV_STREAMING_TARGETS.map(t => [t.id, t.label])
+    TV_STREAMING_TARGETS.map(t => [t.providerId, t.label])
+);
+const TV_STREAMING_NETWORK_LABELS = Object.fromEntries(
+    TV_STREAMING_TARGETS.map(t => [t.networkId, t.label])
 );
 
 // Linear broadcast / cable networks — skip when not on a target streamer
@@ -429,17 +434,26 @@ const tvProvidersCache = new Map();
 
 let currentTvMode = 'airing';
 
-function tvDiscoverParams(mode, page, providerId = null) {
+function tvDiscoverParams(mode, page, streamTarget = null) {
     const base = {
         sort_by: 'popularity.desc',
         without_genres: TV_API_EXCLUDED_GENRES,
         without_networks: TV_API_EXCLUDED_NETWORKS,
         without_companies: TV_API_EXCLUDED_COMPANIES,
-        watch_region: 'US',
-        with_watch_monetization_types: 'flatrate',
-        with_watch_providers: providerId ? String(providerId) : TV_STREAMING_PROVIDER_QUERY,
         page: String(page)
     };
+
+    if (mode === 'upcoming') {
+        base.with_networks = streamTarget?.networkId
+            ? String(streamTarget.networkId)
+            : TV_STREAMING_NETWORK_QUERY;
+    } else {
+        base.watch_region = 'US';
+        base.with_watch_monetization_types = 'flatrate';
+        base.with_watch_providers = streamTarget?.providerId
+            ? String(streamTarget.providerId)
+            : TV_STREAMING_PROVIDER_QUERY;
+    }
 
     if (mode !== 'upcoming') {
         base.certification_country = 'US';
@@ -467,8 +481,8 @@ function tvDiscoverParams(mode, page, providerId = null) {
     }
 }
 
-function tvEndpoint(mode, page = 1, providerId = null) {
-    return tmdbUrl('/discover/tv', tvDiscoverParams(mode, page, providerId));
+function tvEndpoint(mode, page = 1, streamTarget = null) {
+    return tmdbUrl('/discover/tv', tvDiscoverParams(mode, page, streamTarget));
 }
 
 async function fetchTvWatchProviders(showId) {
@@ -496,14 +510,32 @@ function getPreferredProviders(providers) {
 }
 
 function formatProviderLabel(providers) {
-    const preferred = getPreferredProviders(providers);
-    if (preferred.length === 0) {
-        return (providers || []).slice(0, 2).map(p => p.name).join(' · ');
-    }
-    return preferred.map(p => p.name).slice(0, 3).join(' · ');
+    if (!providers?.length) return '';
+    return providers.map(p => p.name).slice(0, 3).join(' · ');
+}
+
+function inferStreamingPlatformsFromDetail(detail) {
+    return (detail?.networks || [])
+        .filter(n => TV_STREAMING_NETWORK_IDS.has(n.id))
+        .map(n => ({ id: n.id, name: TV_STREAMING_NETWORK_LABELS[n.id] || n.name }));
+}
+
+function resolveShowPlatforms(detail, watchProviders) {
+    const fromWatch = getPreferredProviders(watchProviders).map(p => ({
+        id: p.id,
+        name: TV_STREAMING_PROVIDER_LABELS[p.id] || p.name
+    }));
+    if (fromWatch.length) return fromWatch;
+    return inferStreamingPlatformsFromDetail(detail);
+}
+
+function hasStreamingAffiliation(detail, watchProviders) {
+    if (getPreferredProviders(watchProviders).length > 0) return true;
+    return (detail?.networks || []).some(n => TV_STREAMING_NETWORK_IDS.has(n.id));
 }
 
 function isLinearBroadcastShow(detail, providers) {
+    if ((detail?.networks || []).some(n => TV_STREAMING_NETWORK_IDS.has(n.id))) return false;
     if (getPreferredProviders(providers).length > 0) return false;
     return (detail?.networks || []).some(n => TV_BROADCAST_NETWORK_IDS.has(n.id));
 }
@@ -628,14 +660,15 @@ async function isExcludedTvShowAsync(show, mode = currentTvMode) {
     if (mode === 'upcoming' && !isUpcomingQualityShow(show)) return true;
     if (isExcludedTvShow(show, mode)) return true;
     try {
-        const [detail, providers] = await Promise.all([
+        const [detail, watchProviders] = await Promise.all([
             fetchTvDetail(show.id),
             fetchTvWatchProviders(show.id)
         ]);
-        show._providers = providers;
+        show._providers = resolveShowPlatforms(detail, watchProviders);
 
-        if (getPreferredProviders(providers).length === 0) return true;
-        if (isLinearBroadcastShow(detail, providers)) return true;
+        if (!hasStreamingAffiliation(detail, watchProviders)) return true;
+        if (mode !== 'upcoming' && getPreferredProviders(watchProviders).length === 0) return true;
+        if (isLinearBroadcastShow(detail, watchProviders)) return true;
         if (detailHasExcludedAffiliation(detail)) return true;
         if (matchesExcludedPatterns(detail)) return true;
     } catch (_) {
@@ -653,7 +686,7 @@ async function fetchPopularStreamingShows(targetCount = TV_LINEUP_TARGET) {
         let providerCount = 0;
 
         for (let page = 1; page <= 3 && providerCount < perProvider && collected.length < targetCount; page++) {
-            const res = await fetch(tvEndpoint('popular', page, target.id), { headers: TMDB_HEADERS });
+            const res = await fetch(tvEndpoint('popular', page, target), { headers: TMDB_HEADERS });
             if (!res.ok) throw new Error('TMDB error');
             const data = await res.json();
             const batch = data.results || [];
@@ -663,7 +696,7 @@ async function fetchPopularStreamingShows(targetCount = TV_LINEUP_TARGET) {
                 if (seen.has(show.id)) continue;
                 if (await isExcludedTvShowAsync(show, 'popular')) continue;
                 if (!show._providers?.length) {
-                    show._providers = [{ id: target.id, name: target.label }];
+                    show._providers = [{ id: target.networkId, name: target.label }];
                 }
                 seen.add(show.id);
                 collected.push(show);
@@ -700,20 +733,46 @@ async function tryCollectTvShow(show, mode, collected, seen, targetCount) {
 async function fetchUpcomingTvShows(targetCount = TV_LINEUP_TARGET) {
     const collected = [];
     const seen = new Set();
+    const perNetwork = Math.max(1, Math.ceil(targetCount / TV_STREAMING_TARGETS.length));
 
-    for (let page = 1; page <= 10 && collected.length < targetCount; page++) {
-        const res = await fetch(tvEndpoint('upcoming', page), { headers: TMDB_HEADERS });
-        if (!res.ok) throw new Error('TMDB error');
-        const data = await res.json();
-        const batch = data.results || [];
-        if (batch.length === 0) break;
+    for (const target of TV_STREAMING_TARGETS) {
+        let networkCount = 0;
 
-        for (const show of batch) {
-            await tryCollectTvShow(show, 'upcoming', collected, seen, targetCount);
-            if (collected.length >= targetCount) break;
+        for (let page = 1; page <= 3 && networkCount < perNetwork && collected.length < targetCount; page++) {
+            const res = await fetch(tvEndpoint('upcoming', page, target), { headers: TMDB_HEADERS });
+            if (!res.ok) throw new Error('TMDB error');
+            const data = await res.json();
+            const batch = data.results || [];
+            if (batch.length === 0) break;
+
+            for (const show of batch) {
+                if (seen.has(show.id)) continue;
+                if (!isUpcomingQualityShow(show)) continue;
+                if (await isExcludedTvShowAsync(show, 'upcoming')) continue;
+                if (!show._providers?.length) {
+                    show._providers = [{ id: target.networkId, name: target.label }];
+                }
+                seen.add(show.id);
+                collected.push(show);
+                networkCount++;
+                if (collected.length >= targetCount) break;
+            }
+
+            if (page >= (data.total_pages || 1)) break;
         }
+    }
 
-        if (page >= (data.total_pages || 1)) break;
+    if (collected.length < targetCount) {
+        for (let page = 1; page <= 5 && collected.length < targetCount; page++) {
+            const res = await fetch(tvEndpoint('upcoming', page), { headers: TMDB_HEADERS });
+            if (!res.ok) break;
+            const data = await res.json();
+            for (const show of data.results || []) {
+                await tryCollectTvShow(show, 'upcoming', collected, seen, targetCount);
+                if (collected.length >= targetCount) break;
+            }
+            if (page >= (data.total_pages || 1)) break;
+        }
     }
 
     if (collected.length < targetCount) {

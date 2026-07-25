@@ -1,10 +1,13 @@
 const TV_STATUS_LABELS = {
     airing: 'English-language shows with new episodes this week',
     popular: 'most popular English-language shows right now',
-    upcoming: 'anticipated English-language shows coming soon'
+    upcoming: 'highly anticipated English-language shows premiering soon'
 };
 
 const TV_LINEUP_TARGET = 12;
+const TV_UPCOMING_MAX_DAYS = 180;
+const TV_UPCOMING_MIN_POPULARITY = 5;
+const TV_UPCOMING_MIN_OVERVIEW = 25;
 
 // TMDB genre IDs — hardcoded exclusions at the API layer
 const TV_API_EXCLUDED_GENRES = '10763|10767|10762|80|10766'; // News, Talk, Kids, Crime, Soap
@@ -81,6 +84,9 @@ const TV_EXCLUDED_PATTERNS = [
     /after.?show/i,
     /red table talk/i,
     /hot ones/i,
+
+    // Sports doc miniseries (upcoming filler)
+    /^the dynasty:/i,
 
     // Kids & preschool (backup if TMDB rating/genre data is missing)
     /paw patrol/i,
@@ -404,10 +410,13 @@ function tvDiscoverParams(mode, page) {
         without_genres: TV_API_EXCLUDED_GENRES,
         without_networks: TV_API_EXCLUDED_NETWORKS,
         without_companies: TV_API_EXCLUDED_COMPANIES,
-        certification_country: 'US',
-        'certification.gte': TV_MIN_US_CERT,
         page: String(page)
     };
+
+    if (mode !== 'upcoming') {
+        base.certification_country = 'US';
+        base['certification.gte'] = TV_MIN_US_CERT;
+    }
 
     switch (mode) {
         case 'airing':
@@ -421,7 +430,9 @@ function tvDiscoverParams(mode, page) {
         case 'upcoming':
             return englishDiscoverParams({
                 ...base,
-                'first_air_date.gte': todayISO()
+                'first_air_date.gte': todayISO(),
+                'first_air_date.lte': daysFromTodayISO(TV_UPCOMING_MAX_DAYS),
+                include_null_first_air_dates: 'false'
             });
         default:
             return englishDiscoverParams(base);
@@ -481,8 +492,9 @@ function detailHasExcludedAffiliation(detail) {
     return false;
 }
 
-function isExcludedTvShow(show) {
+function isExcludedTvShow(show, mode = currentTvMode) {
     if ((show.genre_ids || []).some(id => TV_BLOCKED_GENRE_IDS.has(id))) return true;
+    if (mode === 'upcoming' && (show.genre_ids || []).includes(99)) return true;
     if (isAsianAnime(show)) return true;
 
     const genres = show.genre_ids || [];
@@ -493,19 +505,116 @@ function isExcludedTvShow(show) {
     return matchesExcludedPatterns(show);
 }
 
-async function isExcludedTvShowAsync(show) {
-    if (isExcludedTvShow(show)) return true;
+function isUpcomingQualityShow(show) {
+    if (!show.poster_path) return false;
+    if ((show.popularity || 0) < TV_UPCOMING_MIN_POPULARITY) return false;
+
+    const overview = (show.overview || '').trim();
+    if (overview.length < TV_UPCOMING_MIN_OVERVIEW) return false;
+    if (!show.first_air_date) return false;
+
+    const today = todayISO();
+    if (show.first_air_date < today) return false;
+    if (show.first_air_date > daysFromTodayISO(TV_UPCOMING_MAX_DAYS)) return false;
+
+    const name = (show.name || '').trim();
+    if (name.length < 2) return false;
+
+    return true;
+}
+
+function formatTvDateMeta(show, mode) {
+    const date = show.first_air_date || '';
+    if (mode === 'upcoming') {
+        if (!date) {
+            return { short: 'Premiere TBA', aria: 'premiere date to be announced', modal: 'Premiere date TBA' };
+        }
+        const formatted = formatDisplayDate(date);
+        return {
+            short: formatted,
+            aria: `premieres ${formatted}`,
+            modal: `Premieres ${formatted}`
+        };
+    }
+
+    const year = date.slice(0, 4) || 'TBA';
+    if (!date) {
+        return { short: year, aria: 'air date to be announced', modal: 'Air date TBA' };
+    }
+    return {
+        short: year,
+        aria: `first aired ${year}`,
+        modal: `First aired ${formatDisplayDate(date)}`
+    };
+}
+
+async function isExcludedTvShowAsync(show, mode = currentTvMode) {
+    if (mode === 'upcoming' && !isUpcomingQualityShow(show)) return true;
+    if (isExcludedTvShow(show, mode)) return true;
     try {
         const detail = await fetchTvDetail(show.id);
         if (detailHasExcludedAffiliation(detail)) return true;
         if (matchesExcludedPatterns(detail)) return true;
     } catch (_) {
-        return true;
+        return mode !== 'upcoming';
     }
     return false;
 }
 
+async function tryCollectTvShow(show, mode, collected, seen, targetCount) {
+    if (seen.has(show.id) || collected.length >= targetCount) return false;
+    if (mode === 'upcoming' && !isUpcomingQualityShow(show)) return false;
+    if (await isExcludedTvShowAsync(show, mode)) return false;
+    seen.add(show.id);
+    collected.push(show);
+    return true;
+}
+
+async function fetchUpcomingTvShows(targetCount = TV_LINEUP_TARGET) {
+    const collected = [];
+    const seen = new Set();
+
+    for (let page = 1; page <= 10 && collected.length < targetCount; page++) {
+        const res = await fetch(tvEndpoint('upcoming', page), { headers: TMDB_HEADERS });
+        if (!res.ok) throw new Error('TMDB error');
+        const data = await res.json();
+        const batch = data.results || [];
+        if (batch.length === 0) break;
+
+        for (const show of batch) {
+            await tryCollectTvShow(show, 'upcoming', collected, seen, targetCount);
+            if (collected.length >= targetCount) break;
+        }
+
+        if (page >= (data.total_pages || 1)) break;
+    }
+
+    if (collected.length < targetCount) {
+        const trendRes = await fetch(
+            tmdbUrl('/trending/tv/week', { page: '1' }),
+            { headers: TMDB_HEADERS }
+        );
+        if (trendRes.ok) {
+            const trendData = await trendRes.json();
+            const today = todayISO();
+            const maxDate = daysFromTodayISO(TV_UPCOMING_MAX_DAYS);
+            for (const show of trendData.results || []) {
+                if (collected.length >= targetCount) break;
+                if (!show.first_air_date || show.first_air_date < today || show.first_air_date > maxDate) continue;
+                await tryCollectTvShow(show, 'upcoming', collected, seen, targetCount);
+            }
+        }
+    }
+
+    collected.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    return collected.slice(0, targetCount);
+}
+
 async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
+    if (mode === 'upcoming') {
+        return fetchUpcomingTvShows(targetCount);
+    }
+
     const collected = [];
     const seen = new Set();
 
@@ -519,7 +628,7 @@ async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
 
         for (const show of batch) {
             if (seen.has(show.id)) continue;
-            if (await isExcludedTvShowAsync(show)) continue;
+            if (await isExcludedTvShowAsync(show, mode)) continue;
             seen.add(show.id);
             collected.push(show);
             if (collected.length >= targetCount) break;
@@ -531,41 +640,43 @@ async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
     return collected;
 }
 
-function renderTvCarousel(shows) {
+function renderTvCarousel(shows, mode = currentTvMode) {
     const carousel = document.getElementById('tv-carousel');
     if (!carousel) return;
     carousel.innerHTML = '';
+    carousel.setAttribute('aria-label', mode === 'upcoming' ? 'Upcoming TV shows' : 'TV shows');
+
     shows.forEach((show, index) => {
+        const meta = formatTvDateMeta(show, mode);
         const card = document.createElement('button');
         card.type = 'button';
         card.className = 'theater-ticket';
-        const airYear = (show.first_air_date || '').slice(0, 4) || 'TBA';
+        card.setAttribute('role', 'listitem');
+        card.setAttribute('aria-label', `${show.name}, ${meta.aria}. View details and trailer`);
         card.innerHTML = `
-            <span class="ticket-rank">#${index + 1}</span>
-            <img src="${escapeAttr(posterUrl(show))}" alt="${escapeAttr(show.name)} poster" loading="lazy" />
+            <span class="ticket-rank" aria-hidden="true">#${index + 1}</span>
+            <img src="${escapeAttr(posterUrl(show))}" alt="" aria-hidden="true" loading="lazy" />
             <div class="ticket-body">
                 <p class="ticket-title">${escapeHtml(show.name)}</p>
-                <p class="ticket-meta">${airYear}</p>
+                <p class="ticket-meta">${escapeHtml(meta.short)}</p>
             </div>`;
-        card.addEventListener('click', () => openTvModal(show));
+        card.addEventListener('click', () => openTvModal(show, mode));
         carousel.appendChild(card);
     });
 }
 
-async function openTvModal(show) {
-    const overlay = document.getElementById('tv-modal');
+async function openTvModal(show, mode = currentTvMode) {
     const title = document.getElementById('tv-modal-title');
     const meta = document.getElementById('tv-modal-meta');
     const synopsis = document.getElementById('tv-modal-synopsis');
     const trailerSlot = document.getElementById('tv-trailer-slot');
+    const dateMeta = formatTvDateMeta(show, mode);
 
     title.textContent = show.name;
-    meta.textContent = show.first_air_date ? `First aired ${show.first_air_date}` : 'Air date TBA';
+    meta.textContent = dateMeta.modal;
     synopsis.textContent = show.overview || 'No synopsis available yet.';
     trailerSlot.innerHTML = '<div class="theater-no-trailer">Loading trailer…</div>';
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    A11y.openModal('tv-modal', '#tv-modal-close');
 
     try {
         const res = await fetch(tmdbUrl(`/tv/${show.id}/videos`), { headers: TMDB_HEADERS });
@@ -583,13 +694,8 @@ async function openTvModal(show) {
 }
 
 function closeTvModal() {
-    const overlay = document.getElementById('tv-modal');
-    overlay.classList.add('hidden');
-    overlay.classList.remove('flex');
     document.getElementById('tv-trailer-slot').innerHTML = '';
-    if (!document.getElementById('theater-modal')?.classList.contains('flex')) {
-        document.body.style.overflow = '';
-    }
+    A11y.closeModal('tv-modal');
 }
 
 async function loadTvTab(mode) {
@@ -598,18 +704,22 @@ async function loadTvTab(mode) {
     if (!statusLine) return;
 
     document.querySelectorAll('.tv-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-        btn.setAttribute('aria-selected', btn.dataset.mode === mode ? 'true' : 'false');
+        const isActive = btn.dataset.mode === mode;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
     });
+    const tabIds = { airing: 'tv-tab-airing', popular: 'tv-tab-popular', upcoming: 'tv-tab-upcoming' };
+    document.getElementById('tv-carousel')?.setAttribute('aria-labelledby', tabIds[mode] || 'tv-tab-airing');
 
     statusLine.textContent = 'Loading…';
     try {
         const shows = await fetchFilteredTvShows(mode);
         statusLine.textContent = `${shows.length} ${TV_STATUS_LABELS[mode]} · updated ${new Date().toLocaleDateString()}`;
-        renderTvCarousel(shows);
+        renderTvCarousel(shows, mode);
     } catch (_) {
         statusLine.textContent = 'Couldn\'t reach TMDB — try again later';
-        renderTvCarousel([]);
+        renderTvCarousel([], mode);
     }
 }
 
@@ -620,9 +730,6 @@ function setupTvLineup() {
     document.getElementById('tv-modal-close')?.addEventListener('click', closeTvModal);
     document.getElementById('tv-modal')?.addEventListener('click', (e) => {
         if (e.target.id === 'tv-modal') closeTvModal();
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeTvModal();
     });
     loadTvTab(currentTvMode);
 }

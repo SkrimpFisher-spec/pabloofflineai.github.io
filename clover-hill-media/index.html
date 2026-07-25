@@ -15,6 +15,10 @@
 </head>
 <body class="retro-body min-h-screen flex flex-col">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div id="a11y-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <div class="wood-bg" aria-hidden="true"></div>
 
     <header class="plastic-bar sticky top-0 z-40 px-4 sm:px-6 py-3 sm:py-4">
@@ -34,23 +38,24 @@
     <div class="container mx-auto px-4 pt-6 pb-2">
         <div class="flex flex-col sm:flex-row gap-3 mb-6">
             <div class="relative flex-1 max-w-md">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-on-light-muted text-xs"></i>
-                <input type="search" id="search-input" placeholder="Search channels..." class="retro-input w-full pl-9 pr-4 py-2 text-sm">
+                <label for="search-input" class="sr-only">Search channels</label>
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-on-light-muted text-xs" aria-hidden="true"></i>
+                <input type="search" id="search-input" placeholder="Search channels..." class="retro-input w-full pl-9 pr-4 py-2 text-sm" autocomplete="off">
             </div>
-            <div id="platform-filters" class="flex flex-wrap gap-2">
-                <button data-filter="streaming" class="filter-chip active"><i class="fa-brands fa-twitch mr-1"></i>Streaming<span class="filter-count"></span></button>
-                <button data-filter="livetv" class="filter-chip"><i class="fa-solid fa-tv mr-1"></i>Live TV<span class="filter-count"></span></button>
-                <button data-filter="vibes" class="filter-chip"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Vibes<span class="filter-count"></span></button>
+            <div id="platform-filters" class="flex flex-wrap gap-2" role="tablist" aria-label="Channel guide categories">
+                <button type="button" role="tab" id="tab-streaming" aria-controls="channel-guide" aria-selected="true" tabindex="0" data-filter="streaming" class="filter-chip active"><i class="fa-brands fa-twitch mr-1" aria-hidden="true"></i>Streaming<span class="filter-count" aria-hidden="true"></span></button>
+                <button type="button" role="tab" id="tab-livetv" aria-controls="channel-guide" aria-selected="false" tabindex="-1" data-filter="livetv" class="filter-chip"><i class="fa-solid fa-tv mr-1" aria-hidden="true"></i>Live TV<span class="filter-count" aria-hidden="true"></span></button>
+                <button type="button" role="tab" id="tab-vibes" aria-controls="channel-guide" aria-selected="false" tabindex="-1" data-filter="vibes" class="filter-chip"><i class="fa-solid fa-wand-magic-sparkles mr-1" aria-hidden="true"></i>Vibes<span class="filter-count" aria-hidden="true"></span></button>
             </div>
         </div>
     </div>
 
-    <main class="flex-grow container mx-auto px-4 pb-8 max-w-4xl">
-        <div id="channel-guide" class="guide-console hidden">
-            <div class="guide-console-header hidden sm:grid grid-cols-[3.5rem_2.5rem_1fr_8rem_5rem] gap-4 px-5 py-2.5">
+    <main id="main-content" class="flex-grow container mx-auto px-4 pb-8 max-w-4xl" tabindex="-1">
+        <div id="channel-guide" class="guide-console hidden" role="tabpanel" aria-labelledby="tab-streaming">
+            <div class="guide-console-header hidden sm:grid grid-cols-[3.5rem_2.5rem_1fr_8rem_5rem] gap-4 px-5 py-2.5" aria-hidden="true">
                 <span>Ch</span><span></span><span>Channel / Now Playing</span><span>Type</span><span class="text-right">Status</span>
             </div>
-            <div id="guide-rows"></div>
+            <div id="guide-rows" role="list" aria-label="Channels"></div>
         </div>
         <div id="empty-state" class="hidden text-center py-16 wood-inset rounded-lg mx-auto max-w-md">
             <svg class="clover-icon-lg mx-auto mb-4 text-on-dark-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -58,7 +63,7 @@
                 <circle cx="6.5" cy="12" r="4.25"/><circle cx="17.5" cy="12" r="4.25"/>
             </svg>
             <p class="text-on-dark-muted text-sm">No channels in your guide.</p>
-            <button onclick="openEditModal()" class="mt-4 link-accent text-sm">Edit channel guide</button>
+            <button type="button" onclick="openEditModal()" class="mt-4 link-accent text-sm">Edit channel guide</button>
         </div>
     </main>
 
@@ -66,13 +71,17 @@
         <div class="theaters-marquee">
             <div class="theaters-header">
                 <div>
-                    <h2 id="theaters-title" class="theaters-title">In theaters now</h2>
-                    <p class="theaters-sub">English-language · US, UK, AU & more · TMDB</p>
+                    <h2 id="theaters-title" class="theaters-title">Movies</h2>
+                    <p class="theaters-sub">English-language · PG-13+ · US, UK, AU & more · TMDB</p>
                 </div>
                 <button type="button" id="theaters-refresh" class="theaters-btn">Refresh lineup</button>
             </div>
-            <p class="theaters-status" id="theaters-status">Loading current releases…</p>
-            <div class="theaters-carousel" id="theaters-carousel"></div>
+            <div class="tv-tabs" role="tablist" aria-label="Movie lineup categories">
+                <button type="button" class="tv-tab active" role="tab" id="movie-tab-now" aria-controls="theaters-carousel" aria-selected="true" tabindex="0" data-mode="now">In theaters now</button>
+                <button type="button" class="tv-tab" role="tab" id="movie-tab-upcoming" aria-controls="theaters-carousel" aria-selected="false" tabindex="-1" data-mode="upcoming">Coming soon</button>
+            </div>
+            <p class="theaters-status" id="theaters-status" role="status" aria-live="polite">Loading current releases…</p>
+            <div class="theaters-carousel" id="theaters-carousel" role="tabpanel" aria-labelledby="movie-tab-now"></div>
             <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
         </div>
     </section>
@@ -86,12 +95,12 @@
                 </div>
             </div>
             <div class="tv-tabs" role="tablist" aria-label="TV lineup categories">
-                <button type="button" class="tv-tab active" role="tab" aria-selected="true" data-mode="airing">Airing this week</button>
-                <button type="button" class="tv-tab" role="tab" aria-selected="false" data-mode="popular">Popular now</button>
-                <button type="button" class="tv-tab" role="tab" aria-selected="false" data-mode="upcoming">Coming soon</button>
+                <button type="button" class="tv-tab active" role="tab" id="tv-tab-airing" aria-controls="tv-carousel" aria-selected="true" tabindex="0" data-mode="airing">Airing this week</button>
+                <button type="button" class="tv-tab" role="tab" id="tv-tab-popular" aria-controls="tv-carousel" aria-selected="false" tabindex="-1" data-mode="popular">Popular now</button>
+                <button type="button" class="tv-tab" role="tab" id="tv-tab-upcoming" aria-controls="tv-carousel" aria-selected="false" tabindex="-1" data-mode="upcoming">Coming soon</button>
             </div>
-            <p class="theaters-status" id="tv-status">Loading…</p>
-            <div class="theaters-carousel" id="tv-carousel"></div>
+            <p class="theaters-status" id="tv-status" role="status" aria-live="polite">Loading…</p>
+            <div class="theaters-carousel" id="tv-carousel" role="tabpanel" aria-labelledby="tv-tab-airing"></div>
             <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
         </div>
     </section>
@@ -102,7 +111,7 @@
                 <h3 id="ambiance-title" class="text-lg font-bold text-on-light flex items-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles text-amber"></i> Pick Your Vibe
                 </h3>
-                <button onclick="closeAmbianceModal()" class="btn-icon-sm" aria-label="Close">
+                <button type="button" onclick="closeAmbianceModal()" class="btn-icon-sm" aria-label="Close">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -111,13 +120,13 @@
         </div>
     </div>
 
-    <div id="edit-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div id="edit-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
         <div class="modal-panel w-full max-w-4xl p-5 sm:p-6 flex flex-col max-h-[92vh] modal-enter">
             <div class="flex justify-between items-center pb-4 border-b border-plastic-shadow mb-4">
-                <h3 class="text-lg font-bold text-on-light flex items-center gap-2">
+                <h3 id="edit-modal-title" class="text-lg font-bold text-on-light flex items-center gap-2">
                     <i class="fa-solid fa-pen-to-square text-amber"></i> Edit Channel Guide
                 </h3>
-                <button onclick="closeEditModal()" class="btn-icon-sm" aria-label="Close">
+                <button type="button" onclick="closeEditModal()" class="btn-icon-sm" aria-label="Close">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -143,7 +152,8 @@
                     <button onclick="exportConfig()" class="btn-plastic text-xs"><i class="fa-solid fa-download"></i> Backup</button>
                     <button onclick="exportSiteGuide()" class="btn-plastic btn-plastic-accent text-xs"><i class="fa-solid fa-cloud-arrow-up"></i> Export for site</button>
                     <label class="btn-plastic text-xs cursor-pointer">
-                        <i class="fa-solid fa-upload"></i> Import
+                        <i class="fa-solid fa-upload" aria-hidden="true"></i> Import
+                        <span class="sr-only">channel guide JSON file</span>
                         <input type="file" accept=".json" class="hidden" id="import-file" onchange="importConfig(event)">
                     </label>
                     <button onclick="reloadSiteGuide()" class="btn-plastic text-xs"><i class="fa-solid fa-rotate"></i> Reload site guide</button>
@@ -181,15 +191,16 @@
     <footer class="plastic-bar border-t py-5 px-4 sm:px-6 mt-auto">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <p class="text-xs text-on-light-muted text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
-            <button onclick="openEditModal()" class="btn-primary text-sm">
+            <button type="button" onclick="openEditModal()" class="btn-primary text-sm">
                 <i class="fa-solid fa-sliders"></i>
                 <span>Edit Channel Guide</span>
             </button>
         </div>
     </footer>
 
-    <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-2 pointer-events-none" aria-live="polite" aria-atomic="true"></div>
 
+    <script src="a11y.js"></script>
     <script src="app.js"></script>
     <script src="theaters.js"></script>
     <script src="tv-lineup.js"></script>

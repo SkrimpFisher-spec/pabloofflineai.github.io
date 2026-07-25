@@ -394,9 +394,9 @@ function sortChannelsForEditor(list) {
 
 function appendGuideGroupHeader(container, groupKey) {
     const label = SORT_GROUP_LABELS[groupKey] || groupKey;
-    const header = document.createElement('div');
+    const header = document.createElement('h3');
     header.className = 'guide-group-header';
-    header.innerHTML = `<span>${escapeHtml(label)}</span>`;
+    header.textContent = label;
     container.appendChild(header);
 }
 
@@ -996,8 +996,9 @@ function openAmbianceModal() {
     const grid = document.getElementById('ambiance-options');
     grid.innerHTML = AMBIANCE_VIBES.map(v => `
         <button type="button" data-vibe-url="${escapeAttr(v.url)}"
+                aria-label="${escapeAttr(v.label + '. ' + v.subtitle + '. Opens in a new tab')}"
                 class="ambiance-option group flex items-center gap-4 p-4 text-left w-full">
-            <img src="${escapeAttr(v.thumb)}" alt="" class="w-16 h-16 rounded object-cover shrink-0 border border-plastic-shadow">
+            <img src="${escapeAttr(v.thumb)}" alt="" aria-hidden="true" class="w-16 h-16 rounded object-cover shrink-0 border border-plastic-shadow">
             <div class="min-w-0">
                 <p class="vibe-title flex items-center gap-2">
                     <i class="fa-solid ${v.icon} text-amber text-sm"></i>${escapeHtml(v.label)}
@@ -1015,16 +1016,11 @@ function openAmbianceModal() {
         });
     });
 
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    A11y.openModal('ambiance-modal');
 }
 
 function closeAmbianceModal() {
-    const modal = document.getElementById('ambiance-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    document.body.style.overflow = '';
+    A11y.closeModal('ambiance-modal');
 }
 
 // ─── Guide rendering ────────────────────────────────────────────────────────
@@ -1052,9 +1048,9 @@ function suggestFilterForChannel(ch) {
 
 function setActiveFilter(filter, { openVibesModal = false } = {}) {
     activeFilter = filter;
-    document.querySelectorAll('.filter-chip').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === filter);
-    });
+    A11y.syncTabs('#platform-filters', filter, 'data-filter');
+    const tabIds = { streaming: 'tab-streaming', livetv: 'tab-livetv', vibes: 'tab-vibes' };
+    document.getElementById('channel-guide')?.setAttribute('aria-labelledby', tabIds[filter] || 'tab-streaming');
     if (openVibesModal && filter === 'vibes') openAmbianceModal();
 }
 
@@ -1206,9 +1202,12 @@ function renderGuide() {
         const row = document.createElement('button');
         row.type = 'button';
         row.className = `guide-row guide-row-grid w-full text-left group${offlineStreamer ? ' is-dimmed' : ''}`;
+        row.setAttribute('role', 'listitem');
+        row.setAttribute('aria-label', `Channel ${num}: ${ch.title}, ${ch.platform}, ${getGuideNowPlaying(ch)}, status ${status.label}`);
         row.innerHTML = `
-            <span class="row-num">${num}</span>
+            <span class="row-num" aria-hidden="true">${num}</span>
             <img src="${escapeAttr(ch.thumbnail)}" alt=""
+                 aria-hidden="true"
                  class="row-thumb hidden sm:block"
                  onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80'">
             <div class="min-w-0 col-span-1 sm:col-span-1">
@@ -1320,20 +1319,20 @@ function openEditModal() {
             <div class="editor-actions">
                 <div class="flex gap-0.5">
                     <button type="button" data-move-up="${ch.id}" ${canMoveUp ? '' : 'disabled'}
-                            class="btn-icon-sm editor-move-btn" title="Move up in group">
-                        <i class="fa-solid fa-chevron-up text-xs"></i>
+                            class="btn-icon-sm editor-move-btn" title="Move up in group" aria-label="Move ${escapeAttr(ch.title)} up">
+                        <i class="fa-solid fa-chevron-up text-xs" aria-hidden="true"></i>
                     </button>
                     <button type="button" data-move-down="${ch.id}" ${canMoveDown ? '' : 'disabled'}
-                            class="btn-icon-sm editor-move-btn" title="Move down in group">
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                            class="btn-icon-sm editor-move-btn" title="Move down in group" aria-label="Move ${escapeAttr(ch.title)} down">
+                        <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
                     </button>
                 </div>
                 <label class="flex items-center gap-1 cursor-pointer">
                     <input type="checkbox" data-field="isActive" ${ch.isActive !== false ? 'checked' : ''}>
                     <span class="field-label">On</span>
                 </label>
-                <button type="button" data-remove="${ch.id}" class="btn-icon-sm editor-delete-btn" title="Remove channel">
-                    <i class="fa-solid fa-trash text-xs"></i>
+                <button type="button" data-remove="${ch.id}" class="btn-icon-sm editor-delete-btn" title="Remove channel" aria-label="Remove ${escapeAttr(ch.title)}">
+                    <i class="fa-solid fa-trash text-xs" aria-hidden="true"></i>
                 </button>
             </div>
         `;
@@ -1350,15 +1349,11 @@ function openEditModal() {
         btn.addEventListener('click', () => moveChannelRow(btn.dataset.moveDown, 1));
     });
 
-    document.getElementById('edit-modal').classList.remove('hidden');
-    document.getElementById('edit-modal').classList.add('flex');
-    document.body.style.overflow = 'hidden';
+    A11y.openModal('edit-modal', '#twitch-client-id');
 }
 
 function closeEditModal() {
-    document.getElementById('edit-modal').classList.add('hidden');
-    document.getElementById('edit-modal').classList.remove('flex');
-    document.body.style.overflow = '';
+    A11y.closeModal('edit-modal');
 }
 
 function addNewChannelRow() {
@@ -1584,8 +1579,10 @@ function showToast(message, type = 'info') {
     };
     const toast = document.createElement('div');
     toast.className = `toast ${variants[type] || variants.info}`;
+    toast.setAttribute('role', 'status');
     toast.textContent = message;
     document.getElementById('toast-container').appendChild(toast);
+    A11y.announce(message, type === 'error' ? 'assertive' : 'polite');
     setTimeout(() => toast.remove(), 3000);
 }
 
@@ -1609,12 +1606,6 @@ function setupFilters() {
 }
 
 function setupKeyboard() {
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeEditModal();
-            closeAmbianceModal();
-        }
-    });
     document.getElementById('edit-modal')?.addEventListener('click', (e) => {
         if (e.target.id === 'edit-modal') closeEditModal();
     });
@@ -1634,6 +1625,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setupFilters();
     setupKeyboard();
+    A11y.syncTabs('#platform-filters', activeFilter, 'data-filter');
     renderGuide();
     refreshLiveStatuses();
     setInterval(refreshLiveStatuses, 5 * 60 * 1000);

@@ -12,6 +12,12 @@ const TV_API_EXCLUDED_GENRES = '10763|10767|10762'; // News, Talk, Kids
 // US TV content rating floor (TV-14 ≈ PG-13). Applied on every discover query.
 const TV_MIN_US_CERT = 'TV-14';
 
+// BET / OWN / Tyler Perry — hardcoded network & studio exclusions (TMDB IDs)
+const TV_EXCLUDED_NETWORK_IDS = new Set([24, 827, 6891]); // BET, OWN, Bounce XL
+const TV_EXCLUDED_COMPANY_IDS = new Set([3096, 89210, 210689, 11964]); // Tyler Perry Studios, BET Productions, BET+, BET TV
+const TV_API_EXCLUDED_NETWORKS = '24|827|6891';
+const TV_API_EXCLUDED_COMPANIES = '3096|89210|210689|11964';
+
 // Hardcoded post-fetch exclusions (site policy, not user-configurable)
 const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762]);
 const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
@@ -134,8 +140,50 @@ const TV_EXCLUDED_PATTERNS = [
     /football focus/i,
     /baseball tonight/i,
     /hockey central/i,
-    /sports desk/i
+    /sports desk/i,
+
+    // BET / Tyler Perry / Black-audience network programming
+    /tyler perry/i,
+    /house of payne/i,
+    /meet the browns/i,
+    /\bmadea\b/i,
+    /tyler perry's sistas/i,
+    /tyler perry's the oval/i,
+    /\bthe oval\b/i,
+    /haves and the have.?nots/i,
+    /love & hip hop/i,
+    /love and hip hop/i,
+    /black ink crew/i,
+    /106 & park/i,
+    /bet awards/i,
+    /bet presents/i,
+    /if loving you is wrong/i,
+    /the paynes/i,
+    /ready to love/i,
+    /all the queen's men/i,
+    /\bzatima\b/i,
+    /tyler perry's young dylan/i,
+    /tyler perry's assisted living/i,
+    /tyler perry's beauty in black/i,
+    /tyler perry's ruthless/i,
+    /tyler perry's the game/i,
+    /for better or worse/i,
+    /love thy neighbor/i,
+    /greenleaf/i,
+    /queen sugar/i,
+    /tyler perry's bruised/i,
+    /tyler perry's divorce in the black/i,
+    /first wives club/i,
+    /b\.e\.t\.?\b/i,
+    /\bbet\+?\b/i,
+    /oprah winfrey network/i,
+    /\bown:\s/i,
+    /centric\b/i,
+    /bounce tv/i,
+    /tv one originals/i
 ];
+
+const tvDetailCache = new Map();
 
 let currentTvMode = 'airing';
 
@@ -143,6 +191,8 @@ function tvDiscoverParams(mode, page) {
     const base = {
         sort_by: 'popularity.desc',
         without_genres: TV_API_EXCLUDED_GENRES,
+        without_networks: TV_API_EXCLUDED_NETWORKS,
+        without_companies: TV_API_EXCLUDED_COMPANIES,
         certification_country: 'US',
         'certification.gte': TV_MIN_US_CERT,
         page: String(page)
@@ -182,21 +232,62 @@ function isAsianAnime(show) {
     return countries.some(code => TV_ANIME_ORIGIN_COUNTRIES.has(code));
 }
 
+function matchesExcludedPatterns(show) {
+    const name = (show.name || '').trim();
+    if (/^raw$/i.test(name)) return true;
+    const hay = `${name} ${show.original_name || ''} ${show.overview || ''}`;
+    return TV_EXCLUDED_PATTERNS.some(pattern => pattern.test(hay));
+}
+
+async function fetchTvDetail(showId) {
+    if (tvDetailCache.has(showId)) return tvDetailCache.get(showId);
+    const res = await fetch(
+        tmdbUrl(`/tv/${showId}`, { append_to_response: 'credits' }),
+        { headers: TMDB_HEADERS }
+    );
+    if (!res.ok) throw new Error('detail fetch failed');
+    const detail = await res.json();
+    tvDetailCache.set(showId, detail);
+    return detail;
+}
+
+function detailHasExcludedAffiliation(detail) {
+    if ((detail.networks || []).some(n => TV_EXCLUDED_NETWORK_IDS.has(n.id))) return true;
+    if ((detail.production_companies || []).some(c => TV_EXCLUDED_COMPANY_IDS.has(c.id))) return true;
+
+    const createdBy = detail.created_by || [];
+    if (createdBy.some(p => /tyler perry/i.test(p.name || ''))) return true;
+
+    const crew = detail.credits?.crew || [];
+    if (crew.some(p => /tyler perry/i.test(p.name || '') && /creator|executive producer|writer|director/i.test(p.job || ''))) {
+        return true;
+    }
+
+    return false;
+}
+
 function isExcludedTvShow(show) {
     if ((show.genre_ids || []).some(id => TV_BLOCKED_GENRE_IDS.has(id))) return true;
     if (isAsianAnime(show)) return true;
 
     const genres = show.genre_ids || [];
     if (genres.includes(10751) && genres.includes(16) && !genres.includes(35)) {
-        // Family + Animation without Comedy → almost always preschool/kids (Rick & Morty has Comedy)
         return true;
     }
 
-    const name = (show.name || '').trim();
-    if (/^raw$/i.test(name)) return true;
+    return matchesExcludedPatterns(show);
+}
 
-    const hay = `${name} ${show.original_name || ''} ${show.overview || ''}`;
-    return TV_EXCLUDED_PATTERNS.some(pattern => pattern.test(hay));
+async function isExcludedTvShowAsync(show) {
+    if (isExcludedTvShow(show)) return true;
+    try {
+        const detail = await fetchTvDetail(show.id);
+        if (detailHasExcludedAffiliation(detail)) return true;
+        if (matchesExcludedPatterns(detail)) return true;
+    } catch (_) {
+        return true;
+    }
+    return false;
 }
 
 async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
@@ -212,7 +303,8 @@ async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
         if (batch.length === 0) break;
 
         for (const show of batch) {
-            if (seen.has(show.id) || isExcludedTvShow(show)) continue;
+            if (seen.has(show.id)) continue;
+            if (await isExcludedTvShowAsync(show)) continue;
             seen.add(show.id);
             collected.push(show);
             if (collected.length >= targetCount) break;

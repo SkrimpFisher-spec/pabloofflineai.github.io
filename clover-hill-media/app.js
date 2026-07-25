@@ -114,7 +114,9 @@ const TWITCH_RESERVED = new Set([
 
 const STORAGE_KEY = 'omnistream_channels';
 const STORAGE_VERSION_KEY = 'omnistream_storage_version';
-const STORAGE_VERSION = 8;
+const STORAGE_VERSION = 9;
+const SITE_GUIDE_URL = 'channels.json';
+const GUIDE_REVISION_KEY = 'omnistream_guide_revision';
 const TWITCH_ID_KEY = 'omnistream_twitch_client_id';
 const TWITCH_SECRET_KEY = 'omnistream_twitch_client_secret';
 const YOUTUBE_API_KEY = 'omnistream_youtube_api_key';
@@ -126,7 +128,7 @@ const INNERTUBE_CLIENT = {
     gl: 'US'
 };
 
-let channels = loadChannels();
+let channels = [];
 let activeFilter = 'streaming';
 let searchQuery = '';
 let isRefreshing = false;
@@ -458,19 +460,91 @@ function readRowDraft(row) {
     return draft;
 }
 
-function loadChannels() {
+function channelsFromRawList(list) {
+    return list.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
+}
+
+function isLikelyBuiltinDefaults(list) {
+    if (!list || list.length === 0) return true;
+    if (list.length > DEFAULT_CHANNELS.length) return false;
+    const defaultIds = new Set(DEFAULT_CHANNELS.map(c => c.id));
+    return list.every(ch => defaultIds.has(ch.id));
+}
+
+function loadLocalChannels() {
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                return parsed
-                    .map((ch, i) => normalizeChannel(ch, i))
-                    .filter(Boolean);
-            }
+        if (!stored) return null;
+        const parsed = JSON.parse(stored);
+        if (!Array.isArray(parsed) || parsed.length === 0) return null;
+        return channelsFromRawList(parsed);
+    } catch (_) {
+        return null;
+    }
+}
+
+async function fetchSiteGuide() {
+    try {
+        const res = await fetch(`${SITE_GUIDE_URL}?v=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (Array.isArray(data)) {
+            return { revision: 0, channels: channelsFromRawList(data) };
         }
-    } catch (_) { /* corrupt */ }
-    return cloneDefaults().map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
+        if (data && Array.isArray(data.channels)) {
+            return {
+                revision: Number(data.revision) || 0,
+                channels: channelsFromRawList(data.channels)
+            };
+        }
+    } catch (_) { /* missing file or offline */ }
+    return null;
+}
+
+async function applySiteGuide(siteGuide, { persistRevision = true } = {}) {
+    if (!siteGuide?.channels?.length) return false;
+    channels = siteGuide.channels;
+    if (persistRevision) {
+        localStorage.setItem(GUIDE_REVISION_KEY, String(siteGuide.revision ?? 0));
+    }
+    persistChannels();
+    return true;
+}
+
+async function bootstrapChannels() {
+    const siteGuide = await fetchSiteGuide();
+    const siteRevision = siteGuide?.revision ?? 0;
+    const storedRevision = Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0);
+    const localChannels = loadLocalChannels();
+
+    if (siteGuide?.channels?.length) {
+        const siteIsNewer = siteRevision > storedRevision;
+        const localIsStale = !localChannels || isLikelyBuiltinDefaults(localChannels);
+        if (siteIsNewer || localIsStale) {
+            await applySiteGuide(siteGuide);
+            return siteIsNewer ? 'site-update' : 'site';
+        }
+    }
+
+    if (localChannels?.length) {
+        channels = localChannels;
+        return 'local';
+    }
+
+    if (siteGuide?.channels?.length) {
+        await applySiteGuide(siteGuide);
+        return 'site';
+    }
+
+    channels = channelsFromRawList(cloneDefaults());
+    persistChannels();
+    return 'defaults';
+}
+
+function loadChannels() {
+    const localChannels = loadLocalChannels();
+    if (localChannels?.length) return localChannels;
+    return channelsFromRawList(cloneDefaults());
 }
 
 function isChannelActive(ch) {
@@ -1444,13 +1518,18 @@ function saveConfigurations() {
 }
 
 function resetDefaultConfig() {
-    if (!confirm('Reset channel guide to defaults?')) return;
-    channels = cloneDefaults().map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
-    persistChannels();
-    closeEditModal();
-    renderGuide();
-    refreshLiveStatuses();
-    showToast('Defaults restored', 'info');
+    if (!confirm('Reload the published site guide from channels.json? Unsaved browser edits will be replaced.')) return;
+    reloadSiteGuide().then((ok) => {
+        if (ok) openEditModal();
+        else {
+            channels = channelsFromRawList(cloneDefaults());
+            persistChannels();
+            openEditModal();
+            renderGuide();
+            refreshLiveStatuses();
+            showToast('Site guide missing — restored built-in defaults', 'info');
+        }
+    });
 }
 
 function exportConfig() {
@@ -1460,7 +1539,36 @@ function exportConfig() {
     a.download = `clover-hill-media-guide-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
-    showToast('Exported', 'success');
+    showToast('Exported backup', 'success');
+}
+
+function exportSiteGuide() {
+    const revision = Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0) + 1;
+    const payload = {
+        revision,
+        updated: new Date().toISOString().slice(0, 10),
+        channels: channels.map(serializeChannel)
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'channels.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast(`Downloaded channels.json (rev ${revision}) — commit this file to publish`, 'success');
+}
+
+async function reloadSiteGuide({ quiet = false } = {}) {
+    const siteGuide = await fetchSiteGuide();
+    if (!siteGuide?.channels?.length) {
+        if (!quiet) showToast('No site guide found (channels.json)', 'error');
+        return false;
+    }
+    await applySiteGuide(siteGuide);
+    renderGuide();
+    refreshLiveStatuses();
+    if (!quiet) showToast(`Loaded ${channels.length} channels from site guide`, 'success');
+    return true;
 }
 
 function importConfig(event) {
@@ -1469,10 +1577,20 @@ function importConfig(event) {
     const reader = new FileReader();
     reader.onload = (e) => {
         try {
-            channels = JSON.parse(e.target.result).map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
+            const parsed = JSON.parse(e.target.result);
+            const list = Array.isArray(parsed) ? parsed : parsed.channels;
+            if (!Array.isArray(list)) throw new Error('invalid');
+            channels = list.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
             persistChannels();
+            if (parsed.revision != null) {
+                localStorage.setItem(GUIDE_REVISION_KEY, String(parsed.revision));
+            } else {
+                localStorage.setItem(GUIDE_REVISION_KEY, String(Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0) + 1));
+            }
             openEditModal();
-            showToast(`Imported ${channels.length} channels`, 'success');
+            renderGuide();
+            refreshLiveStatuses();
+            showToast(`Imported ${channels.length} channels (saved in this browser)`, 'success');
         } catch (_) {
             showToast('Invalid JSON', 'error');
         }
@@ -1534,12 +1652,15 @@ function setupMobileMenu() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    const loadedFrom = await bootstrapChannels();
+
     const before = JSON.stringify(channels.map(serializeChannel));
     channels = channels.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
     if (JSON.stringify(channels.map(serializeChannel)) !== before) {
         persistChannels();
     }
+
     setupFilters();
     setupKeyboard();
     setupMobileMenu();
@@ -1548,6 +1669,10 @@ document.addEventListener('DOMContentLoaded', () => {
     refreshLiveStatuses();
     setInterval(refreshLiveStatuses, 5 * 60 * 1000);
     scheduleRokuRefresh();
+
+    if (loadedFrom === 'site' || loadedFrom === 'site-update') {
+        showToast(`Loaded ${channels.length} channels from site guide`, 'info');
+    }
 });
 
 window.openEditModal = openEditModal;
@@ -1559,4 +1684,6 @@ window.removeChannelRow = removeChannelRow;
 window.saveConfigurations = saveConfigurations;
 window.resetDefaultConfig = resetDefaultConfig;
 window.exportConfig = exportConfig;
+window.exportSiteGuide = exportSiteGuide;
+window.reloadSiteGuide = reloadSiteGuide;
 window.importConfig = importConfig;

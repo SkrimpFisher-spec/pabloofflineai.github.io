@@ -1,0 +1,40 @@
+{
+  "revision": 1,
+  "updated": "2026-07-25",
+  "channels": [
+    {
+      "id": "roku-cc",
+      "title": "Comedy Central",
+      "platform": "roku",
+      "linkType": "roku-linear",
+      "url": "https://therokuchannel.roku.com/watch/3d3f3113ff49ca22c3ad51ee00fe7e9d",
+      "thumbnail": "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=200&q=80",
+      "isActive": true,
+      "twitchChannel": "",
+      "gameName": "",
+      "nowPlaying": "",
+      "rokuContentId": "3d3f3113ff49ca22c3ad51ee00fe7e9d",
+      "guideSubtitle": "",
+      "guideCategory": "livetv",
+      "sortOrder": 0,
+      "broadcastMode": "live"
+    },
+    {
+      "id": "twitch-planet-zoo",
+      "title": "Planet Zoo",
+      "platform": "twitch",
+      "linkType": "twitch-game-live",
+      "url": "https://www.twitch.tv/directory/game/Planet%20Zoo",
+      "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=200&q=80",
+      "isActive": true,
+      "twitchChannel": "",
+      "gameName": "Planet Zoo",
+      "nowPlaying": "",
+      "rokuContentId": "",
+      "guideSubtitle": "",
+      "guideCategory": "streaming",
+      "sortOrder": 0,
+      "broadcastMode": "live"
+    }
+  ]
+}

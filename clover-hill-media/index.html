@@ -342,7 +342,7 @@
             </div>
 
             <div class="overflow-y-auto flex-grow space-y-3 pr-1 scrollbar-thin" id="config-editor-list"></div>
-            <p class="text-[10px] text-gray-500 mt-2">Channels are grouped by type in the guide. Use ↑↓ to reorder within each group, then Save &amp; Apply.</p>
+            <p class="text-[10px] text-gray-500 mt-2">Browser edits save locally. Use <strong class="text-gray-400">Export for site</strong> → commit <code class="text-gray-400">channels.json</code> → push so every device gets the same guide.</p>
 
             <div class="pt-4 border-t border-gray-800 flex flex-wrap justify-between items-center gap-3 mt-4">
                 <div class="flex flex-wrap gap-2">
@@ -350,15 +350,21 @@
                         <i class="fa-solid fa-plus"></i> Add Channel
                     </button>
                     <button onclick="exportConfig()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-download"></i> Export
+                        <i class="fa-solid fa-download"></i> Backup
+                    </button>
+                    <button onclick="exportSiteGuide()" class="px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs rounded-xl transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Export for site
                     </button>
                     <label class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5 cursor-pointer">
                         <i class="fa-solid fa-upload"></i> Import
                         <input type="file" accept=".json" class="hidden" id="import-file" onchange="importConfig(event)">
                     </label>
+                    <button onclick="reloadSiteGuide()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> Reload site guide
+                    </button>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="resetDefaultConfig()" class="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs rounded-xl font-medium transition">Reset</button>
+                    <button onclick="resetDefaultConfig()" class="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs rounded-xl font-medium transition">Reset to site</button>
                     <button onclick="saveConfigurations()" class="px-4 py-2 bg-accent hover:bg-accent/90 text-white text-xs rounded-xl font-semibold transition shadow-lg shadow-accent/20">Save & Apply</button>
                 </div>
             </div>
@@ -368,7 +374,7 @@
     <!-- Footer -->
     <footer class="glass-panel border-t border-gray-800/80 py-5 px-4 sm:px-6 mt-auto">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-xs text-gray-500 text-center sm:text-left">Clover Hill Media · Saved in your browser</p>
+            <p class="text-xs text-gray-500 text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
             <button onclick="openEditModal()" class="px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-lg shadow-accent/5">
                 <i class="fa-solid fa-sliders"></i>
                 <span>Edit Channel Guide</span>

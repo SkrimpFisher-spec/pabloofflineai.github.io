@@ -44,7 +44,18 @@ git push origin main
 
 Site URL: `https://www.pablooffline.com/clover-hill-media/`
 
-Channel data is stored in the browser (`localStorage` keys still use the legacy `omnistream_` prefix for backward compatibility).
+## Publish your full channel list (all devices)
+
+The guide loads from **`channels.json`** on the site. Fresh visits only see what's in that file — browser storage is a per-device backup.
+
+1. Open **Edit channel guide** on the browser where your full list looks correct
+2. Click **Export for site** (downloads `channels.json`)
+3. Replace `clover-hill-media/channels.json` in this repo with that file
+4. Commit and push to `main`
+
+Every visitor (and fresh browser) will load the updated guide automatically. Bump the `"revision"` number in the file when you publish (Export for site does this for you).
+
+To pull the latest published guide on this device: **Reload site guide** in Edit.
 
 ## Optional: YouTube API key
 

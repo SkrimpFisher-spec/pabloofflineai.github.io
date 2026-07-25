@@ -101,10 +101,10 @@ const LINK_TYPE_LABELS = {
 };
 
 const PLATFORM_STYLES = {
-    twitch: 'text-twitch bg-twitch/15 border-twitch/30',
-    youtube: 'text-red-400 bg-youtube/15 border-youtube/30',
-    pluto: 'text-pluto bg-pluto/15 border-pluto/30',
-    roku: 'text-purple-300 bg-roku/15 border-roku/30'
+    twitch: 'badge-platform badge-twitch',
+    youtube: 'badge-platform badge-youtube',
+    pluto: 'badge-platform badge-pluto',
+    roku: 'badge-platform badge-roku'
 };
 
 const TWITCH_RESERVED = new Set([
@@ -395,8 +395,8 @@ function sortChannelsForEditor(list) {
 function appendGuideGroupHeader(container, groupKey) {
     const label = SORT_GROUP_LABELS[groupKey] || groupKey;
     const header = document.createElement('div');
-    header.className = 'px-4 sm:px-5 py-2 bg-gray-900/40 border-b border-gray-800/60';
-    header.innerHTML = `<span class="text-[10px] font-bold uppercase tracking-widest text-gray-500">${escapeHtml(label)}</span>`;
+    header.className = 'guide-group-header';
+    header.innerHTML = `<span>${escapeHtml(label)}</span>`;
     container.appendChild(header);
 }
 
@@ -799,7 +799,6 @@ async function checkYouTubeVideoLiveViaPage(videoId) {
 async function refreshLiveStatuses() {
     if (isRefreshing) return;
     isRefreshing = true;
-    document.getElementById('refresh-icon')?.classList.add('fa-spin');
 
     const auth = await getTwitchAccessToken();
 
@@ -860,7 +859,6 @@ async function refreshLiveStatuses() {
     }));
 
     isRefreshing = false;
-    document.getElementById('refresh-icon')?.classList.remove('fa-spin');
     renderGuide();
     scheduleRokuRefresh();
 }
@@ -998,15 +996,15 @@ function openAmbianceModal() {
     const grid = document.getElementById('ambiance-options');
     grid.innerHTML = AMBIANCE_VIBES.map(v => `
         <button type="button" data-vibe-url="${escapeAttr(v.url)}"
-                class="ambiance-option group flex items-center gap-4 p-4 rounded-xl border border-gray-800 bg-gray-900/60 hover:border-accent/50 hover:bg-accent/10 transition text-left w-full">
-            <img src="${escapeAttr(v.thumb)}" alt="" class="w-16 h-16 rounded-lg object-cover shrink-0">
+                class="ambiance-option group flex items-center gap-4 p-4 text-left w-full">
+            <img src="${escapeAttr(v.thumb)}" alt="" class="w-16 h-16 rounded object-cover shrink-0 border border-plastic-shadow">
             <div class="min-w-0">
-                <p class="font-semibold text-white flex items-center gap-2">
-                    <i class="fa-solid ${v.icon} text-accent text-sm"></i>${escapeHtml(v.label)}
+                <p class="vibe-title flex items-center gap-2">
+                    <i class="fa-solid ${v.icon} text-amber text-sm"></i>${escapeHtml(v.label)}
                 </p>
-                <p class="text-xs text-gray-500 mt-0.5">${escapeHtml(v.subtitle)}</p>
+                <p class="vibe-sub mt-0.5">${escapeHtml(v.subtitle)}</p>
             </div>
-            <i class="fa-solid fa-arrow-up-right-from-square text-gray-600 group-hover:text-accent ml-auto shrink-0"></i>
+            <i class="fa-solid fa-arrow-up-right-from-square vibe-arrow ml-auto shrink-0"></i>
         </button>
     `).join('');
 
@@ -1074,46 +1072,46 @@ function shouldShowChannel(ch) {
 
 function getYouTubeGuideStatus(ch) {
     if (normalizeBroadcastMode(ch.broadcastMode, ch) === '247') {
-        return { label: '24/7', cls: 'bg-youtube/20 text-red-300 border-youtube/30' };
+        return { label: '24/7', cls: 'badge badge-247' };
     }
     if (!ch.liveChecked) {
-        return { label: '···', cls: 'bg-gray-800 text-gray-500 border-gray-700' };
+        return { label: '···', cls: 'badge badge-checking' };
     }
     return ch.isLive
-        ? { label: 'LIVE', cls: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' }
-        : { label: 'OFFLINE', cls: 'bg-gray-800 text-gray-500 border-gray-700' };
+        ? { label: 'LIVE', cls: 'badge badge-live' }
+        : { label: 'OFFLINE', cls: 'badge badge-offline' };
 }
 
 function getTwitchGuideStatus(ch) {
     if (ch.broadcastMode === '247') {
-        return { label: '24/7', cls: 'bg-twitch/20 text-twitch border-twitch/30' };
+        return { label: '24/7', cls: 'badge badge-247' };
     }
     if (!ch.liveChecked) {
-        return { label: '···', cls: 'bg-gray-800 text-gray-500 border-gray-700' };
+        return { label: '···', cls: 'badge badge-checking' };
     }
     return ch.isLive
-        ? { label: 'LIVE', cls: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' }
-        : { label: 'OFFLINE', cls: 'bg-gray-800 text-gray-500 border-gray-700' };
+        ? { label: 'LIVE', cls: 'badge badge-live' }
+        : { label: 'OFFLINE', cls: 'badge badge-offline' };
 }
 
 function getGuideStatus(ch) {
     switch (ch.linkType) {
         case 'youtube-247':
             return getYouTubeGuideStatus(ch);
-        case 'roku-linear': return { label: 'LINEAR', cls: 'bg-roku/20 text-purple-200 border-roku/30' };
+        case 'roku-linear': return { label: 'LINEAR', cls: 'badge badge-linear' };
         case 'twitch-game-live':
             return ch.resolvedTwitchLogin
-                ? { label: 'LIVE', cls: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' }
-                : { label: 'GAME', cls: 'bg-twitch/20 text-twitch border-twitch/30' };
+                ? { label: 'LIVE', cls: 'badge badge-live' }
+                : { label: 'GAME', cls: 'badge badge-game' };
         case 'twitch-streamer':
             return getTwitchGuideStatus(ch);
         case 'channel':
             if (isTwitchDirectUrl(ch.url)) return getTwitchGuideStatus(ch);
             if (extractYouTubeVideoId(ch.url)) return getYouTubeGuideStatus(ch);
-            return { label: 'LINK', cls: 'bg-gray-800 text-gray-400 border-gray-700' };
+            return { label: 'LINK', cls: 'badge badge-link' };
         default:
             if (isYouTubeLiveChannel(ch)) return getYouTubeGuideStatus(ch);
-            return { label: 'LINK', cls: 'bg-gray-800 text-gray-400 border-gray-700' };
+            return { label: 'LINK', cls: 'badge badge-link' };
     }
 }
 
@@ -1149,48 +1147,30 @@ function renderGuide() {
     const guide = document.getElementById('channel-guide');
     const rows = document.getElementById('guide-rows');
     const empty = document.getElementById('empty-state');
-    const countBadge = document.getElementById('channel-count');
-    const liveBadge = document.getElementById('live-count');
 
     const visible = sortChannelsForGuide(channels.filter(shouldShowChannel), activeFilter);
-    const activeTotal = channels.filter(isChannelActive).length;
-    const liveCount = channels.filter(c =>
-        isChannelActive(c) && (
-            (shouldCheckTwitchLive(c) && c.isLive) ||
-            (shouldCheckYouTubeLive(c) && c.isLive) ||
-            (c.linkType === 'twitch-game-live' && c.resolvedTwitchLogin)
-        )
-    ).length;
 
-    countBadge.textContent = searchQuery
-        ? `${visible.length} match · ${activeTotal} saved`
-        : `${visible.length} on this tab · ${activeTotal} saved total`;
     updateFilterCounts();
-    liveBadge.innerHTML = `<i class="fa-solid fa-circle text-[6px] mr-1"></i> ${liveCount} live`;
-
     rows.innerHTML = '';
 
     if (activeFilter === 'vibes' && visible.length === 0) {
         guide.classList.add('hidden');
         empty.classList.remove('hidden');
         empty.innerHTML = `
-            <i class="fa-solid fa-wand-magic-sparkles text-4xl text-accent/60 mb-4"></i>
-            <p class="text-gray-400 text-sm">Built-in presets + any YouTube 24/7 channels you add in Edit</p>
-            <p class="text-gray-600 text-xs mt-2">${countChannelsForFilter('streaming')} on Streaming · ${countChannelsForFilter('livetv')} on Live TV · ${countChannelsForFilter('vibes')} vibes here</p>
-            <button type="button" onclick="openAmbianceModal()"
-                    class="mt-4 px-4 py-2 bg-accent/20 hover:bg-accent/30 text-accent border border-accent/40 rounded-xl text-sm font-medium transition">
+            <i class="fa-solid fa-wand-magic-sparkles text-4xl text-amber mb-4"></i>
+            <p class="empty-state-title">Built-in presets + any YouTube 24/7 channels you add in Edit</p>
+            <p class="empty-state-note">${countChannelsForFilter('streaming')} on Streaming · ${countChannelsForFilter('livetv')} on Live TV · ${countChannelsForFilter('vibes')} vibes here</p>
+            <button type="button" onclick="openAmbianceModal()" class="empty-vibes-btn">
                 Pick Your Vibe
             </button>`;
-        countBadge.textContent = `${AMBIANCE_VIBES.length} presets · ${activeTotal} saved total`;
         return;
     }
 
     if (activeFilter === 'vibes' && visible.length > 0) {
         const presetBtn = document.createElement('div');
-        presetBtn.className = 'px-4 sm:px-5 py-3 border-b border-gray-800/80 bg-accent/5';
+        presetBtn.className = 'vibes-banner';
         presetBtn.innerHTML = `
-            <button type="button" onclick="openAmbianceModal()"
-                    class="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-accent/30 bg-accent/10 hover:bg-accent/20 text-accent text-sm font-medium transition">
+            <button type="button" onclick="openAmbianceModal()">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Browse vibe presets (lofi, forest, cafe…)
             </button>`;
         rows.appendChild(presetBtn);
@@ -1200,10 +1180,10 @@ function renderGuide() {
         guide.classList.add('hidden');
         empty.classList.remove('hidden');
         empty.innerHTML = `
-            <svg class="mx-auto mb-4 text-emerald-500/40" width="44" height="44" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="6.5" r="4.25"/><circle cx="12" cy="17.5" r="4.25"/><circle cx="6.5" cy="12" r="4.25"/><circle cx="17.5" cy="12" r="4.25"/></svg>
-            <p class="text-gray-500 text-sm">Nothing on ${activeFilter === 'streaming' ? 'Streaming' : activeFilter === 'livetv' ? 'Live TV' : 'Vibes'} yet.</p>
-            <p class="text-gray-600 text-xs mt-1">${countChannelsForFilter('streaming')} streaming · ${countChannelsForFilter('livetv')} live TV · ${countChannelsForFilter('vibes')} vibes — check other tabs</p>
-            <button type="button" onclick="openEditModal()" class="mt-4 text-accent text-sm hover:underline">Edit channel guide</button>`;
+            <svg class="clover-icon-lg mx-auto mb-4 text-on-dark-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="6.5" r="4.25"/><circle cx="12" cy="17.5" r="4.25"/><circle cx="6.5" cy="12" r="4.25"/><circle cx="17.5" cy="12" r="4.25"/></svg>
+            <p class="empty-state-title">Nothing on ${activeFilter === 'streaming' ? 'Streaming' : activeFilter === 'livetv' ? 'Live TV' : 'Vibes'} yet.</p>
+            <p class="empty-state-note">${countChannelsForFilter('streaming')} streaming · ${countChannelsForFilter('livetv')} live TV · ${countChannelsForFilter('vibes')} vibes — check other tabs</p>
+            <button type="button" onclick="openEditModal()" class="empty-state-link">Edit channel guide</button>`;
         return;
     }
 
@@ -1220,26 +1200,26 @@ function renderGuide() {
 
         const num = String(i + 1).padStart(2, '0');
         const status = getGuideStatus(ch);
-        const platformCls = PLATFORM_STYLES[ch.platform] || 'text-gray-400 bg-gray-800 border-gray-700';
+        const platformCls = PLATFORM_STYLES[ch.platform] || 'badge-platform badge-default';
         const offlineStreamer = (shouldCheckTwitchLive(ch) || shouldCheckYouTubeLive(ch))
             && ch.liveChecked && !ch.isLive;
         const row = document.createElement('button');
         row.type = 'button';
-        row.className = `guide-row w-full grid grid-cols-[3rem_1fr_auto] sm:grid-cols-[3.5rem_2.5rem_1fr_8rem_5rem] gap-3 sm:gap-4 items-center px-4 sm:px-5 py-3 border-b border-gray-800/80 hover:bg-accent/5 transition text-left group${offlineStreamer ? ' opacity-60' : ''}`;
+        row.className = `guide-row guide-row-grid w-full text-left group${offlineStreamer ? ' is-dimmed' : ''}`;
         row.innerHTML = `
-            <span class="text-xs font-mono text-gray-500 group-hover:text-accent">${num}</span>
+            <span class="row-num">${num}</span>
             <img src="${escapeAttr(ch.thumbnail)}" alt=""
-                 class="hidden sm:block w-10 h-10 rounded-lg object-cover bg-gray-900 ring-1 ring-gray-800"
+                 class="row-thumb hidden sm:block"
                  onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=200&q=80'">
             <div class="min-w-0 col-span-1 sm:col-span-1">
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-sm font-semibold text-gray-100 truncate">${escapeHtml(ch.title)}</span>
-                    <span class="text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded border ${platformCls}">${escapeHtml(ch.platform)}</span>
+                    <span class="row-title truncate">${escapeHtml(ch.title)}</span>
+                    <span class="${platformCls}">${escapeHtml(ch.platform)}</span>
                 </div>
-                <p class="text-xs text-gray-500 truncate mt-0.5">${escapeHtml(getGuideNowPlaying(ch))}</p>
+                <p class="row-sub truncate mt-0.5">${escapeHtml(getGuideNowPlaying(ch))}</p>
             </div>
-            <span class="hidden sm:inline text-[10px] text-gray-600 truncate">${escapeHtml(LINK_TYPE_LABELS[ch.linkType] || ch.linkType)}</span>
-            <span class="text-[10px] font-bold uppercase tracking-wide px-2 py-1 rounded-full border shrink-0 justify-self-end ${status.cls}">${status.label}</span>
+            <span class="row-type hidden sm:inline truncate">${escapeHtml(LINK_TYPE_LABELS[ch.linkType] || ch.linkType)}</span>
+            <span class="${status.cls} shrink-0 justify-self-end">${status.label}</span>
         `;
         row.addEventListener('click', () => handleGuideClick(ch));
         rows.appendChild(row);
@@ -1283,81 +1263,78 @@ function openEditModal() {
         const broadcastMode = ch.broadcastMode || 'live';
 
         const row = document.createElement('div');
-        row.className = 'channel-editor-row grid grid-cols-1 md:grid-cols-12 gap-2 p-3 bg-gray-900/60 border border-gray-800 rounded-xl items-start';
+        row.className = 'channel-editor-row editor-row-grid p-3 items-start';
         row.dataset.channelId = ch.id;
         row.innerHTML = `
-            <div class="md:col-span-2">
-                <label class="text-[10px] text-gray-500 mb-1 block">Guide name</label>
+            <div class="editor-field">
+                <label class="field-label">Guide name</label>
                 <input type="text" value="${escapeAttr(ch.title)}" data-field="title"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-xs text-white focus:border-accent outline-none">
+                       class="retro-input w-full px-2 py-1.5 text-xs">
             </div>
-            <div class="md:col-span-2">
-                <label class="text-[10px] text-gray-500 mb-1 block">Guide tab</label>
-                <select data-field="guideCategory"
-                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-1 py-1.5 text-xs text-white focus:border-accent outline-none">
+            <div class="editor-field">
+                <label class="field-label">Guide tab</label>
+                <select data-field="guideCategory" class="retro-input w-full px-1 py-1.5 text-xs">
                     <option value="streaming" ${getChannelCategory(ch) === 'streaming' ? 'selected' : ''}>Streaming</option>
                     <option value="livetv" ${getChannelCategory(ch) === 'livetv' ? 'selected' : ''}>Live TV</option>
                     <option value="vibes" ${getChannelCategory(ch) === 'vibes' ? 'selected' : ''}>Vibes</option>
                 </select>
             </div>
-            <div class="md:col-span-2">
-                <label class="text-[10px] text-gray-500 mb-1 block">Type</label>
-                <select data-field="linkType"
-                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-1 py-1.5 text-xs text-white focus:border-accent outline-none">
+            <div class="editor-field">
+                <label class="field-label">Type</label>
+                <select data-field="linkType" class="retro-input w-full px-1 py-1.5 text-xs">
                     <option value="roku-linear" ${ch.linkType === 'roku-linear' ? 'selected' : ''}>Roku Linear</option>
                     <option value="youtube-247" ${ch.linkType === 'youtube-247' ? 'selected' : ''}>YouTube 24/7</option>
                     <option value="twitch-game-live" ${ch.linkType === 'twitch-game-live' ? 'selected' : ''}>Twitch Game → 1st EN</option>
                     <option value="twitch-streamer" ${ch.linkType === 'twitch-streamer' ? 'selected' : ''}>Twitch Streamer</option>
                     <option value="channel" ${ch.linkType === 'channel' ? 'selected' : ''}>Direct Link</option>
                 </select>
-                <p class="text-[9px] text-gray-600 mt-0.5">${escapeHtml(groupLabel)}</p>
+                <p class="field-hint">${escapeHtml(groupLabel)}</p>
                 ${showBroadcast ? `
-                <label class="text-[10px] text-gray-500 mb-1 block mt-1.5">Guide status</label>
-                <select data-field="broadcastMode"
-                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-1 py-1.5 text-xs text-white focus:border-accent outline-none">
+                <label class="field-label mt-1.5">Guide status</label>
+                <select data-field="broadcastMode" class="retro-input w-full px-1 py-1.5 text-xs">
                     <option value="live" ${broadcastMode === 'live' ? 'selected' : ''}>Live — check if online</option>
                     <option value="247" ${broadcastMode === '247' ? 'selected' : ''}>24/7 — always on</option>
                 </select>` : ''}
             </div>
-            <div class="md:col-span-1">
-                <label class="text-[10px] text-gray-500 mb-1 block">Platform</label>
-                <select data-field="platform"
-                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-1 py-1.5 text-xs text-white focus:border-accent outline-none">
+            <div class="editor-field">
+                <label class="field-label">Platform</label>
+                <select data-field="platform" class="retro-input w-full px-1 py-1.5 text-xs">
                     <option value="roku" ${ch.platform === 'roku' ? 'selected' : ''}>Roku</option>
                     <option value="youtube" ${ch.platform === 'youtube' ? 'selected' : ''}>YouTube</option>
                     <option value="twitch" ${ch.platform === 'twitch' ? 'selected' : ''}>Twitch</option>
                     <option value="pluto" ${ch.platform === 'pluto' ? 'selected' : ''}>Pluto</option>
                 </select>
             </div>
-            <div class="md:col-span-2">
-                <label class="text-[10px] text-gray-500 mb-1 block">URL (fallback / direct)</label>
+            <div class="editor-field">
+                <label class="field-label">URL (fallback / direct)</label>
                 <input type="text" value="${escapeAttr(ch.url)}" data-field="url"
                        placeholder="https://..."
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-xs text-white focus:border-accent outline-none">
+                       class="retro-input w-full px-2 py-1.5 text-xs">
             </div>
-            <div class="md:col-span-2">
-                <label class="text-[10px] text-gray-500 mb-1 block">Game / user / fallback subtitle</label>
+            <div class="editor-field">
+                <label class="field-label">Game / user / fallback subtitle</label>
                 <input type="text" value="${escapeAttr(getExtraFieldValue(ch))}" data-field="extra"
                        placeholder="${ch.linkType === 'roku-linear' ? 'Optional if auto now-playing fails' : ''}"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-xs text-white focus:border-accent outline-none">
+                       class="retro-input w-full px-2 py-1.5 text-xs">
             </div>
-            <div class="md:col-span-1 flex flex-col items-center gap-1.5 pt-4">
+            <div class="editor-actions">
                 <div class="flex gap-0.5">
                     <button type="button" data-move-up="${ch.id}" ${canMoveUp ? '' : 'disabled'}
-                            class="text-gray-400 hover:text-white p-1 disabled:opacity-30 disabled:cursor-not-allowed" title="Move up in group">
+                            class="btn-icon-sm editor-move-btn" title="Move up in group">
                         <i class="fa-solid fa-chevron-up text-xs"></i>
                     </button>
                     <button type="button" data-move-down="${ch.id}" ${canMoveDown ? '' : 'disabled'}
-                            class="text-gray-400 hover:text-white p-1 disabled:opacity-30 disabled:cursor-not-allowed" title="Move down in group">
+                            class="btn-icon-sm editor-move-btn" title="Move down in group">
                         <i class="fa-solid fa-chevron-down text-xs"></i>
                     </button>
                 </div>
                 <label class="flex items-center gap-1 cursor-pointer">
-                    <input type="checkbox" data-field="isActive" ${ch.isActive !== false ? 'checked' : ''}
-                           class="rounded border-gray-600 bg-gray-800 text-accent">
-                    <span class="text-[10px] text-gray-500">On</span>
+                    <input type="checkbox" data-field="isActive" ${ch.isActive !== false ? 'checked' : ''}>
+                    <span class="field-label">On</span>
                 </label>
-                <button type="button" data-remove="${ch.id}" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash text-xs"></i></button>
+                <button type="button" data-remove="${ch.id}" class="btn-icon-sm editor-delete-btn" title="Remove channel">
+                    <i class="fa-solid fa-trash text-xs"></i>
+                </button>
             </div>
         `;
         editorList.appendChild(row);
@@ -1600,13 +1577,13 @@ function importConfig(event) {
 }
 
 function showToast(message, type = 'info') {
-    const colors = {
-        success: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300',
-        error: 'border-red-500/40 bg-red-500/10 text-red-300',
-        info: 'border-accent/40 bg-accent/10 text-purple-300'
+    const variants = {
+        success: 'toast-success',
+        error: 'toast-error',
+        info: 'toast-info'
     };
     const toast = document.createElement('div');
-    toast.className = `toast pointer-events-auto px-4 py-2.5 rounded-xl border text-sm font-medium shadow-lg ${colors[type] || colors.info}`;
+    toast.className = `toast ${variants[type] || variants.info}`;
     toast.textContent = message;
     document.getElementById('toast-container').appendChild(toast);
     setTimeout(() => toast.remove(), 3000);
@@ -1646,12 +1623,6 @@ function setupKeyboard() {
     });
 }
 
-function setupMobileMenu() {
-    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.toggle('hidden');
-    });
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
     const loadedFrom = await bootstrapChannels();
 
@@ -1663,8 +1634,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     setupFilters();
     setupKeyboard();
-    setupMobileMenu();
-    document.getElementById('refresh-btn')?.addEventListener('click', refreshLiveStatuses);
     renderGuide();
     refreshLiveStatuses();
     setInterval(refreshLiveStatuses, 5 * 60 * 1000);

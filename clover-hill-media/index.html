@@ -1,390 +1,164 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clover Hill Media</title>
     <meta name="description" content="Clover Hill Media — your personal channel guide for streaming, live TV, and vibes.">
-    <meta name="theme-color" content="#0a0a0c">
+    <meta name="theme-color" content="#3d3228">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-                    colors: {
-                        darkbg: '#09090b',
-                        cardbg: '#121216',
-                        accent: '#8b5cf6',
-                        twitch: '#9146FF',
-                        youtube: '#FF0000',
-                        pluto: '#E50914',
-                        roku: '#662d91'
-                    },
-                    animation: {
-                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-                        'fade-up': 'fade-up 0.5s ease-out forwards',
-                        'shimmer': 'shimmer 1.5s infinite'
-                    },
-                    keyframes: {
-                        'pulse-glow': {
-                            '0%, 100%': { boxShadow: '0 0 8px rgba(52, 211, 153, 0.4)' },
-                            '50%': { boxShadow: '0 0 16px rgba(52, 211, 153, 0.8)' }
-                        },
-                        'fade-up': {
-                            '0%': { opacity: '0', transform: 'translateY(16px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        'shimmer': {
-                            '0%': { backgroundPosition: '-200% 0' },
-                            '100%': { backgroundPosition: '200% 0' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-deep: #0a0a0c;
-            --glass: rgba(18, 18, 22, 0.72);
-            --glass-border: rgba(255, 255, 255, 0.06);
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg-deep);
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-
-        /* Animated deep-space background */
-        .space-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            overflow: hidden;
-            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.15), transparent),
-                        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(145, 70, 255, 0.08), transparent),
-                        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(229, 9, 20, 0.06), transparent),
-                        var(--bg-deep);
-        }
-
-        .space-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
-                radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.3), transparent),
-                radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.35), transparent),
-                radial-gradient(1px 1px at 40% 90%, rgba(255,255,255,0.25), transparent),
-                radial-gradient(1.5px 1.5px at 90% 60%, rgba(139,92,246,0.5), transparent),
-                radial-gradient(1px 1px at 10% 50%, rgba(255,255,255,0.2), transparent);
-            background-size: 200px 200px;
-            animation: drift 120s linear infinite;
-        }
-
-        @keyframes drift {
-            to { transform: translateY(-200px); }
-        }
-
-        .clover-icon {
-            display: block;
-            width: 1.35rem;
-            height: 1.35rem;
-        }
-
-        @media (min-width: 640px) {
-            .clover-icon { width: 1.5rem; height: 1.5rem; }
-        }
-
-        .clover-icon-lg {
-            width: 2.75rem;
-            height: 2.75rem;
-            opacity: 0.45;
-        }
-
-        .glass-panel {
-            background: var(--glass);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid var(--glass-border);
-        }
-
-        .guide-row:last-child {
-            border-bottom: none !important;
-        }
-
-        .guide-row:focus-visible {
-            outline: 2px solid rgba(139, 92, 246, 0.5);
-            outline-offset: -2px;
-        }
-
-        .live-dot {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 6px rgba(52, 211, 153, 0.5); }
-            50% { box-shadow: 0 0 14px rgba(52, 211, 153, 0.9); }
-        }
-
-        .filter-chip.active {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: rgba(139, 92, 246, 0.5);
-            color: #c4b5fd;
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, #1a1a1f 25%, #252530 50%, #1a1a1f 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .modal-enter { animation: modal-in 0.3s ease-out; }
-        @keyframes modal-in {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .toast {
-            animation: toast-in 0.35s ease-out, toast-out 0.35s ease-in 2.65s forwards;
-        }
-        @keyframes toast-in {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes toast-out {
-            to { opacity: 0; transform: translateY(-10px); }
-        }
-
-        #guide-rows .guide-row {
-            animation: guide-in 0.35s ease-out both;
-        }
-
-        @keyframes guide-in {
-            from { opacity: 0; transform: translateX(-6px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .scrollbar-thin::-webkit-scrollbar { width: 6px; }
-        .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
-        .scrollbar-thin::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .space-bg::before, .live-dot, .toast { animation: none !important; }
-            #guide-rows .guide-row { animation: none; }
-        }
-    </style>
+    <link rel="stylesheet" href="retro.css">
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen flex flex-col selection:bg-accent selection:text-white">
+<body class="retro-body min-h-screen flex flex-col">
 
-    <div class="space-bg" aria-hidden="true"></div>
+    <div class="wood-bg" aria-hidden="true"></div>
 
-    <!-- Header -->
-    <header class="glass-panel sticky top-0 z-40 px-4 sm:px-6 py-3 sm:py-4">
-        <div class="container mx-auto flex items-center justify-between gap-4">
-            <div class="flex items-center space-x-3 min-w-0">
-                <div class="bg-emerald-500/15 p-2 rounded-xl border border-emerald-500/35 text-emerald-400 shrink-0" aria-hidden="true">
-                    <svg class="clover-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="6.5" r="4.25"/>
-                        <circle cx="12" cy="17.5" r="4.25"/>
-                        <circle cx="6.5" cy="12" r="4.25"/>
-                        <circle cx="17.5" cy="12" r="4.25"/>
-                    </svg>
-                </div>
-                <div class="min-w-0">
-                    <h1 class="text-base sm:text-lg font-bold tracking-wide text-white truncate">Clover Hill Media</h1>
-                    <p class="text-[10px] text-gray-500 hidden sm:block">Channel guide · Streaming · Live TV · Vibes</p>
-                </div>
+    <header class="plastic-bar sticky top-0 z-40 px-4 sm:px-6 py-3 sm:py-4">
+        <div class="container mx-auto flex items-center gap-3 min-w-0">
+            <div class="logo-badge shrink-0" aria-hidden="true">
+                <svg class="clover-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="6.5" r="4.25"/>
+                    <circle cx="12" cy="17.5" r="4.25"/>
+                    <circle cx="6.5" cy="12" r="4.25"/>
+                    <circle cx="17.5" cy="12" r="4.25"/>
+                </svg>
             </div>
-
-            <!-- Twitch Quick Nav -->
-            <div class="hidden md:flex items-center space-x-3 text-sm font-medium">
-                <a href="https://www.twitch.tv/directory/following" target="_blank" rel="noopener"
-                   class="px-3 py-1.5 rounded-lg bg-twitch/10 hover:bg-twitch/20 text-twitch border border-twitch/30 transition flex items-center space-x-2">
-                    <i class="fa-brands fa-twitch"></i><span>Following</span>
-                </a>
-                <a href="https://www.twitch.tv/directory/category/games-you-follow" target="_blank" rel="noopener"
-                   class="px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-300 border border-gray-700 transition flex items-center space-x-2">
-                    <i class="fa-solid fa-gamepad"></i><span>My Games</span>
-                </a>
-            </div>
-
-            <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg bg-gray-800/80 text-gray-300" aria-label="Menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden container mx-auto mt-3 pt-3 border-t border-gray-800 flex flex-col gap-2">
-            <a href="https://www.twitch.tv/directory/following" target="_blank" rel="noopener"
-               class="px-3 py-2 rounded-lg bg-twitch/10 text-twitch border border-twitch/30 text-sm flex items-center gap-2">
-                <i class="fa-brands fa-twitch"></i> Twitch Following
-            </a>
-            <a href="https://www.twitch.tv/directory/category/games-you-follow" target="_blank" rel="noopener"
-               class="px-3 py-2 rounded-lg bg-gray-800 text-gray-300 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-gamepad"></i> My Games
-            </a>
+            <h1 class="text-base sm:text-lg font-bold tracking-wide text-on-light truncate">Clover Hill Media</h1>
         </div>
     </header>
 
-    <!-- Toolbar -->
     <div class="container mx-auto px-4 pt-6 pb-2">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-            <div>
-                <h2 class="text-base sm:text-lg font-semibold text-gray-200 flex items-center gap-2">
-                    <i class="fa-solid fa-list text-accent"></i> Channel Guide
-                </h2>
-                <p class="text-xs text-gray-500 mt-0.5">Streaming · Live TV · Vibes picker</p>
-            </div>
-            <div class="flex items-center gap-2 flex-wrap">
-                <span id="live-count" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                    <i class="fa-solid fa-circle text-[6px] mr-1"></i> 0 live
-                </span>
-                <span id="channel-count" class="text-xs px-2.5 py-1 rounded-full bg-gray-800/80 text-gray-400 border border-gray-700">0 channels</span>
-                <button id="refresh-btn" title="Refresh live status"
-                        class="p-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-gray-400 hover:text-white border border-gray-700 transition">
-                    <i class="fa-solid fa-arrows-rotate text-xs" id="refresh-icon"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Search + Filters -->
         <div class="flex flex-col sm:flex-row gap-3 mb-6">
             <div class="relative flex-1 max-w-md">
-                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
-                <input type="search" id="search-input" placeholder="Search channels..."
-                       class="w-full pl-9 pr-4 py-2 bg-gray-900/60 border border-gray-800 rounded-xl text-sm text-white placeholder-gray-500 focus:border-accent/50 focus:outline-none transition">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-on-light-muted text-xs"></i>
+                <input type="search" id="search-input" placeholder="Search channels..." class="retro-input w-full pl-9 pr-4 py-2 text-sm">
             </div>
             <div id="platform-filters" class="flex flex-wrap gap-2">
-                <button data-filter="streaming" class="filter-chip active px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-800/60 text-gray-300 transition"><i class="fa-brands fa-twitch mr-1"></i>Streaming<span class="filter-count text-gray-500"></span></button>
-                <button data-filter="livetv" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-800/60 text-gray-300 transition"><i class="fa-solid fa-tv mr-1"></i>Live TV<span class="filter-count text-gray-500"></span></button>
-                <button data-filter="vibes" class="filter-chip px-3 py-1.5 rounded-lg text-xs font-medium border border-gray-700 bg-gray-800/60 text-gray-300 transition"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Vibes<span class="filter-count text-gray-500"></span></button>
+                <button data-filter="streaming" class="filter-chip active"><i class="fa-brands fa-twitch mr-1"></i>Streaming<span class="filter-count"></span></button>
+                <button data-filter="livetv" class="filter-chip"><i class="fa-solid fa-tv mr-1"></i>Live TV<span class="filter-count"></span></button>
+                <button data-filter="vibes" class="filter-chip"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Vibes<span class="filter-count"></span></button>
             </div>
         </div>
     </div>
 
-    <!-- Channel Guide -->
     <main class="flex-grow container mx-auto px-4 pb-8 max-w-4xl">
-        <div id="channel-guide" class="glass-panel rounded-2xl overflow-hidden shadow-xl hidden">
-            <div class="hidden sm:grid grid-cols-[3.5rem_2.5rem_1fr_8rem_5rem] gap-4 px-5 py-2.5 border-b border-gray-800 text-[10px] uppercase tracking-wider font-semibold text-gray-500 bg-gray-900/40">
+        <div id="channel-guide" class="guide-console hidden">
+            <div class="guide-console-header hidden sm:grid grid-cols-[3.5rem_2.5rem_1fr_8rem_5rem] gap-4 px-5 py-2.5">
                 <span>Ch</span><span></span><span>Channel / Now Playing</span><span>Type</span><span class="text-right">Status</span>
             </div>
-            <div id="guide-rows" class="divide-y divide-gray-800/50"></div>
+            <div id="guide-rows"></div>
         </div>
-        <div id="empty-state" class="hidden text-center py-16">
-            <svg class="clover-icon-lg mx-auto mb-4 text-emerald-500/70" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="6.5" r="4.25"/>
-                <circle cx="12" cy="17.5" r="4.25"/>
-                <circle cx="6.5" cy="12" r="4.25"/>
-                <circle cx="17.5" cy="12" r="4.25"/>
+        <div id="empty-state" class="hidden text-center py-16 wood-inset rounded-lg mx-auto max-w-md">
+            <svg class="clover-icon-lg mx-auto mb-4 text-on-dark-muted" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="6.5" r="4.25"/><circle cx="12" cy="17.5" r="4.25"/>
+                <circle cx="6.5" cy="12" r="4.25"/><circle cx="17.5" cy="12" r="4.25"/>
             </svg>
-            <p class="text-gray-500 text-sm">No channels in your guide.</p>
-            <button onclick="openEditModal()" class="mt-4 text-accent text-sm hover:underline">Edit channel guide</button>
+            <p class="text-on-dark-muted text-sm">No channels in your guide.</p>
+            <button onclick="openEditModal()" class="mt-4 link-accent text-sm">Edit channel guide</button>
         </div>
+
+        <section id="theaters-section" class="theaters-marquee mt-8" aria-labelledby="theaters-title">
+            <div class="theaters-header">
+                <div>
+                    <h2 id="theaters-title" class="theaters-title">In theaters now</h2>
+                    <p class="theaters-sub">Verified box office · data via TMDB</p>
+                </div>
+                <button type="button" id="theaters-refresh" class="theaters-btn">Refresh lineup</button>
+            </div>
+            <p class="theaters-status" id="theaters-status">Loading current releases…</p>
+            <div class="theaters-carousel scrollbar-thin" id="theaters-carousel"></div>
+            <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        </section>
     </main>
 
-    <!-- Ambiance Picker -->
-    <div id="ambiance-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="ambiance-title">
-        <div class="w-full max-w-md glass-panel rounded-2xl p-5 shadow-2xl modal-enter">
+    <div id="ambiance-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="ambiance-title">
+        <div class="modal-panel w-full max-w-md p-5 modal-enter">
             <div class="flex justify-between items-center mb-4">
-                <h3 id="ambiance-title" class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles text-accent"></i> Pick Your Vibe
+                <h3 id="ambiance-title" class="text-lg font-bold text-on-light flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber"></i> Pick Your Vibe
                 </h3>
-                <button onclick="closeAmbianceModal()" class="text-gray-400 hover:text-white p-1" aria-label="Close">
+                <button onclick="closeAmbianceModal()" class="btn-icon-sm" aria-label="Close">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
-            <p class="text-xs text-gray-500 mb-4">24/7 ambient streams — opens in a new tab</p>
+            <p class="text-xs text-on-light-muted mb-4">24/7 ambient streams — opens in a new tab</p>
             <div id="ambiance-options" class="space-y-2 max-h-[60vh] overflow-y-auto scrollbar-thin pr-1"></div>
         </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div id="edit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4" role="dialog" aria-modal="true">
-        <div class="w-full max-w-4xl glass-panel rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col max-h-[92vh] modal-enter">
-            <div class="flex justify-between items-center pb-4 border-b border-gray-800 mb-4">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square text-accent"></i> Edit Channel Guide
+    <div id="edit-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true">
+        <div class="modal-panel w-full max-w-4xl p-5 sm:p-6 flex flex-col max-h-[92vh] modal-enter">
+            <div class="flex justify-between items-center pb-4 border-b border-plastic-shadow mb-4">
+                <h3 class="text-lg font-bold text-on-light flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-amber"></i> Edit Channel Guide
                 </h3>
-                <button onclick="closeEditModal()" class="text-gray-400 hover:text-white p-1" aria-label="Close">
+                <button onclick="closeEditModal()" class="btn-icon-sm" aria-label="Close">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
-            <!-- Twitch settings -->
-            <div class="mb-4 p-3 bg-gray-900/50 border border-gray-800 rounded-xl space-y-2">
-                <p class="text-xs text-gray-400"><i class="fa-brands fa-twitch text-twitch mr-1"></i> Twitch API — optional, for game → first English streamer</p>
-                <input type="text" id="twitch-client-id" placeholder="Client ID from dev.twitch.tv"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-accent outline-none">
-                <input type="password" id="twitch-client-secret" placeholder="Client Secret (stored locally only)"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-accent outline-none">
+            <div class="mb-4 p-3 settings-block space-y-2">
+                <p class="text-xs text-on-light-muted"><i class="fa-brands fa-twitch mr-1 text-twitch-brand"></i> Twitch API — optional, for game → first English streamer</p>
+                <input type="text" id="twitch-client-id" placeholder="Client ID from dev.twitch.tv" class="retro-input w-full px-3 py-1.5 text-xs">
+                <input type="password" id="twitch-client-secret" placeholder="Client Secret (stored locally only)" class="retro-input w-full px-3 py-1.5 text-xs">
             </div>
 
-            <!-- YouTube settings -->
-            <div class="mb-4 p-3 bg-gray-900/50 border border-gray-800 rounded-xl space-y-2">
-                <p class="text-xs text-gray-400"><i class="fa-brands fa-youtube text-red-400 mr-1"></i> YouTube API — optional fallback for live status checks</p>
-                <input type="password" id="youtube-api-key" placeholder="API key from console.cloud.google.com (stored locally)"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:border-accent outline-none">
-                <p class="text-[10px] text-gray-500">Live status is checked automatically for YouTube links. Add a key only if checks fail in your browser.</p>
+            <div class="mb-4 p-3 settings-block space-y-2">
+                <p class="text-xs text-on-light-muted"><i class="fa-brands fa-youtube mr-1 text-youtube-brand"></i> YouTube API — optional fallback for live status checks</p>
+                <input type="password" id="youtube-api-key" placeholder="API key from console.cloud.google.com (stored locally)" class="retro-input w-full px-3 py-1.5 text-xs">
+                <p class="text-[10px] text-on-light-muted">Live status is checked automatically for YouTube links. Add a key only if checks fail in your browser.</p>
             </div>
 
             <div class="overflow-y-auto flex-grow space-y-3 pr-1 scrollbar-thin" id="config-editor-list"></div>
-            <p class="text-[10px] text-gray-500 mt-2">Browser edits save locally. Use <strong class="text-gray-400">Export for site</strong> → commit <code class="text-gray-400">channels.json</code> → push so every device gets the same guide.</p>
+            <p class="text-[10px] text-on-light-muted mt-2">Browser edits save locally. Use <strong class="text-on-light">Export for site</strong> → commit <code class="text-on-light">channels.json</code> → push so every device gets the same guide.</p>
 
-            <div class="pt-4 border-t border-gray-800 flex flex-wrap justify-between items-center gap-3 mt-4">
+            <div class="pt-4 border-t border-plastic-shadow flex flex-wrap justify-between items-center gap-3 mt-4">
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="addNewChannelRow()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs rounded-xl font-medium transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-plus"></i> Add Channel
-                    </button>
-                    <button onclick="exportConfig()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-download"></i> Backup
-                    </button>
-                    <button onclick="exportSiteGuide()" class="px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs rounded-xl transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Export for site
-                    </button>
-                    <label class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+                    <button onclick="addNewChannelRow()" class="btn-plastic text-xs"><i class="fa-solid fa-plus"></i> Add Channel</button>
+                    <button onclick="exportConfig()" class="btn-plastic text-xs"><i class="fa-solid fa-download"></i> Backup</button>
+                    <button onclick="exportSiteGuide()" class="btn-plastic btn-plastic-accent text-xs"><i class="fa-solid fa-cloud-arrow-up"></i> Export for site</button>
+                    <label class="btn-plastic text-xs cursor-pointer">
                         <i class="fa-solid fa-upload"></i> Import
                         <input type="file" accept=".json" class="hidden" id="import-file" onchange="importConfig(event)">
                     </label>
-                    <button onclick="reloadSiteGuide()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-rotate"></i> Reload site guide
-                    </button>
+                    <button onclick="reloadSiteGuide()" class="btn-plastic text-xs"><i class="fa-solid fa-rotate"></i> Reload site guide</button>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="resetDefaultConfig()" class="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs rounded-xl font-medium transition">Reset to site</button>
-                    <button onclick="saveConfigurations()" class="px-4 py-2 bg-accent hover:bg-accent/90 text-white text-xs rounded-xl font-semibold transition shadow-lg shadow-accent/20">Save & Apply</button>
+                    <button onclick="resetDefaultConfig()" class="btn-plastic btn-plastic-danger text-xs">Reset to site</button>
+                    <button onclick="saveConfigurations()" class="btn-primary text-xs">Save & Apply</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="glass-panel border-t border-gray-800/80 py-5 px-4 sm:px-6 mt-auto">
+    <div id="theater-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="theater-modal-title">
+        <div class="theater-modal-panel modal-enter">
+            <button type="button" id="theater-modal-close" class="theater-modal-close" aria-label="Close">&times;</button>
+            <h3 id="theater-modal-title" class="theater-modal-title">—</h3>
+            <p id="theater-modal-meta" class="theater-modal-meta">—</p>
+            <div id="theater-trailer-slot"></div>
+            <p id="theater-modal-synopsis" class="theater-modal-synopsis">—</p>
+            <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        </div>
+    </div>
+
+    <footer class="plastic-bar border-t py-5 px-4 sm:px-6 mt-auto">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-xs text-gray-500 text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
-            <button onclick="openEditModal()" class="px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-lg shadow-accent/5">
+            <p class="text-xs text-on-light-muted text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
+            <button onclick="openEditModal()" class="btn-primary text-sm">
                 <i class="fa-solid fa-sliders"></i>
                 <span>Edit Channel Guide</span>
             </button>
         </div>
     </footer>
 
-    <!-- Toast container -->
     <div id="toast-container" class="fixed bottom-6 right-6 z-[60] flex flex-col gap-2 pointer-events-none"></div>
 
     <script src="app.js"></script>
+    <script src="theaters.js"></script>
 </body>
 </html>

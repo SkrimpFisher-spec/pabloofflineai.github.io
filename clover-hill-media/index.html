@@ -144,23 +144,23 @@
             </div>
 
             <div class="overflow-y-auto flex-grow space-y-3 pr-1 scrollbar-thin" id="config-editor-list"></div>
-            <p class="text-[10px] text-on-light-muted mt-2">Browser edits save locally. Use <strong class="text-on-light">Export for site</strong> → commit <code class="text-on-light">channels.json</code> → push so every device gets the same guide.</p>
+            <p class="text-[10px] text-on-light-muted mt-2">The live site reads <code class="text-on-light">channels.json</code> from GitHub Pages — not this browser. <strong class="text-on-light">Save &amp; Publish</strong> downloads an updated file. Replace <code class="text-on-light">clover-hill-media/channels.json</code> in the repo and push to go live.</p>
 
             <div class="pt-4 border-t border-plastic-shadow flex flex-wrap justify-between items-center gap-3 mt-4">
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="addNewChannelRow()" class="btn-plastic text-xs"><i class="fa-solid fa-plus"></i> Add Channel</button>
-                    <button onclick="exportConfig()" class="btn-plastic text-xs"><i class="fa-solid fa-download"></i> Backup</button>
-                    <button onclick="exportSiteGuide()" class="btn-plastic btn-plastic-accent text-xs"><i class="fa-solid fa-cloud-arrow-up"></i> Export for site</button>
+                    <button type="button" onclick="addNewChannelRow()" class="btn-plastic text-xs"><i class="fa-solid fa-plus"></i> Add Channel</button>
+                    <button type="button" onclick="exportConfig()" class="btn-plastic text-xs"><i class="fa-solid fa-download"></i> Backup JSON</button>
+                    <button type="button" onclick="exportSiteGuide()" class="btn-plastic btn-plastic-accent text-xs"><i class="fa-solid fa-cloud-arrow-up"></i> Download channels.json</button>
                     <label class="btn-plastic text-xs cursor-pointer">
                         <i class="fa-solid fa-upload" aria-hidden="true"></i> Import
                         <span class="sr-only">channel guide JSON file</span>
                         <input type="file" accept=".json" class="hidden" id="import-file" onchange="importConfig(event)">
                     </label>
-                    <button onclick="reloadSiteGuide()" class="btn-plastic text-xs"><i class="fa-solid fa-rotate"></i> Reload site guide</button>
+                    <button type="button" onclick="reloadSiteGuide()" class="btn-plastic text-xs"><i class="fa-solid fa-rotate"></i> Reload site guide</button>
                 </div>
                 <div class="flex flex-wrap gap-2">
-                    <button onclick="resetDefaultConfig()" class="btn-plastic btn-plastic-danger text-xs">Reset to site</button>
-                    <button onclick="saveConfigurations()" class="btn-primary text-xs">Save & Apply</button>
+                    <button type="button" onclick="resetDefaultConfig()" class="btn-plastic btn-plastic-danger text-xs">Discard edits</button>
+                    <button type="button" onclick="saveConfigurations()" class="btn-primary text-xs">Save &amp; Publish</button>
                 </div>
             </div>
         </div>
@@ -190,7 +190,7 @@
 
     <footer class="plastic-bar border-t py-5 px-4 sm:px-6 mt-auto">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-xs text-on-light-muted text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
+            <p class="text-xs text-on-light-muted text-center sm:text-left">Clover Hill Media · Live guide from channels.json</p>
             <button type="button" onclick="openEditModal()" class="btn-primary text-sm">
                 <i class="fa-solid fa-sliders"></i>
                 <span>Edit Channel Guide</span>

@@ -114,9 +114,8 @@ const TWITCH_RESERVED = new Set([
 
 const STORAGE_KEY = 'omnistream_channels';
 const STORAGE_VERSION_KEY = 'omnistream_storage_version';
-const STORAGE_VERSION = 9;
-const SITE_GUIDE_URL = 'channels.json';
 const GUIDE_REVISION_KEY = 'omnistream_guide_revision';
+const SITE_GUIDE_URL = 'channels.json';
 const TWITCH_ID_KEY = 'omnistream_twitch_client_id';
 const TWITCH_SECRET_KEY = 'omnistream_twitch_client_secret';
 const YOUTUBE_API_KEY = 'omnistream_youtube_api_key';
@@ -129,6 +128,7 @@ const INNERTUBE_CLIENT = {
 };
 
 let channels = [];
+let siteGuideRevision = 0;
 let activeFilter = 'streaming';
 let searchQuery = '';
 let isRefreshing = false;
@@ -436,16 +436,42 @@ function serializeChannel(ch) {
     };
 }
 
-function persistChannels() {
-    try {
-        const payload = channels.map(serializeChannel);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-        localStorage.setItem(STORAGE_VERSION_KEY, String(STORAGE_VERSION));
-        return true;
-    } catch (e) {
-        showToast('Could not save — storage blocked or full', 'error');
-        return false;
+function clearLegacyGuideStorage() {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_VERSION_KEY);
+    localStorage.removeItem(GUIDE_REVISION_KEY);
+}
+
+function downloadSiteGuideFile(payload) {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'channels.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+async function buildSiteGuidePayload() {
+    const siteGuide = await fetchSiteGuide();
+    const revision = (siteGuide?.revision ?? siteGuideRevision ?? 0) + 1;
+    return {
+        revision,
+        updated: new Date().toISOString().slice(0, 10),
+        channels: channels.map(serializeChannel)
+    };
+}
+
+async function publishSiteGuide({ quiet = false } = {}) {
+    const payload = await buildSiteGuidePayload();
+    downloadSiteGuideFile(payload);
+    siteGuideRevision = payload.revision;
+    if (!quiet) {
+        showToast(
+            `Downloaded channels.json (rev ${payload.revision}). Replace clover-hill-media/channels.json in the repo and push to update the live site.`,
+            'success'
+        );
     }
+    return payload;
 }
 
 function readRowDraft(row) {
@@ -464,25 +490,6 @@ function channelsFromRawList(list) {
     return list.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
 }
 
-function isLikelyBuiltinDefaults(list) {
-    if (!list || list.length === 0) return true;
-    if (list.length > DEFAULT_CHANNELS.length) return false;
-    const defaultIds = new Set(DEFAULT_CHANNELS.map(c => c.id));
-    return list.every(ch => defaultIds.has(ch.id));
-}
-
-function loadLocalChannels() {
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (!stored) return null;
-        const parsed = JSON.parse(stored);
-        if (!Array.isArray(parsed) || parsed.length === 0) return null;
-        return channelsFromRawList(parsed);
-    } catch (_) {
-        return null;
-    }
-}
-
 async function fetchSiteGuide() {
     try {
         const res = await fetch(`${SITE_GUIDE_URL}?v=${Date.now()}`, { cache: 'no-store' });
@@ -492,8 +499,9 @@ async function fetchSiteGuide() {
             return { revision: 0, channels: channelsFromRawList(data) };
         }
         if (data && Array.isArray(data.channels)) {
+            siteGuideRevision = Number(data.revision) || 0;
             return {
-                revision: Number(data.revision) || 0,
+                revision: siteGuideRevision,
                 channels: channelsFromRawList(data.channels)
             };
         }
@@ -501,50 +509,23 @@ async function fetchSiteGuide() {
     return null;
 }
 
-async function applySiteGuide(siteGuide, { persistRevision = true } = {}) {
+async function applySiteGuide(siteGuide) {
     if (!siteGuide?.channels?.length) return false;
     channels = siteGuide.channels;
-    if (persistRevision) {
-        localStorage.setItem(GUIDE_REVISION_KEY, String(siteGuide.revision ?? 0));
-    }
-    persistChannels();
+    siteGuideRevision = Number(siteGuide.revision) || siteGuideRevision;
     return true;
 }
 
 async function bootstrapChannels() {
+    clearLegacyGuideStorage();
     const siteGuide = await fetchSiteGuide();
-    const siteRevision = siteGuide?.revision ?? 0;
-    const storedRevision = Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0);
-    const localChannels = loadLocalChannels();
-
-    if (siteGuide?.channels?.length) {
-        const siteIsNewer = siteRevision > storedRevision;
-        const localIsStale = !localChannels || isLikelyBuiltinDefaults(localChannels);
-        if (siteIsNewer || localIsStale) {
-            await applySiteGuide(siteGuide);
-            return siteIsNewer ? 'site-update' : 'site';
-        }
-    }
-
-    if (localChannels?.length) {
-        channels = localChannels;
-        return 'local';
-    }
-
     if (siteGuide?.channels?.length) {
         await applySiteGuide(siteGuide);
         return 'site';
     }
 
     channels = channelsFromRawList(cloneDefaults());
-    persistChannels();
     return 'defaults';
-}
-
-function loadChannels() {
-    const localChannels = loadLocalChannels();
-    if (localChannels?.length) return localChannels;
-    return channelsFromRawList(cloneDefaults());
 }
 
 function isChannelActive(ch) {
@@ -1412,11 +1393,10 @@ function moveChannelRow(channelId, direction) {
     current.sortOrder = targetOrder;
     target.sortOrder = currentOrder;
 
-    persistChannels();
     openEditModal();
 }
 
-function saveConfigurations() {
+async function saveConfigurations() {
     const rows = document.getElementById('config-editor-list')?.querySelectorAll('.channel-editor-row');
     if (!rows || rows.length === 0) {
         showToast('Nothing to save — add a channel first', 'error');
@@ -1471,7 +1451,7 @@ function saveConfigurations() {
 
     twitchAccessToken = null;
 
-    if (!persistChannels()) return;
+    await publishSiteGuide({ quiet: true });
 
     const lastSaved = channels[channels.length - 1];
     if (lastSaved) setActiveFilter(suggestFilterForChannel(lastSaved));
@@ -1480,22 +1460,21 @@ function saveConfigurations() {
     renderGuide();
     refreshLiveStatuses();
 
-    let msg = `Saved ${channels.length} channel${channels.length === 1 ? '' : 's'}`;
+    let msg = `Published rev ${siteGuideRevision} — downloaded channels.json. Commit that file to the repo and push to update the live site.`;
     if (lastSaved) {
         const tab = getChannelCategory(lastSaved);
         const tabLabel = GUIDE_CATEGORIES[tab] || tab;
-        msg += ` · see ${tabLabel} tab`;
+        msg += ` Previewing ${tabLabel} tab.`;
     }
     showToast(msg, 'success');
 }
 
 function resetDefaultConfig() {
-    if (!confirm('Reload the published site guide from channels.json? Unsaved browser edits will be replaced.')) return;
+    if (!confirm('Discard unsaved edits and reload the published site guide from channels.json?')) return;
     reloadSiteGuide().then((ok) => {
         if (ok) openEditModal();
         else {
             channels = channelsFromRawList(cloneDefaults());
-            persistChannels();
             openEditModal();
             renderGuide();
             refreshLiveStatuses();
@@ -1514,20 +1493,8 @@ function exportConfig() {
     showToast('Exported backup', 'success');
 }
 
-function exportSiteGuide() {
-    const revision = Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0) + 1;
-    const payload = {
-        revision,
-        updated: new Date().toISOString().slice(0, 10),
-        channels: channels.map(serializeChannel)
-    };
-    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'channels.json';
-    a.click();
-    URL.revokeObjectURL(a.href);
-    showToast(`Downloaded channels.json (rev ${revision}) — commit this file to publish`, 'success');
+async function exportSiteGuide() {
+    await publishSiteGuide();
 }
 
 async function reloadSiteGuide({ quiet = false } = {}) {
@@ -1553,16 +1520,13 @@ function importConfig(event) {
             const list = Array.isArray(parsed) ? parsed : parsed.channels;
             if (!Array.isArray(list)) throw new Error('invalid');
             channels = list.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
-            persistChannels();
             if (parsed.revision != null) {
-                localStorage.setItem(GUIDE_REVISION_KEY, String(parsed.revision));
-            } else {
-                localStorage.setItem(GUIDE_REVISION_KEY, String(Number(localStorage.getItem(GUIDE_REVISION_KEY) || 0) + 1));
+                siteGuideRevision = Number(parsed.revision) || 0;
             }
             openEditModal();
             renderGuide();
             refreshLiveStatuses();
-            showToast(`Imported ${channels.length} channels (saved in this browser)`, 'success');
+            showToast(`Imported ${channels.length} channels for editing. Use Save & Publish to download channels.json for the live site.`, 'success');
         } catch (_) {
             showToast('Invalid JSON', 'error');
         }
@@ -1617,11 +1581,7 @@ function setupKeyboard() {
 document.addEventListener('DOMContentLoaded', async () => {
     const loadedFrom = await bootstrapChannels();
 
-    const before = JSON.stringify(channels.map(serializeChannel));
     channels = channels.map((ch, i) => normalizeChannel(ch, i)).filter(Boolean);
-    if (JSON.stringify(channels.map(serializeChannel)) !== before) {
-        persistChannels();
-    }
 
     setupFilters();
     setupKeyboard();
@@ -1631,8 +1591,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     setInterval(refreshLiveStatuses, 5 * 60 * 1000);
     scheduleRokuRefresh();
 
-    if (loadedFrom === 'site' || loadedFrom === 'site-update') {
-        showToast(`Loaded ${channels.length} channels from site guide`, 'info');
+    if (loadedFrom === 'site') {
+        showToast(`Loaded ${channels.length} channels from site guide (rev ${siteGuideRevision})`, 'info');
     }
 });
 

@@ -703,7 +703,7 @@ async function loadTvTab(mode) {
     const statusLine = document.getElementById('tv-status');
     if (!statusLine) return;
 
-    document.querySelectorAll('.tv-tab').forEach(btn => {
+    document.querySelectorAll('#tv-section .tv-tab').forEach(btn => {
         const isActive = btn.dataset.mode === mode;
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
@@ -724,7 +724,7 @@ async function loadTvTab(mode) {
 }
 
 function setupTvLineup() {
-    document.querySelectorAll('.tv-tab').forEach(btn => {
+    document.querySelectorAll('#tv-section .tv-tab').forEach(btn => {
         btn.addEventListener('click', () => loadTvTab(btn.dataset.mode));
     });
     document.getElementById('tv-modal-close')?.addEventListener('click', closeTvModal);

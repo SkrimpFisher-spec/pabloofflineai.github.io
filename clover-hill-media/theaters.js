@@ -336,7 +336,7 @@ async function loadMovieTab(mode) {
     const statusLine = document.getElementById('theaters-status');
     if (!statusLine) return;
 
-    document.querySelectorAll('#theaters-section .tv-tab').forEach(btn => {
+    document.querySelectorAll('#theaters-section .movie-tab').forEach(btn => {
         const isActive = btn.dataset.mode === mode;
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
@@ -358,7 +358,7 @@ async function loadMovieTab(mode) {
 }
 
 function setupTheaters() {
-    document.querySelectorAll('#theaters-section .tv-tab').forEach(btn => {
+    document.querySelectorAll('#theaters-section .movie-tab').forEach(btn => {
         btn.addEventListener('click', () => loadMovieTab(btn.dataset.mode));
     });
     document.getElementById('theaters-refresh')?.addEventListener('click', () => loadMovieTab(currentMovieMode));

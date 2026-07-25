@@ -156,7 +156,8 @@ function a11yInit() {
     a11ySetupModal('tv-modal', () => window.closeTvModal?.());
 
     a11ySetupTabList('#platform-filters');
-    a11ySetupTabList('.tv-tabs');
+    a11ySetupTabList('#theaters-section .movie-tabs');
+    a11ySetupTabList('#tv-section .tv-tabs');
 }
 
 document.addEventListener('DOMContentLoaded', a11yInit);

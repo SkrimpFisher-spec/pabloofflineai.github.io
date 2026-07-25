@@ -89,7 +89,9 @@ function closeTheaterModal() {
     overlay.classList.add('hidden');
     overlay.classList.remove('flex');
     document.getElementById('theater-trailer-slot').innerHTML = '';
-    document.body.style.overflow = '';
+    if (!document.getElementById('tv-modal')?.classList.contains('flex')) {
+        document.body.style.overflow = '';
+    }
 }
 
 async function loadNowPlaying() {

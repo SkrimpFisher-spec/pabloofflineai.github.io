@@ -77,6 +77,25 @@
         </div>
     </section>
 
+    <section id="tv-section" class="theaters-wrap" aria-labelledby="tv-title">
+        <div class="theaters-marquee tv-marquee">
+            <div class="theaters-header">
+                <div>
+                    <h2 id="tv-title" class="theaters-title">TV lineup</h2>
+                    <p class="theaters-sub">Cross-platform · data via TMDB</p>
+                </div>
+            </div>
+            <div class="tv-tabs" role="tablist" aria-label="TV lineup categories">
+                <button type="button" class="tv-tab active" role="tab" aria-selected="true" data-mode="airing">Airing this week</button>
+                <button type="button" class="tv-tab" role="tab" aria-selected="false" data-mode="popular">Popular now</button>
+                <button type="button" class="tv-tab" role="tab" aria-selected="false" data-mode="upcoming">Coming soon</button>
+            </div>
+            <p class="theaters-status" id="tv-status">Loading…</p>
+            <div class="theaters-carousel" id="tv-carousel"></div>
+            <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        </div>
+    </section>
+
     <div id="ambiance-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="ambiance-title">
         <div class="modal-panel w-full max-w-md p-5 modal-enter">
             <div class="flex justify-between items-center mb-4">
@@ -148,6 +167,17 @@
         </div>
     </div>
 
+    <div id="tv-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="tv-modal-title">
+        <div class="theater-modal-panel modal-enter">
+            <button type="button" id="tv-modal-close" class="theater-modal-close" aria-label="Close">&times;</button>
+            <h3 id="tv-modal-title" class="theater-modal-title">—</h3>
+            <p id="tv-modal-meta" class="theater-modal-meta">—</p>
+            <div id="tv-trailer-slot"></div>
+            <p id="tv-modal-synopsis" class="theater-modal-synopsis">—</p>
+            <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        </div>
+    </div>
+
     <footer class="plastic-bar border-t py-5 px-4 sm:px-6 mt-auto">
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <p class="text-xs text-on-light-muted text-center sm:text-left">Clover Hill Media · Site guide + browser backup</p>
@@ -162,5 +192,6 @@
 
     <script src="app.js"></script>
     <script src="theaters.js"></script>
+    <script src="tv-lineup.js"></script>
 </body>
 </html>

@@ -1,29 +1,36 @@
 const TV_STATUS_LABELS = {
-    airing: 'shows with new episodes this week',
-    popular: 'most popular shows right now, across networks and streamers',
-    upcoming: 'anticipated shows with first air dates coming up'
+    airing: 'English-language shows with new episodes this week',
+    popular: 'most popular English-language shows right now',
+    upcoming: 'anticipated English-language shows coming soon'
 };
 
 let currentTvMode = 'airing';
 
-function todayISO() {
-    return new Date().toISOString().slice(0, 10);
-}
-
 function tvEndpoint(mode) {
     switch (mode) {
         case 'airing':
-            return tmdbUrl('/tv/on_the_air', { page: '1' });
+            return tmdbUrl('/discover/tv', englishDiscoverParams({
+                sort_by: 'popularity.desc',
+                'air_date.gte': daysFromTodayISO(-7),
+                'air_date.lte': daysFromTodayISO(7),
+                page: '1'
+            }));
         case 'popular':
-            return tmdbUrl('/tv/popular', { page: '1' });
+            return tmdbUrl('/discover/tv', englishDiscoverParams({
+                sort_by: 'popularity.desc',
+                page: '1'
+            }));
         case 'upcoming':
-            return tmdbUrl('/discover/tv', {
+            return tmdbUrl('/discover/tv', englishDiscoverParams({
                 sort_by: 'popularity.desc',
                 'first_air_date.gte': todayISO(),
                 page: '1'
-            });
+            }));
         default:
-            return tmdbUrl('/tv/on_the_air', { page: '1' });
+            return tmdbUrl('/discover/tv', englishDiscoverParams({
+                sort_by: 'popularity.desc',
+                page: '1'
+            }));
     }
 }
 

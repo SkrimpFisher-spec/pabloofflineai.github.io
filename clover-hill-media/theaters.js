@@ -5,6 +5,28 @@ const TMDB_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YTVmYTM1YTI0NjJmNWY3
 const TMDB_IMG_BASE = 'https://image.tmdb.org/t/p/w342';
 const TMDB_HEADERS = { Authorization: `Bearer ${TMDB_ACCESS_TOKEN}` };
 
+// Hardcoded English/Western scope for all lineup queries (US, UK, AU, CA, NZ, IE)
+const TMDB_ENGLISH_ORIGIN_COUNTRIES = 'US|GB|AU|CA|NZ|IE';
+
+function todayISO() {
+    return new Date().toISOString().slice(0, 10);
+}
+
+function daysFromTodayISO(days) {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+}
+
+function englishDiscoverParams(extra = {}) {
+    return {
+        with_original_language: 'en',
+        with_origin_country: TMDB_ENGLISH_ORIGIN_COUNTRIES,
+        region: 'US',
+        ...extra
+    };
+}
+
 function tmdbUrl(path, params = {}) {
     const url = new URL(`https://api.themoviedb.org/3${path}`);
     url.searchParams.set('api_key', TMDB_API_KEY);
@@ -100,11 +122,17 @@ async function loadNowPlaying() {
 
     statusLine.textContent = 'Loading current releases…';
     try {
-        const res = await fetch(tmdbUrl('/movie/now_playing', { region: 'US', page: '1' }), { headers: TMDB_HEADERS });
+        const res = await fetch(tmdbUrl('/discover/movie', englishDiscoverParams({
+            sort_by: 'popularity.desc',
+            with_release_type: '3|2',
+            'release_date.lte': todayISO(),
+            'release_date.gte': daysFromTodayISO(-90),
+            page: '1'
+        })), { headers: TMDB_HEADERS });
         if (!res.ok) throw new Error('TMDB error');
         const data = await res.json();
         const movies = (data.results || []).slice(0, 12);
-        statusLine.textContent = `${movies.length} titles in theaters · updated ${new Date().toLocaleDateString()}`;
+        statusLine.textContent = `${movies.length} English-language titles in theaters · updated ${new Date().toLocaleDateString()}`;
         renderTheaterCarousel(movies);
     } catch (_) {
         statusLine.textContent = 'Couldn\'t reach TMDB — try again later';

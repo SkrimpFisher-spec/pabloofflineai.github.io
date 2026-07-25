@@ -60,8 +60,10 @@
             <p class="text-on-dark-muted text-sm">No channels in your guide.</p>
             <button onclick="openEditModal()" class="mt-4 link-accent text-sm">Edit channel guide</button>
         </div>
+    </main>
 
-        <section id="theaters-section" class="theaters-marquee mt-8" aria-labelledby="theaters-title">
+    <section id="theaters-section" class="theaters-wrap" aria-labelledby="theaters-title">
+        <div class="theaters-marquee">
             <div class="theaters-header">
                 <div>
                     <h2 id="theaters-title" class="theaters-title">In theaters now</h2>
@@ -70,10 +72,10 @@
                 <button type="button" id="theaters-refresh" class="theaters-btn">Refresh lineup</button>
             </div>
             <p class="theaters-status" id="theaters-status">Loading current releases…</p>
-            <div class="theaters-carousel scrollbar-thin" id="theaters-carousel"></div>
+            <div class="theaters-carousel" id="theaters-carousel"></div>
             <p class="theaters-attribution">Poster, synopsis, and trailer data courtesy of TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <div id="ambiance-modal" class="retro-modal hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="ambiance-title">
         <div class="modal-panel w-full max-w-md p-5 modal-enter">

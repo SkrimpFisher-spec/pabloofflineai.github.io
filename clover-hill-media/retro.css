@@ -472,14 +472,19 @@ body.retro-body {
 
 /* ─── In Theaters Now (TMDB marquee) ─────────────────────────────────────── */
 
+.theaters-wrap {
+    width: 100%;
+    padding: 0 0 2rem;
+}
+
 .theaters-marquee {
+    width: 100%;
     background: linear-gradient(180deg, #3a3228 0%, #2a2218 100%);
-    border: 4px solid var(--plastic-mid);
+    border-top: 4px solid var(--plastic-mid);
+    border-bottom: 4px solid var(--plastic-mid);
     border-top-color: var(--plastic-light);
-    border-left-color: var(--plastic-light);
-    border-radius: 6px;
-    padding: 1.25rem 1.25rem 1rem;
-    box-shadow: inset 0 0 0 2px var(--wood-deep), 0 6px 20px rgba(0, 0, 0, 0.5);
+    padding: 1.25rem clamp(1rem, 3vw, 2rem) 1rem;
+    box-shadow: inset 0 0 0 2px var(--wood-deep), 0 -4px 20px rgba(0, 0, 0, 0.35);
     color: var(--text-on-dark);
 }
 
@@ -536,21 +541,27 @@ body.retro-body {
 }
 
 .theaters-carousel {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scroll-snap-type: x mandatory;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    overflow: visible;
 }
 
-.theaters-carousel::-webkit-scrollbar { height: 8px; }
-.theaters-carousel::-webkit-scrollbar-track { background: var(--wood-deep); }
-.theaters-carousel::-webkit-scrollbar-thumb { background: var(--plastic-shadow); border-radius: 2px; }
+@media (max-width: 1280px) {
+    .theaters-carousel { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+    .theaters-carousel { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .theaters-carousel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 
 .theater-ticket {
-    flex: 0 0 auto;
-    width: 170px;
-    scroll-snap-align: start;
+    width: 100%;
+    min-width: 0;
     cursor: pointer;
     background: #322820;
     border-radius: 4px;
@@ -572,7 +583,8 @@ body.retro-body {
 
 .theater-ticket img {
     width: 100%;
-    height: 250px;
+    aspect-ratio: 2 / 3;
+    height: auto;
     object-fit: cover;
     display: block;
     background: var(--wood-deep);
@@ -594,11 +606,16 @@ body.retro-body {
 .ticket-body { padding: 0.625rem 0.625rem 0.75rem; }
 
 .ticket-title {
-    font-size: 0.8125rem;
+    font-size: clamp(0.625rem, 0.9vw, 0.8125rem);
     font-weight: 600;
     line-height: 1.3;
     margin: 0 0 0.25rem;
     color: var(--text-on-dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .ticket-meta {

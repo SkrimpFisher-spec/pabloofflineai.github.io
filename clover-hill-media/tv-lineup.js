@@ -7,7 +7,7 @@ const TV_STATUS_LABELS = {
 const TV_LINEUP_TARGET = 12;
 
 // TMDB genre IDs — hardcoded exclusions at the API layer
-const TV_API_EXCLUDED_GENRES = '10763|10767|10762'; // News, Talk, Kids
+const TV_API_EXCLUDED_GENRES = '10763|10767|10762|80'; // News, Talk, Kids, Crime
 
 // US TV content rating floor (TV-14 ≈ PG-13). Applied on every discover query.
 const TV_MIN_US_CERT = 'TV-14';
@@ -19,9 +19,28 @@ const TV_API_EXCLUDED_NETWORKS = '24|827|6891';
 const TV_API_EXCLUDED_COMPANIES = '3096|89210|210689|11964';
 
 // Hardcoded post-fetch exclusions (site policy, not user-configurable)
-const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762]);
+const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762, 80]);
 const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
 const TV_ANIME_LANGUAGES = new Set(['ja', 'ko', 'zh', 'cn']);
+
+// Any of these words in the show title → blocked (judge/court/police daytime trash)
+const TV_TITLE_KEYWORD_PATTERNS = [
+    /\bjudge\b/i,
+    /\bcourt\b/i,
+    /\bcourts\b/i,
+    /\bpolice\b/i,
+    /\bcops\b/i,
+    /\bcop\b/i,
+    /\bsheriff\b/i,
+    /\bpatrol\b/i,
+    /\bbodycam\b/i,
+    /\bbody cam\b/i,
+    /\bdetectives\b/i,
+    /\bhomicide\b/i,
+    /\bforensic\b/i,
+    /\bprosecutor\b/i,
+    /\bdistrict attorney\b/i
+];
 
 const TV_EXCLUDED_PATTERNS = [
     // Late night & talking-head formats
@@ -180,7 +199,142 @@ const TV_EXCLUDED_PATTERNS = [
     /\bown:\s/i,
     /centric\b/i,
     /bounce tv/i,
-    /tv one originals/i
+    /tv one originals/i,
+
+    // Law & Order franchise (every spin-off)
+    /law & order/i,
+    /law and order/i,
+    /special victims unit/i,
+    /\bsvu\b/i,
+    /criminal intent/i,
+    /organized crime/i,
+    /trial by jury/i,
+
+    // NCIS franchise
+    /\bncis\b/i,
+
+    // CSI franchise & forensics procedurals
+    /^csi\b/i,
+    /csi:\s/i,
+    /csi cyber/i,
+    /criminal minds/i,
+    /criminal mind/i,
+    /without a trace/i,
+    /cold case/i,
+    /forensic files/i,
+    /forensics/i,
+    /bones\b/i,
+    /the mentalist/i,
+    /the closer/i,
+    /major crimes/i,
+    /unforgettable/i,
+    /prodigal son/i,
+    /the profiler/i,
+    /profiler\b/i,
+
+    // FBI / federal / task-force procedurals
+    /\bfbi\b/i,
+    /fbi:/i,
+    /most wanted/i,
+    /fbi international/i,
+    /quantico\b/i,
+    /the blacklist/i,
+    /person of interest/i,
+    /the unit\b/i,
+    /seal team/i,
+    /ncis:?\s*origins/i,
+
+    // Local PD / fire / EMS procedurals
+    /blue bloods/i,
+    /chicago pd/i,
+    /chicago p\.d\./i,
+    /chicago fire/i,
+    /chicago med/i,
+    /chicago justice/i,
+    /nypd/i,
+    /n\.y\.p\.d\./i,
+    /hawaii five/i,
+    /the rookie/i,
+    /\bs\.?w\.?a\.?t\.?\b/i,
+    /\bswat\b/i,
+    /9-1-1/i,
+    /\b911\b/i,
+    /911:?\s*lone star/i,
+    /the shield/i,
+    /southland/i,
+    /brooklyn nine-nine/i,
+    /brooklyn 99/i,
+    /the wire/i,
+    /true detective/i,
+    /line of duty/i,
+    /the equalizer/i,
+    /walker\b/i,
+    /texas ranger/i,
+    /castle\b/i,
+    /monk\b/i,
+    /\bpsych\b/i,
+    /elementary\b/i,
+    /sherlock\b/i,
+    /luther\b/i,
+    /dexter\b/i,
+    /midsomer murders/i,
+    /death in paradise/i,
+    /silent witness/i,
+    /inspector morse/i,
+    /endeavour\b/i,
+    /\bvera\b/i,
+    /shetland/i,
+    /broadchurch/i,
+    /jag\b/i,
+    /dragnet/i,
+    /adam-12/i,
+    /police story/i,
+    /police squad/i,
+    /hill street blues/i,
+    /t\.j\. hooker/i,
+    /kojak\b/i,
+    /miami vice/i,
+    /nash bridges/i,
+
+    // Court / judge / justice-as-TV
+    /judge judy/i,
+    /judge mathis/i,
+    /judge joe brown/i,
+    /judge hatchett/i,
+    /judge faith/i,
+    /hot bench/i,
+    /people'?s court/i,
+    /divorce court/i,
+    /court cam/i,
+    /court tv/i,
+    /jury duty/i,
+    /paternity court/i,
+    /traffic court/i,
+    /supreme justice/i,
+    /justice central/i,
+    /legal justice/i,
+
+    // Bodycam / ride-along / true-crime TV
+    /live pd/i,
+    /live p\.d\./i,
+    /\bcops\b/i,
+    /body cam/i,
+    /bodycam/i,
+    /police cam/i,
+    /on patrol/i,
+    /patrol live/i,
+    /dateline\b/i,
+    /48 hours/i,
+    /20\/20\b/i,
+    /first 48/i,
+    /snapped\b/i,
+    /deadly women/i,
+    /forensic detectives/i,
+    /i.?survived/i,
+    /on the case/i,
+    /american detective/i,
+    /murder one/i,
+    /murder, she wrote/i
 ];
 
 const tvDetailCache = new Map();
@@ -235,7 +389,11 @@ function isAsianAnime(show) {
 function matchesExcludedPatterns(show) {
     const name = (show.name || '').trim();
     if (/^raw$/i.test(name)) return true;
-    const hay = `${name} ${show.original_name || ''} ${show.overview || ''}`;
+
+    const titleHay = `${name} ${show.original_name || ''}`;
+    if (TV_TITLE_KEYWORD_PATTERNS.some(pattern => pattern.test(titleHay))) return true;
+
+    const hay = `${titleHay} ${show.overview || ''}`;
     return TV_EXCLUDED_PATTERNS.some(pattern => pattern.test(hay));
 }
 

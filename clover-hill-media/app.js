@@ -1457,7 +1457,7 @@ function exportConfig() {
     const blob = new Blob([JSON.stringify(channels.map(serializeChannel), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `omnistream-guide-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = `clover-hill-media-guide-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
     showToast('Exported', 'success');

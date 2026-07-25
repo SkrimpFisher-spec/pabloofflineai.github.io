@@ -7,10 +7,13 @@ const TV_STATUS_LABELS = {
 const TV_LINEUP_TARGET = 12;
 
 // TMDB genre IDs — hardcoded exclusions at the API layer
-const TV_API_EXCLUDED_GENRES = '10763|10767'; // News, Talk
+const TV_API_EXCLUDED_GENRES = '10763|10767|10762'; // News, Talk, Kids
+
+// US TV content rating floor (TV-14 ≈ PG-13). Applied on every discover query.
+const TV_MIN_US_CERT = 'TV-14';
 
 // Hardcoded post-fetch exclusions (site policy, not user-configurable)
-const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767]);
+const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762]);
 const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
 const TV_ANIME_LANGUAGES = new Set(['ja', 'ko', 'zh', 'cn']);
 
@@ -53,6 +56,33 @@ const TV_EXCLUDED_PATTERNS = [
     /after.?show/i,
     /red table talk/i,
     /hot ones/i,
+
+    // Kids & preschool (backup if TMDB rating/genre data is missing)
+    /paw patrol/i,
+    /peppa pig/i,
+    /\bbluey\b/i,
+    /cocomelon/i,
+    /dora the explorer/i,
+    /mickey mouse/i,
+    /mickey and the roadster/i,
+    /pj masks/i,
+    /blippi/i,
+    /thomas & friends/i,
+    /thomas the tank engine/i,
+    /sesame street/i,
+    /barney & friends/i,
+    /teletubbies/i,
+    /caillou/i,
+    /spidey and his amazing friends/i,
+    /gabbys dollhouse/i,
+    /baby shark/i,
+    /ms\.?\s*rachel/i,
+    /bubble guppies/i,
+    /fireman sam/i,
+    /postman pat/i,
+    /curious george/i,
+    /clifford the/i,
+    /power rangers.*megaforce/i,
 
     // Wrestling
     /^wwe\b/i,
@@ -113,6 +143,8 @@ function tvDiscoverParams(mode, page) {
     const base = {
         sort_by: 'popularity.desc',
         without_genres: TV_API_EXCLUDED_GENRES,
+        certification_country: 'US',
+        'certification.gte': TV_MIN_US_CERT,
         page: String(page)
     };
 
@@ -153,6 +185,12 @@ function isAsianAnime(show) {
 function isExcludedTvShow(show) {
     if ((show.genre_ids || []).some(id => TV_BLOCKED_GENRE_IDS.has(id))) return true;
     if (isAsianAnime(show)) return true;
+
+    const genres = show.genre_ids || [];
+    if (genres.includes(10751) && genres.includes(16) && !genres.includes(35)) {
+        // Family + Animation without Comedy → almost always preschool/kids (Rick & Morty has Comedy)
+        return true;
+    }
 
     const name = (show.name || '').trim();
     if (/^raw$/i.test(name)) return true;

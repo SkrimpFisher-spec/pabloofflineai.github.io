@@ -1,13 +1,37 @@
 const TV_STATUS_LABELS = {
-    airing: 'English-language shows with new episodes this week',
-    popular: 'most popular English-language shows right now',
-    upcoming: 'highly anticipated English-language shows premiering soon'
+    airing: 'new episodes this week on Netflix, Hulu, Max, Apple TV+, and more',
+    popular: 'popular now on major US streaming services',
+    upcoming: 'anticipated streaming premieres coming soon'
 };
 
 const TV_LINEUP_TARGET = 12;
 const TV_UPCOMING_MAX_DAYS = 180;
 const TV_UPCOMING_MIN_POPULARITY = 5;
 const TV_UPCOMING_MIN_OVERVIEW = 25;
+
+// Major US subscription streaming services (TMDB provider IDs, US region)
+const TV_STREAMING_TARGETS = [
+    { id: 8, label: 'Netflix' },
+    { id: 15, label: 'Hulu' },
+    { id: 350, label: 'Apple TV+' },
+    { id: 1899, label: 'Max' },
+    { id: 531, label: 'Paramount+' },
+    { id: 386, label: 'Peacock' },
+    { id: 337, label: 'Disney+' },
+    { id: 9, label: 'Prime Video' }
+];
+
+const TV_STREAMING_PROVIDER_IDS = new Set(TV_STREAMING_TARGETS.map(t => t.id));
+const TV_STREAMING_PROVIDER_QUERY = TV_STREAMING_TARGETS.map(t => t.id).join('|');
+
+const TV_STREAMING_PROVIDER_LABELS = Object.fromEntries(
+    TV_STREAMING_TARGETS.map(t => [t.id, t.label])
+);
+
+// Linear broadcast / cable networks — skip when not on a target streamer
+const TV_BROADCAST_NETWORK_IDS = new Set([
+    6, 16, 2, 19, 71, 14, 45, 42, 293, 84, 64, 65, 98, 87
+]);
 
 // TMDB genre IDs — hardcoded exclusions at the API layer
 const TV_API_EXCLUDED_GENRES = '10763|10767|10762|80|10766'; // News, Talk, Kids, Crime, Soap
@@ -401,15 +425,19 @@ const TV_EXCLUDED_PATTERNS = [
 ];
 
 const tvDetailCache = new Map();
+const tvProvidersCache = new Map();
 
 let currentTvMode = 'airing';
 
-function tvDiscoverParams(mode, page) {
+function tvDiscoverParams(mode, page, providerId = null) {
     const base = {
         sort_by: 'popularity.desc',
         without_genres: TV_API_EXCLUDED_GENRES,
         without_networks: TV_API_EXCLUDED_NETWORKS,
         without_companies: TV_API_EXCLUDED_COMPANIES,
+        watch_region: 'US',
+        with_watch_monetization_types: 'flatrate',
+        with_watch_providers: providerId ? String(providerId) : TV_STREAMING_PROVIDER_QUERY,
         page: String(page)
     };
 
@@ -439,8 +467,45 @@ function tvDiscoverParams(mode, page) {
     }
 }
 
-function tvEndpoint(mode, page = 1) {
-    return tmdbUrl('/discover/tv', tvDiscoverParams(mode, page));
+function tvEndpoint(mode, page = 1, providerId = null) {
+    return tmdbUrl('/discover/tv', tvDiscoverParams(mode, page, providerId));
+}
+
+async function fetchTvWatchProviders(showId) {
+    if (tvProvidersCache.has(showId)) return tvProvidersCache.get(showId);
+
+    try {
+        const res = await fetch(tmdbUrl(`/tv/${showId}/watch/providers`), { headers: TMDB_HEADERS });
+        if (!res.ok) throw new Error('providers fetch failed');
+        const data = await res.json();
+        const flatrate = data.results?.US?.flatrate || [];
+        const providers = flatrate.map(p => ({
+            id: p.provider_id,
+            name: TV_STREAMING_PROVIDER_LABELS[p.provider_id] || p.provider_name
+        }));
+        tvProvidersCache.set(showId, providers);
+        return providers;
+    } catch (_) {
+        tvProvidersCache.set(showId, []);
+        return [];
+    }
+}
+
+function getPreferredProviders(providers) {
+    return (providers || []).filter(p => TV_STREAMING_PROVIDER_IDS.has(p.id));
+}
+
+function formatProviderLabel(providers) {
+    const preferred = getPreferredProviders(providers);
+    if (preferred.length === 0) {
+        return (providers || []).slice(0, 2).map(p => p.name).join(' · ');
+    }
+    return preferred.map(p => p.name).slice(0, 3).join(' · ');
+}
+
+function isLinearBroadcastShow(detail, providers) {
+    if (getPreferredProviders(providers).length > 0) return false;
+    return (detail?.networks || []).some(n => TV_BROADCAST_NETWORK_IDS.has(n.id));
 }
 
 function isAsianAnime(show) {
@@ -548,17 +613,79 @@ function formatTvDateMeta(show, mode) {
     };
 }
 
+function formatTvCardMeta(show, mode) {
+    const dateMeta = formatTvDateMeta(show, mode);
+    const platform = formatProviderLabel(show._providers || []);
+    return {
+        platform,
+        short: dateMeta.short,
+        aria: platform ? `${dateMeta.aria}, streaming on ${platform}` : dateMeta.aria,
+        modal: platform ? `${dateMeta.modal} · ${platform}` : dateMeta.modal
+    };
+}
+
 async function isExcludedTvShowAsync(show, mode = currentTvMode) {
     if (mode === 'upcoming' && !isUpcomingQualityShow(show)) return true;
     if (isExcludedTvShow(show, mode)) return true;
     try {
-        const detail = await fetchTvDetail(show.id);
+        const [detail, providers] = await Promise.all([
+            fetchTvDetail(show.id),
+            fetchTvWatchProviders(show.id)
+        ]);
+        show._providers = providers;
+
+        if (getPreferredProviders(providers).length === 0) return true;
+        if (isLinearBroadcastShow(detail, providers)) return true;
         if (detailHasExcludedAffiliation(detail)) return true;
         if (matchesExcludedPatterns(detail)) return true;
     } catch (_) {
         return mode !== 'upcoming';
     }
     return false;
+}
+
+async function fetchPopularStreamingShows(targetCount = TV_LINEUP_TARGET) {
+    const collected = [];
+    const seen = new Set();
+    const perProvider = Math.max(1, Math.ceil(targetCount / TV_STREAMING_TARGETS.length));
+
+    for (const target of TV_STREAMING_TARGETS) {
+        let providerCount = 0;
+
+        for (let page = 1; page <= 3 && providerCount < perProvider && collected.length < targetCount; page++) {
+            const res = await fetch(tvEndpoint('popular', page, target.id), { headers: TMDB_HEADERS });
+            if (!res.ok) throw new Error('TMDB error');
+            const data = await res.json();
+            const batch = data.results || [];
+            if (batch.length === 0) break;
+
+            for (const show of batch) {
+                if (seen.has(show.id)) continue;
+                if (await isExcludedTvShowAsync(show, 'popular')) continue;
+                if (!show._providers?.length) {
+                    show._providers = [{ id: target.id, name: target.label }];
+                }
+                seen.add(show.id);
+                collected.push(show);
+                providerCount++;
+                if (collected.length >= targetCount) break;
+            }
+
+            if (page >= (data.total_pages || 1)) break;
+        }
+    }
+
+    collected.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+    return collected.slice(0, targetCount);
+}
+
+async function enrichShowsForDisplay(shows) {
+    await Promise.all(shows.map(async (show) => {
+        if (!show._providers?.length) {
+            show._providers = await fetchTvWatchProviders(show.id);
+        }
+    }));
+    return shows;
 }
 
 async function tryCollectTvShow(show, mode, collected, seen, targetCount) {
@@ -612,7 +739,11 @@ async function fetchUpcomingTvShows(targetCount = TV_LINEUP_TARGET) {
 
 async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
     if (mode === 'upcoming') {
-        return fetchUpcomingTvShows(targetCount);
+        return enrichShowsForDisplay(await fetchUpcomingTvShows(targetCount));
+    }
+
+    if (mode === 'popular') {
+        return enrichShowsForDisplay(await fetchPopularStreamingShows(targetCount));
     }
 
     const collected = [];
@@ -637,7 +768,7 @@ async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
         if (page >= (data.total_pages || 1)) break;
     }
 
-    return collected;
+    return enrichShowsForDisplay(collected);
 }
 
 function renderTvCarousel(shows, mode = currentTvMode) {
@@ -647,7 +778,7 @@ function renderTvCarousel(shows, mode = currentTvMode) {
     carousel.setAttribute('aria-label', mode === 'upcoming' ? 'Upcoming TV shows' : 'TV shows');
 
     shows.forEach((show, index) => {
-        const meta = formatTvDateMeta(show, mode);
+        const meta = formatTvCardMeta(show, mode);
         const card = document.createElement('button');
         card.type = 'button';
         card.className = 'theater-ticket';
@@ -658,6 +789,7 @@ function renderTvCarousel(shows, mode = currentTvMode) {
             <img src="${escapeAttr(posterUrl(show))}" alt="" aria-hidden="true" loading="lazy" />
             <div class="ticket-body">
                 <p class="ticket-title">${escapeHtml(show.name)}</p>
+                ${meta.platform ? `<p class="ticket-platform">${escapeHtml(meta.platform)}</p>` : ''}
                 <p class="ticket-meta">${escapeHtml(meta.short)}</p>
             </div>`;
         card.addEventListener('click', () => openTvModal(show, mode));
@@ -670,10 +802,14 @@ async function openTvModal(show, mode = currentTvMode) {
     const meta = document.getElementById('tv-modal-meta');
     const synopsis = document.getElementById('tv-modal-synopsis');
     const trailerSlot = document.getElementById('tv-trailer-slot');
-    const dateMeta = formatTvDateMeta(show, mode);
+
+    if (!show._providers?.length) {
+        show._providers = await fetchTvWatchProviders(show.id);
+    }
+    const cardMeta = formatTvCardMeta(show, mode);
 
     title.textContent = show.name;
-    meta.textContent = dateMeta.modal;
+    meta.textContent = cardMeta.modal;
     synopsis.textContent = show.overview || 'No synopsis available yet.';
     trailerSlot.innerHTML = '<div class="theater-no-trailer">Loading trailer…</div>';
     A11y.openModal('tv-modal', '#tv-modal-close');

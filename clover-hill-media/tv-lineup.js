@@ -4,34 +4,186 @@ const TV_STATUS_LABELS = {
     upcoming: 'anticipated English-language shows coming soon'
 };
 
+const TV_LINEUP_TARGET = 12;
+
+// TMDB genre IDs — hardcoded exclusions at the API layer
+const TV_API_EXCLUDED_GENRES = '10763|10767'; // News, Talk
+
+// Hardcoded post-fetch exclusions (site policy, not user-configurable)
+const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767]);
+const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
+const TV_ANIME_LANGUAGES = new Set(['ja', 'ko', 'zh', 'cn']);
+
+const TV_EXCLUDED_PATTERNS = [
+    // Late night & talking-head formats
+    /tonight show/i,
+    /late night with/i,
+    /late late show/i,
+    /after midnight/i,
+    /daily show/i,
+    /watch what happens/i,
+    /last week tonight/i,
+    /real time with/i,
+    /jimmy kimmel/i,
+    /jimmy fallon/i,
+    /seth meyers/i,
+    /stephen colbert/i,
+    /\bconan\b/i,
+    /conan o.?brien/i,
+    /trevor noah/i,
+    /jon stewart/i,
+    /john stewart/i,
+    /larry king/i,
+    /graham norton/i,
+    /james corden/i,
+    /chelsea handler/i,
+    /andy cohen/i,
+    /bill maher/i,
+    /john oliver/i,
+    /the view/i,
+    /good morning america/i,
+    /today show/i,
+    /morning joe/i,
+    /fox & friends/i,
+    /meet the press/i,
+    /face the nation/i,
+    /state of the union/i,
+    /political party live/i,
+    /talking dead/i,
+    /after.?show/i,
+    /red table talk/i,
+    /hot ones/i,
+
+    // Wrestling
+    /^wwe\b/i,
+    /^aew\b/i,
+    /\bwwe\b/i,
+    /\baew\b/i,
+    /\bnxt\b/i,
+    /smackdown/i,
+    /wrestlemania/i,
+    /lucha libre/i,
+    /impact wrestling/i,
+    /ring of honor/i,
+    /all elite wrestling/i,
+    /professional wrestling/i,
+    /\bwwf\b/i,
+    /monday night raw/i,
+    /friday night smackdown/i,
+    /greek wrestling/i,
+
+    // Sports
+    /\bnfl\b/i,
+    /\bnba\b/i,
+    /\bmlb\b/i,
+    /\bnhl\b/i,
+    /\bespn\b/i,
+    /sportscenter/i,
+    /sports center/i,
+    /monday night football/i,
+    /thursday night football/i,
+    /sunday night football/i,
+    /inside the nba/i,
+    /first take/i,
+    /sportsnation/i,
+    /mlb tonight/i,
+    /nhl tonight/i,
+    /premier league/i,
+    /match of the day/i,
+    /march madness/i,
+    /super bowl/i,
+    /olympic/i,
+    /\bufc\b/i,
+    /formula 1/i,
+    /\bf1\b/i,
+    /nascar/i,
+    /pga tour/i,
+    /college gameday/i,
+    /sports illustrated/i,
+    /monday night soccer/i,
+    /football focus/i,
+    /baseball tonight/i,
+    /hockey central/i,
+    /sports desk/i
+];
+
 let currentTvMode = 'airing';
 
-function tvEndpoint(mode) {
+function tvDiscoverParams(mode, page) {
+    const base = {
+        sort_by: 'popularity.desc',
+        without_genres: TV_API_EXCLUDED_GENRES,
+        page: String(page)
+    };
+
     switch (mode) {
         case 'airing':
-            return tmdbUrl('/discover/tv', englishDiscoverParams({
-                sort_by: 'popularity.desc',
+            return englishDiscoverParams({
+                ...base,
                 'air_date.gte': daysFromTodayISO(-7),
-                'air_date.lte': daysFromTodayISO(7),
-                page: '1'
-            }));
+                'air_date.lte': daysFromTodayISO(7)
+            });
         case 'popular':
-            return tmdbUrl('/discover/tv', englishDiscoverParams({
-                sort_by: 'popularity.desc',
-                page: '1'
-            }));
+            return englishDiscoverParams(base);
         case 'upcoming':
-            return tmdbUrl('/discover/tv', englishDiscoverParams({
-                sort_by: 'popularity.desc',
-                'first_air_date.gte': todayISO(),
-                page: '1'
-            }));
+            return englishDiscoverParams({
+                ...base,
+                'first_air_date.gte': todayISO()
+            });
         default:
-            return tmdbUrl('/discover/tv', englishDiscoverParams({
-                sort_by: 'popularity.desc',
-                page: '1'
-            }));
+            return englishDiscoverParams(base);
     }
+}
+
+function tvEndpoint(mode, page = 1) {
+    return tmdbUrl('/discover/tv', tvDiscoverParams(mode, page));
+}
+
+function isAsianAnime(show) {
+    const genres = show.genre_ids || [];
+    if (!genres.includes(16)) return false;
+
+    const lang = (show.original_language || '').toLowerCase();
+    if (TV_ANIME_LANGUAGES.has(lang)) return true;
+
+    const countries = show.origin_country || [];
+    return countries.some(code => TV_ANIME_ORIGIN_COUNTRIES.has(code));
+}
+
+function isExcludedTvShow(show) {
+    if ((show.genre_ids || []).some(id => TV_BLOCKED_GENRE_IDS.has(id))) return true;
+    if (isAsianAnime(show)) return true;
+
+    const name = (show.name || '').trim();
+    if (/^raw$/i.test(name)) return true;
+
+    const hay = `${name} ${show.original_name || ''} ${show.overview || ''}`;
+    return TV_EXCLUDED_PATTERNS.some(pattern => pattern.test(hay));
+}
+
+async function fetchFilteredTvShows(mode, targetCount = TV_LINEUP_TARGET) {
+    const collected = [];
+    const seen = new Set();
+
+    for (let page = 1; page <= 5 && collected.length < targetCount; page++) {
+        const res = await fetch(tvEndpoint(mode, page), { headers: TMDB_HEADERS });
+        if (!res.ok) throw new Error('TMDB error');
+        const data = await res.json();
+        const batch = data.results || [];
+
+        if (batch.length === 0) break;
+
+        for (const show of batch) {
+            if (seen.has(show.id) || isExcludedTvShow(show)) continue;
+            seen.add(show.id);
+            collected.push(show);
+            if (collected.length >= targetCount) break;
+        }
+
+        if (page >= (data.total_pages || 1)) break;
+    }
+
+    return collected;
 }
 
 function renderTvCarousel(shows) {
@@ -107,10 +259,7 @@ async function loadTvTab(mode) {
 
     statusLine.textContent = 'Loading…';
     try {
-        const res = await fetch(tvEndpoint(mode), { headers: TMDB_HEADERS });
-        if (!res.ok) throw new Error('TMDB error');
-        const data = await res.json();
-        const shows = (data.results || []).slice(0, 12);
+        const shows = await fetchFilteredTvShows(mode);
         statusLine.textContent = `${shows.length} ${TV_STATUS_LABELS[mode]} · updated ${new Date().toLocaleDateString()}`;
         renderTvCarousel(shows);
     } catch (_) {

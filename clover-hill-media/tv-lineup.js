@@ -50,6 +50,51 @@ const TV_EXCLUDED_COMPANY_IDS = new Set([3096, 89210, 210689, 11964]); // Tyler 
 const TV_API_EXCLUDED_NETWORKS = '24|827|6891';
 const TV_API_EXCLUDED_COMPANIES = '3096|89210|210689|11964';
 
+// TMDB keyword IDs — LGBT-focused tagging (discover layer + per-show keyword lookup)
+const TV_EXCLUDED_KEYWORD_IDS = new Set([
+    158718, // lgbt
+    363345, // gay
+    264386, // lesbian
+    250606, // queer
+    378259, // lgbtq
+    290527, // transgender
+    329968, // bisexual
+    275157, // homosexuality
+    271167, // same sex relationship
+    265777, // gay relationship
+    9833,   // lesbian relationship
+    372311, // trans
+    252909, // non-binary
+    156501  // pride
+]);
+
+const TV_API_EXCLUDED_KEYWORDS = [...TV_EXCLUDED_KEYWORD_IDS].join('|');
+
+const TV_EXCLUDED_KEYWORD_NAME_PATTERNS = [
+    /lgbtq?\+?/i,
+    /\bqueer\b/i,
+    /lesbian/i,
+    /homosexual/i,
+    /transgender/i,
+    /\bnon-binary\b/i,
+    /bisexual/i,
+    /same[- ]sex/i,
+    /gay relationship/i,
+    /lesbian relationship/i,
+    /\bgay\b/i
+];
+
+// Hardcoded title blocklist (exact / franchise matches on show name)
+const TV_EXCLUDED_TITLE_PATTERNS = [
+    /^ancient aliens$/i,
+    /^deadliest catch$/i,
+    /^ice road truckers$/i,
+    /^all american$/i,
+    /^the west wing$/i,
+    /^vikings$/i,
+    /^vikings:\s*valhalla$/i
+];
+
 // Hardcoded post-fetch exclusions (site policy, not user-configurable)
 const TV_BLOCKED_GENRE_IDS = new Set([10763, 10767, 10762, 80, 10766]);
 const TV_ANIME_ORIGIN_COUNTRIES = new Set(['JP', 'KR', 'CN', 'TW']);
@@ -431,6 +476,7 @@ const TV_EXCLUDED_PATTERNS = [
 
 const tvDetailCache = new Map();
 const tvProvidersCache = new Map();
+const tvKeywordsCache = new Map();
 
 let currentTvMode = 'airing';
 
@@ -440,6 +486,7 @@ function tvDiscoverParams(mode, page, streamTarget = null) {
         without_genres: TV_API_EXCLUDED_GENRES,
         without_networks: TV_API_EXCLUDED_NETWORKS,
         without_companies: TV_API_EXCLUDED_COMPANIES,
+        without_keywords: TV_API_EXCLUDED_KEYWORDS,
         page: String(page)
     };
 
@@ -553,13 +600,40 @@ function isAsianAnime(show) {
 
 function matchesExcludedPatterns(show) {
     const name = (show.name || '').trim();
+    const original = (show.original_name || '').trim();
+    if (TV_EXCLUDED_TITLE_PATTERNS.some(pattern => pattern.test(name) || pattern.test(original))) {
+        return true;
+    }
     if (/^raw$/i.test(name)) return true;
 
-    const titleHay = `${name} ${show.original_name || ''}`;
+    const titleHay = `${name} ${original}`;
     if (TV_TITLE_KEYWORD_PATTERNS.some(pattern => pattern.test(titleHay))) return true;
 
     const hay = `${titleHay} ${show.overview || ''}`;
     return TV_EXCLUDED_PATTERNS.some(pattern => pattern.test(hay));
+}
+
+async function fetchTvKeywords(showId) {
+    if (tvKeywordsCache.has(showId)) return tvKeywordsCache.get(showId);
+
+    try {
+        const res = await fetch(tmdbUrl(`/tv/${showId}/keywords`), { headers: TMDB_HEADERS });
+        if (!res.ok) throw new Error('keywords fetch failed');
+        const data = await res.json();
+        const keywords = data.results || [];
+        tvKeywordsCache.set(showId, keywords);
+        return keywords;
+    } catch (_) {
+        tvKeywordsCache.set(showId, []);
+        return [];
+    }
+}
+
+function hasExcludedKeywords(keywords) {
+    return (keywords || []).some(kw =>
+        TV_EXCLUDED_KEYWORD_IDS.has(kw.id)
+        || TV_EXCLUDED_KEYWORD_NAME_PATTERNS.some(pattern => pattern.test(kw.name || ''))
+    );
 }
 
 async function fetchTvDetail(showId) {
@@ -660,11 +734,14 @@ async function isExcludedTvShowAsync(show, mode = currentTvMode) {
     if (mode === 'upcoming' && !isUpcomingQualityShow(show)) return true;
     if (isExcludedTvShow(show, mode)) return true;
     try {
-        const [detail, watchProviders] = await Promise.all([
+        const [detail, watchProviders, keywords] = await Promise.all([
             fetchTvDetail(show.id),
-            fetchTvWatchProviders(show.id)
+            fetchTvWatchProviders(show.id),
+            fetchTvKeywords(show.id)
         ]);
         show._providers = resolveShowPlatforms(detail, watchProviders);
+
+        if (hasExcludedKeywords(keywords)) return true;
 
         if (!hasStreamingAffiliation(detail, watchProviders)) return true;
         if (mode !== 'upcoming' && getPreferredProviders(watchProviders).length === 0) return true;

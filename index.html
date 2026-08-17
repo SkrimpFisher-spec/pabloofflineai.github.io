@@ -1358,6 +1358,113 @@
             font-size: 0.92rem;
         }
 
+        /* About Pablo Offline */
+        .about-section {
+            padding: clamp(4rem, 10vw, 6.5rem) 5%;
+            background: transparent;
+        }
+
+        .about-inner {
+            max-width: 52rem;
+            margin: 0 auto;
+        }
+
+        .about-prose {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+            line-height: 1.65;
+            text-wrap: pretty;
+        }
+
+        .about-prose p + p {
+            margin-top: 1.15rem;
+        }
+
+        .about-prose strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .about-pillars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: clamp(1rem, 2.5vw, 1.35rem);
+            margin: clamp(2.25rem, 5vw, 3rem) 0;
+        }
+
+        .about-pillar {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            padding: clamp(1.35rem, 3vw, 1.65rem);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .about-pillar h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.55rem;
+            color: var(--text);
+        }
+
+        .about-pillar p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+
+        .about-closing {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: clamp(1.5rem, 4vw, 2rem);
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-closing p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .about-closing p + p {
+            margin-top: 0.85rem;
+        }
+
+        .about-community {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(255, 255, 255, 0.55) 100%);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid rgba(14, 165, 233, 0.18);
+            border-radius: var(--radius);
+            padding: clamp(1.5rem, 4vw, 2.25rem);
+            margin: clamp(2rem, 5vw, 2.75rem) 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-community h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.85rem;
+            color: var(--text);
+        }
+
+        .about-community p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .about-community p + p {
+            margin-top: 0.85rem;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .architecture {
@@ -1385,6 +1492,10 @@
         }
 
         @media (max-width: 600px) {
+            .about-pillars {
+                grid-template-columns: 1fr;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
@@ -1423,6 +1534,7 @@
             <li><a href="#security">Security</a></li>
             <li><a href="#screenshots">Screenshots</a></li>
             <li><a href="#faq">FAQ</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="buy.html">Buy License</a></li>
             <li><a href="downloadpage.html" class="nav-cta">Download</a></li>
         </ul>
@@ -2062,6 +2174,72 @@
         </details>
     </section>
 
+    <!-- About Pablo Offline -->
+    <section id="about" class="about-section">
+        <div class="about-inner">
+            <div class="section-header">
+                <p class="section-label">About Pablo Offline</p>
+                <h2 class="section-title">No sponsors. No ads. No nonsense.</h2>
+                <p class="section-subtitle">
+                    Pablo Offline AI is indie, ad-free, and sponsor-free. A community turned a shared dream into software people install, use, and recommend.
+                </p>
+            </div>
+
+            <div class="about-prose">
+                <p>
+                    Pablo runs on your computer and is funded by the people who use it. We do not take money from cloud providers, chip makers, software vendors, or advertisers.
+                </p>
+                <p>
+                    We ship without pre-installed bloat, suggested cloud services, or banners in your chat. Every feature has to protect <em>your</em> privacy and keep <em>you</em> in control.
+                </p>
+            </div>
+
+            <div class="about-community">
+                <h3>From community dream to thriving reality</h3>
+                <p>
+                    Pablo began as an idea passed around by people who wanted AI that stayed local. Developers contributed code. Testers ran early builds on their own PCs. Donors helped cover hosting and tooling. License buyers and gift-givers put real money behind the project. Together they turned a shared vision into a product you can download today.
+                </p>
+                <p>
+                    That momentum shows. People run Pablo on Windows every day. The free Android companion on Google Play extends the same private setup to their phones. Bug reports, feature requests, and word of mouth shape each release. The community did not just kick-start Pablo. It keeps Pablo growing.
+                </p>
+            </div>
+
+            <div class="about-pillars" aria-label="How Pablo stays independent">
+                <article class="about-pillar">
+                    <h3>No software sponsors</h3>
+                    <p>Pablo ships without vendor bundles, subsidies, or paid placement. We build what private AI needs.</p>
+                </article>
+                <article class="about-pillar">
+                    <h3>No hardware sponsors</h3>
+                    <p>Chip makers and PC brands do not write our roadmap. Pablo runs on NVIDIA, Intel, or CPU because that matches the hardware people actually own.</p>
+                </article>
+                <article class="about-pillar">
+                    <h3>No ads, ever</h3>
+                    <p>Pablo will never run ads, sponsored answers, or paid slots inside your conversations. We will never sell your attention.</p>
+                </article>
+                <article class="about-pillar">
+                    <h3>Community powered</h3>
+                    <p>Contributors write code, file bugs, suggest features, and help new users get started. Donations and license sales fund the work. The people who believed in private AI early are the same ones keeping it strong now.</p>
+                </article>
+            </div>
+
+            <div class="about-prose">
+                <p>
+                    Your conversations stay on your machine. They are never training data for a sponsor&rsquo;s model. Our roadmap follows feedback from users and contributors who use Pablo in their own homes every day.
+                </p>
+            </div>
+
+            <div class="about-closing">
+                <p>
+                    Private AI that keeps your keystrokes local exists because a community made it happen: coders, early testers, donors, and customers who bought a license to support the full desktop app. Their work turned a dream into something real, popular, and still moving forward.
+                </p>
+                <p>
+                    If you use Pablo, contribute, report a bug, or chip in: thank you. You are part of why private, offline, ad-free AI is here and growing.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -2098,6 +2276,7 @@
             <div class="footer-links">
                 <h5>Company</h5>
                 <ul>
+                    <li><a href="#about">About Pablo Offline</a></li>
                     <li><a href="/cdn-cgi/l/email-protection#7b2b1a191714341d1d1712151e3a323b0b09140f141555161e">Contact</a></li>
                 </ul>
             </div>

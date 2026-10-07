@@ -27,10 +27,10 @@
     window.weddingCalendar = {
         googleUrl: function () {
             var title = encodeURIComponent(cfg.eventTitle || "Jennifer & James's Wedding");
-            var start = formatGoogleUtc(cfg.eventStart || "2027-02-07T21:30:00.000Z");
-            var end = formatGoogleUtc(cfg.eventEnd || "2027-02-08T04:00:00.000Z");
-            var details = encodeURIComponent(cfg.eventDetails || "Ceremony at 4:30 PM. We cannot wait to celebrate with you!");
-            var location = encodeURIComponent(cfg.eventLocation || "2396 Juniper Creek Rd, Quincy, FL 32351");
+            var start = formatGoogleUtc(cfg.eventStart || "2027-02-07T20:30:00.000Z");
+            var end = formatGoogleUtc(cfg.eventEnd || "2027-02-08T02:00:00.000Z");
+            var details = encodeURIComponent(cfg.eventDetails || "Ceremony at 3:30 PM at The Glade Venue. Reception 4:00 PM to 9:00 PM. The reception is indoors.");
+            var location = encodeURIComponent(cfg.eventLocation || "871 Pine Hill Road, Cairo, GA 39828");
             var tz = encodeURIComponent(cfg.eventTimezone || "America/New_York");
             return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + title +
                 "&dates=" + start + "/" + end + "&details=" + details + "&location=" + location + "&ctz=" + tz;
@@ -38,19 +38,19 @@
 
         outlookUrl: function () {
             var title = encodeURIComponent(cfg.eventTitle || "Jennifer & James's Wedding");
-            var start = new Date(cfg.eventStart || "2027-02-07T21:30:00.000Z").toISOString();
-            var end = new Date(cfg.eventEnd || "2027-02-08T04:00:00.000Z").toISOString();
-            var body = encodeURIComponent(cfg.eventDetails || "Ceremony at 4:30 PM.");
-            var location = encodeURIComponent(cfg.eventLocation || "2396 Juniper Creek Rd, Quincy, FL 32351");
+            var start = new Date(cfg.eventStart || "2027-02-07T20:30:00.000Z").toISOString();
+            var end = new Date(cfg.eventEnd || "2027-02-08T02:00:00.000Z").toISOString();
+            var body = encodeURIComponent(cfg.eventDetails || "Ceremony at 3:30 PM at The Glade Venue. Reception 4:00 PM to 9:00 PM.");
+            var location = encodeURIComponent(cfg.eventLocation || "871 Pine Hill Road, Cairo, GA 39828");
             return "https://outlook.live.com/calendar/0/deeplink/compose?subject=" + title +
                 "&body=" + body + "&location=" + location + "&startdt=" + start + "&enddt=" + end + "&allday=false";
         },
 
         downloadIcs: function () {
             var title = cfg.eventTitle || "Jennifer & James's Wedding";
-            var location = cfg.eventLocation || "2396 Juniper Creek Rd, Quincy, FL 32351";
+            var location = cfg.eventLocation || "871 Pine Hill Road, Cairo, GA 39828";
             var start = cfg.eventStartLocal || "20270207T153000";
-            var end = cfg.eventEndLocal || "20270207T230000";
+            var end = cfg.eventEndLocal || "20270207T210000";
             var tz = cfg.eventTimezone || "America/New_York";
             var ics = [
                 "BEGIN:VCALENDAR",
@@ -62,7 +62,7 @@
                 "DTEND;TZID=" + tz + ":" + end,
                 "SUMMARY:" + title,
                 "LOCATION:" + location,
-                "DESCRIPTION:Ceremony at 4:30 PM. Reception to follow.",
+                "DESCRIPTION:Ceremony at 3:30 PM at The Glade Venue. Reception 4:00 PM to 9:00 PM. The reception is indoors.",
                 "BEGIN:VALARM",
                 "TRIGGER:-P1D",
                 "ACTION:DISPLAY",

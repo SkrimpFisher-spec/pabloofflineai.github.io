@@ -70,29 +70,8 @@
     }
 
     function formatRsvpText(p) {
-        var displayName = p.fullName || (p.firstName + " " + p.lastName).trim();
-        var lines = [
-            "Wedding RSVP — Jennifer & James",
-            "Submitted: " + new Date().toLocaleString(),
-            "",
-            "Name: " + displayName,
-            "Attendance: " + (p.attending ? "Happily Accepts" : "Regretfully Declines")
-        ];
-
-        if (p.attending) {
-            lines.push(
-                "Email: " + p.email,
-                "Phone: " + (p.phone || "(none)"),
-                "Meal: " + (p.mealChoice || "(n/a)"),
-                "Dietary: " + (p.dietaryRestrictions || "(none)"),
-                "Mailing address: " + (p.addressLine || "(none)"),
-                "Song request: " + (p.songRequest || "(none)"),
-                "Artist: " + (p.songArtist || "(none)"),
-                "Message: " + (p.message || "(none)")
-            );
-        }
-
-        return lines.join("\n");
+        if (window.weddingRsvpPayload) return window.weddingRsvpPayload.formatRsvpText(p);
+        return "";
     }
 
     function deliverRsvp(p) {
@@ -108,7 +87,7 @@
                     access_key: cfg.web3formsKey,
                     subject: "RSVP: " + displayName + " — " + subjectSuffix,
                     from_name: displayName,
-                    email: p.email || cfg.formSubmitEmail || "",
+                    email: p.email || "",
                     phone: p.phone || "",
                     message: formatted
                 })
@@ -126,46 +105,47 @@
             ));
         }
 
-        var body = {
-            name: displayName,
-            attending: p.attending ? "Happily Accepts" : "Regretfully Declines",
-            email: p.email || "",
-            phone: p.phone || "",
-            address: p.addressLine || "",
-            meal: p.mealChoice || "",
-            dietary: p.dietaryRestrictions || "",
-            song: p.songRequest || "",
-            artist: p.songArtist || "",
-            guest_message: p.message || "",
-            message: formatted,
-            _subject: "Wedding RSVP: " + displayName + " — " + subjectSuffix,
-            _captcha: "false"
+        var next = new URL(window.location.href);
+        next.searchParams.set("rsvp", p.attending ? "yes" : "no");
+        next.hash = "";
+        var postCfg = {
+            formSubmitEmail: email,
+            nextUrl: next.toString()
         };
+        var body = window.weddingRsvpPayload
+            ? window.weddingRsvpPayload.buildFormSubmitBody(p, postCfg)
+            : { name: displayName, message: formatted };
+        delete body._formsubmit_to;
 
-        if (p.attending && p.email) {
-            body._replyto = p.email;
-            body._autoresponse = "Thank you! Your RSVP for Jennifer & James's wedding on February 7, 2027 has been received. We can't wait to celebrate with you!";
-        }
-
-        return fetch("https://formsubmit.co/ajax/" + encodeURIComponent(email), {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify(body)
-        }).then(function (res) { return res.json(); })
-          .then(function (data) {
-              if (data.success !== "true" && data.success !== true) {
-                  throw new Error("Could not send RSVP. Try again in a moment.");
-              }
-              return { ok: true, guestNotified: !!(p.attending && p.email) };
-          });
+        var post = document.createElement("form");
+        post.method = "POST";
+        post.action = "https://formsubmit.co/" + email;
+        post.acceptCharset = "UTF-8";
+        post.style.display = "none";
+        Object.keys(body).forEach(function (key) {
+            if (body[key] === undefined || body[key] === null) return;
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = String(body[key]);
+            post.appendChild(input);
+        });
+        document.body.appendChild(post);
+        post.submit();
+        return new Promise(function () {});
     }
 
-    function showConfirmation(message, attending, guestNotified) {
+    function showConfirmation(message, attending, guestNotified, summary) {
         if (!confirmation || !confirmMessage) return;
         confirmMessage.textContent = message;
+        var summaryEl = document.getElementById("confirmSummary");
+        if (summaryEl) {
+            summaryEl.textContent = summary || "";
+            summaryEl.hidden = !summary;
+        }
         if (confirmEmailNote) {
             confirmEmailNote.textContent = guestNotified
-                ? "A confirmation copy was sent to your email."
+                ? "A confirmation was sent to your email."
                 : "";
             confirmEmailNote.hidden = !guestNotified;
         }
@@ -178,14 +158,15 @@
 
     function buildPayload(attending) {
         var parsed = parseGuestName(readGuestName());
-        var mealEl = document.querySelector('input[name="meal"]:checked');
         var emailEl = document.getElementById("email");
         var phoneEl = document.getElementById("phone");
         var addressEl = document.getElementById("address");
-        var dietaryEl = document.getElementById("dietary");
         var songEl = document.getElementById("song");
         var artistEl = document.getElementById("artist");
         var messageEl = document.getElementById("message");
+        var plusOneEl = document.querySelector('input[name="plusOne"]:checked');
+        var plusOneNameEl = document.getElementById("plusOneName");
+        var plusOneChoice = attending && plusOneEl ? plusOneEl.value : null;
 
         return {
             fullName: parsed.fullName,
@@ -195,12 +176,20 @@
             phone: attending && phoneEl ? (phoneEl.value.trim() || null) : null,
             addressLine: attending && addressEl ? (addressEl.value.trim() || null) : null,
             attending: attending,
-            mealChoice: attending && mealEl ? mealEl.value : null,
-            dietaryRestrictions: attending && dietaryEl ? (dietaryEl.value.trim() || null) : null,
+            plusOneChoice: plusOneChoice,
+            plusOneName: plusOneChoice === "yes" && plusOneNameEl ? (plusOneNameEl.value.trim() || null) : null,
             songRequest: attending && songEl ? (songEl.value.trim() || null) : null,
             songArtist: attending && artistEl ? (artistEl.value.trim() || null) : null,
-            message: attending && messageEl ? (messageEl.value.trim() || null) : null
+            message: attending && messageEl ? (messageEl.value.trim() || null) : null,
+            submittedAt: new Date().toLocaleString()
         };
+    }
+
+    function rsvpSummary(p) {
+        var lines = [p.attending ? "Attendance: Happily Accepts" : "Attendance: Regretfully Declines"];
+        if (p.attending && p.plusOneChoice === "yes") lines.push("Plus one: " + p.plusOneName);
+        if (p.attending && p.plusOneChoice === "no") lines.push("Plus one: No");
+        return lines.join(". ") + ".";
     }
 
     function setSubmitting(triggerBtn, submitting) {
@@ -224,14 +213,12 @@
         }
 
         var payload = buildPayload(attending);
+        var validationError = window.weddingRsvpPayload
+            ? window.weddingRsvpPayload.validateRsvp(payload)
+            : (!payload.fullName ? "Please enter your name." : "");
 
-        if (!payload.fullName) {
-            showError(formError, "Please enter your name.");
-            return;
-        }
-
-        if (attending && !payload.email) {
-            showError(formError, "Please enter your email so we can confirm your RSVP.");
+        if (validationError) {
+            showError(formError, validationError);
             return;
         }
 
@@ -244,7 +231,8 @@
                         ? "We cannot wait to celebrate with you!"
                         : "Thank you for letting us know. You will be missed.",
                     attending,
-                    result.guestNotified
+                    result.guestNotified,
+                    rsvpSummary(payload)
                 );
             })
             .catch(function (err) {
@@ -278,6 +266,18 @@
             showStep(stepAttendance);
         });
     }
+
+    document.querySelectorAll('input[name="plusOne"]').forEach(function (r) {
+        r.addEventListener("change", function () {
+            var group = document.getElementById("plusOneNameGroup");
+            var show = this.checked && this.value === "yes";
+            if (group) group.classList.toggle("rsvp-step--hidden", !show);
+            if (!show) {
+                var nameInput = document.getElementById("plusOneName");
+                if (nameInput) nameInput.value = "";
+            }
+        });
+    });
 
     document.querySelectorAll('input[name="attending"]').forEach(function (r) {
         r.addEventListener("change", function () {
@@ -336,5 +336,20 @@
         confirmClose.addEventListener("click", function () {
             confirmation.classList.remove("visible");
         });
+    }
+
+    var returned = new URLSearchParams(window.location.search).get("rsvp");
+    if (returned === "yes" || returned === "no") {
+        showConfirmation(
+            returned === "yes"
+                ? "We cannot wait to celebrate with you!"
+                : "Thank you for letting us know. You will be missed.",
+            returned === "yes",
+            returned === "yes",
+            returned === "yes" ? "Attendance: Happily Accepts." : "Attendance: Regretfully Declines."
+        );
+        var clean = new URL(window.location.href);
+        clean.searchParams.delete("rsvp");
+        window.history.replaceState({}, "", clean.pathname + clean.search + clean.hash);
     }
 })();

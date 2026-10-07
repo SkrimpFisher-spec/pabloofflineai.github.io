@@ -109,7 +109,7 @@
             ? Object.entries(data.mealTotals).map(function (e) {
                 return '<span class="chip">' + e[0] + ": " + e[1] + "</span>";
             }).join("")
-            : '<span class="chip">No meal selections yet</span>';
+            : '<span class="chip">None recorded</span>';
 
         var allergySection = document.getElementById("allergySection");
         var allergyList = document.getElementById("allergyList");
@@ -133,11 +133,12 @@
 
         var guests = data.guests || [];
         document.getElementById("guestTable").innerHTML =
-            "<thead><tr><th>Name</th><th>Code</th><th>Status</th><th>Meal</th><th>Email</th></tr></thead><tbody>" +
+            "<thead><tr><th>Name</th><th>Code</th><th>Status</th><th>Plus one</th><th>Email</th></tr></thead><tbody>" +
             guests.map(function (g) {
+                var plus = g.plusOne ? (g.plusOneName || "Yes") : "No";
                 return "<tr><td>" + esc(g.firstName + " " + g.lastName) + "</td><td>" + esc(g.inviteCode) +
                     '</td><td class="' + (g.attending ? "status-yes" : "status-no") + '">' +
-                    (g.attending ? "Coming" : "Declined") + "</td><td>" + esc(g.mealChoice || "-") +
+                    (g.attending ? "Coming" : "Declined") + "</td><td>" + esc(plus) +
                     "</td><td>" + esc(g.email) + "</td></tr>";
             }).join("") + "</tbody>";
     }

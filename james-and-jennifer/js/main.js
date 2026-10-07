@@ -128,7 +128,7 @@
 
         var y = parseInt(parts[0], 10);
 
-        var m = parseInt(parts[1], 10) - 1;
+        var m = parseInt(parts[1], 10);
 
         var d = parseInt(parts[2], 10);
 
@@ -136,7 +136,15 @@
 
         var min = typeof cfg.countdownMinute === "number" ? cfg.countdownMinute : 30;
 
-        return new Date(y, m, d, h, min, 0, 0);
+        var zone = cfg.eventTimezone || "America/New_York";
+
+        if (window.weddingCountdown) {
+
+            return new Date(window.weddingCountdown.wallTimeToUtcMs(y, m, d, h, min, zone));
+
+        }
+
+        return new Date(y, m - 1, d, h, min, 0, 0);
 
     }
 
@@ -156,13 +164,17 @@
 
     var cdMinsLabel = document.getElementById("cdMinsLabel");
 
+    var cdSecs = document.getElementById("cdSecs");
+
+    var cdSecsLabel = document.getElementById("cdSecsLabel");
+
     var countdownTagline = document.getElementById("countdownTagline");
 
     var countdownNote = document.getElementById("countdownNote");
 
 
 
-    function updateCountdownCopy(days, hours, mins) {
+    function updateCountdownCopy(days, hours, mins, secs) {
         if (cdDaysLabel) {
             cdDaysLabel.textContent = days === 1 ? "Day" : "Days";
         }
@@ -172,8 +184,11 @@
         if (cdMinsLabel) {
             cdMinsLabel.textContent = mins === 1 ? "Minute" : "Minutes";
         }
+        if (cdSecsLabel) {
+            cdSecsLabel.textContent = secs === 1 ? "Second" : "Seconds";
+        }
         if (countdownTagline) {
-            if (days === 0 && hours === 0 && mins === 0) {
+            if (days === 0 && hours === 0 && mins === 0 && secs === 0) {
                 countdownTagline.textContent = "today we say \"I do\"";
             } else {
                 countdownTagline.textContent = "until we tie the knot";
@@ -203,33 +218,27 @@
 
     function tickCountdown() {
 
-        var now = new Date();
+        var parts = window.weddingCountdown
+            ? window.weddingCountdown.remainingUntil(Date.now(), weddingDate.getTime())
+            : { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
-        var diff = weddingDate.getTime() - now.getTime();
+        if (cdDays) cdDays.textContent = String(parts.days);
 
-        if (diff < 0) diff = 0;
+        if (cdHours) cdHours.textContent = String(parts.hours);
 
-        var days = Math.floor(diff / 86400000);
+        if (cdMins) cdMins.textContent = String(parts.minutes);
 
-        var hours = Math.floor((diff % 86400000) / 3600000);
+        if (cdSecs) cdSecs.textContent = String(parts.seconds);
 
-        var mins = Math.floor((diff % 3600000) / 60000);
+        updateCountdownCopy(parts.days, parts.hours, parts.minutes, parts.seconds);
 
-        if (cdDays) cdDays.textContent = String(days);
-
-        if (cdHours) cdHours.textContent = String(hours);
-
-        if (cdMins) cdMins.textContent = String(mins);
-
-        updateCountdownCopy(days, hours, mins);
-
-        applyThirtyDayMood(days);
+        applyThirtyDayMood(parts.days);
 
     }
 
     tickCountdown();
 
-    setInterval(tickCountdown, 60000);
+    setInterval(tickCountdown, 1000);
 
 
 

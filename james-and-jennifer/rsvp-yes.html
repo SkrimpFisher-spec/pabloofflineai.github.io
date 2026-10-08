@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you | Jennifer &amp; James</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="confirmation visible" id="confirmation">
+        <div class="confirmation-card" id="confirmationCard">
+            <h2>Thank You</h2>
+            <p id="confirmMessage">We cannot wait to celebrate with you!</p>
+            <p class="confirm-email-note" id="confirmEmailNote">A confirmation was sent to your email.</p>
+            <div class="calendar-actions" id="calendarActions">
+                <p class="calendar-actions-label">Add a reminder to your calendar</p>
+                <div class="calendar-buttons">
+                    <a class="calendar-btn" id="calGoogle" href="#" target="_blank" rel="noopener noreferrer">Google</a>
+                    <a class="calendar-btn" id="calOutlook" href="#" target="_blank" rel="noopener noreferrer">Outlook</a>
+                    <a class="calendar-btn" id="calApple" href="#">Apple / .ics</a>
+                </div>
+            </div>
+            <a class="btn-submit confirm-close" href="index.html">Close</a>
+        </div>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        if (window.weddingCalendar) window.weddingCalendar.showInConfirmation(true);
+        if (window.launchConfetti) window.launchConfetti();
+    </script>
+</body>
+</html>

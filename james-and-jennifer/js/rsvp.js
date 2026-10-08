@@ -105,8 +105,8 @@
             ));
         }
 
-        var next = new URL(window.location.href);
-        next.searchParams.set("rsvp", p.attending ? "yes" : "no");
+        var next = new URL(p.attending ? "rsvp-yes.html" : "rsvp-no.html", window.location.href);
+        next.search = "";
         next.hash = "";
         var postCfg = {
             formSubmitEmail: email,
@@ -207,7 +207,8 @@
         clearError(formError);
 
         var honeypot = form.querySelector('[name="website"]');
-        if (honeypot && honeypot.value) {
+        var honey = form.querySelector('[name="_honey"]');
+        if ((honeypot && honeypot.value) || (honey && honey.value)) {
             showConfirmation("Thank you!", true, false);
             return;
         }
@@ -339,6 +340,8 @@
     }
 
     var returned = new URLSearchParams(window.location.search).get("rsvp");
+    if (window.location.hash === "#rsvp=yes") returned = "yes";
+    if (window.location.hash === "#rsvp=no") returned = "no";
     if (returned === "yes" || returned === "no") {
         showConfirmation(
             returned === "yes"
@@ -350,6 +353,7 @@
         );
         var clean = new URL(window.location.href);
         clean.searchParams.delete("rsvp");
-        window.history.replaceState({}, "", clean.pathname + clean.search + clean.hash);
+        clean.hash = "";
+        window.history.replaceState({}, "", clean.pathname + clean.search);
     }
 })();

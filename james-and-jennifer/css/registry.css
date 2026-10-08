@@ -1,0 +1,261 @@
+/* Registry — editorial layer. Purchasing stays with the retailer. */
+
+.registry-page { background: var(--cream); }
+
+.reg-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: min(1120px, var(--container-width));
+    margin: 0 auto;
+    padding: 1.25rem 0 0;
+}
+
+.reg-back,
+.reg-amazon {
+    font-size: var(--fs-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+}
+
+.reg-hero {
+    position: relative;
+    min-height: clamp(28rem, 70vh, 40rem);
+    display: flex;
+    align-items: flex-end;
+    margin-top: 1rem;
+    color: var(--warm-white);
+    background:
+        linear-gradient(180deg, rgba(44, 40, 37, 0.15) 0%, rgba(44, 40, 37, 0.72) 78%),
+        url("../assets/hero.png") center 42% / cover no-repeat;
+}
+
+.reg-hero-inner {
+    width: min(1120px, var(--container-width));
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(2.2rem, 5vw, 3.5rem);
+}
+
+.reg-kicker,
+.reg-date {
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-size: var(--fs-label);
+}
+
+.reg-date { margin-top: 0.35rem; opacity: 0.9; }
+
+.reg-hero h1 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(3.4rem, 8vw, 6.4rem);
+    line-height: 0.92;
+    margin: 0.8rem 0 0.9rem;
+}
+
+.reg-hero-lead {
+    font-family: var(--font-serif);
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    line-height: 1.25;
+    max-width: 18em;
+}
+
+.reg-story {
+    max-width: 40rem;
+    margin-top: 1.1rem;
+    color: rgba(255, 252, 248, 0.92);
+}
+
+.reg-chapters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    width: min(1120px, var(--container-width));
+    margin: -2.2rem auto 0;
+    position: relative;
+    z-index: 2;
+}
+
+.reg-chapter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-height: 7.5rem;
+    padding: 1.25rem 1.2rem;
+    background: var(--warm-white);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    color: var(--charcoal);
+}
+
+.reg-chapter:hover { color: var(--charcoal); }
+
+.reg-chapter strong {
+    font-family: var(--font-serif);
+    font-size: clamp(1.45rem, 2vw, 1.85rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.reg-chapter span {
+    color: var(--charcoal-soft);
+    font-size: var(--fs-small);
+}
+
+.reg-block { padding: clamp(4.5rem, 8vw, 6.5rem) 0 1rem; }
+
+.reg-block-head {
+    max-width: 40rem;
+    margin-bottom: 2rem;
+}
+
+.reg-block h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--fs-section-title);
+    line-height: 1;
+    letter-spacing: 0.03em;
+}
+
+.reg-block-head p,
+.gift p,
+.project p,
+.collection p {
+    color: var(--charcoal-soft);
+    margin-top: 0.85rem;
+}
+
+.reg-subhead {
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 2.5vw, 2.1rem);
+    font-weight: 500;
+    margin: 2.2rem 0 0.4rem;
+}
+
+.gift-list, .project-list { display: grid; gap: 1rem; }
+
+.gift, .project, .collection {
+    background: var(--warm-white);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.4rem, 2.5vw, 2.1rem);
+    box-shadow: var(--shadow);
+}
+
+.gift-kicker, .wanted {
+    display: inline-block;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--gold-dark);
+}
+
+.wanted {
+    margin-left: 0.75rem;
+    padding: 0.15rem 0.45rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+}
+
+.gift h3, .project h3, .collection h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.7rem, 2.6vw, 2.25rem);
+    line-height: 1.1;
+    margin-top: 0.45rem;
+}
+
+.gift-price {
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    color: var(--charcoal);
+    margin-top: 0.8rem;
+}
+
+.gift-actions, .fund-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.15rem;
+    align-items: center;
+}
+
+.gift-btn, .fund-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--touch-min);
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    background: var(--gold-dark);
+    color: var(--warm-white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: var(--fs-label);
+}
+
+.gift-btn:hover, .fund-btn:hover { color: var(--warm-white); background: var(--charcoal); }
+
+.fund-btn {
+    background: transparent;
+    color: var(--gold-dark);
+    border: 1px solid var(--glass-border);
+}
+
+.fund-btn:hover { color: var(--charcoal); background: rgba(184, 149, 106, 0.12); }
+
+.piece-list {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+    columns: 2;
+    column-gap: 2rem;
+}
+
+.piece-list li {
+    break-inside: avoid;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(184, 149, 106, 0.18);
+    color: var(--charcoal);
+}
+
+.project { background: linear-gradient(180deg, var(--warm-white), var(--faded-sage)); }
+
+.fund-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    font-family: var(--font-serif);
+    font-size: 1.7rem;
+}
+
+.fund-track {
+    height: 0.35rem;
+    margin-top: 0.45rem;
+    background: rgba(184, 149, 106, 0.22);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.fund-fill { width: 0%; height: 100%; background: var(--gold); }
+
+.fund-note, .reg-fine {
+    font-size: var(--fs-small);
+    color: var(--charcoal-soft);
+}
+
+.reg-fine {
+    width: min(1120px, var(--container-width));
+    margin: 0 auto;
+    padding: 2.5rem 0 4rem;
+}
+
+@media (max-width: 800px) {
+    .reg-chapters { grid-template-columns: 1fr; margin-top: 1rem; }
+    .piece-list { columns: 1; }
+    .reg-top { padding-left: 3vw; padding-right: 3vw; }
+}

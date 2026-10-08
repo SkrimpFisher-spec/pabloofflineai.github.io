@@ -23,5 +23,5 @@ window.WEDDING_CONFIG = {
     venueName: "The Glade Venue",
     venueUrl: "https://www.thegladevenue.com/",
     mapsDirectionsUrl: "https://www.google.com/maps/dir/?api=1&destination=871+Pine+Hill+Road,+Cairo,+GA+39828",
-    registryUrl: "https://www.amazon.com/wedding/share/thewoodrows"
+    registryUrl: "registry.html"
 };

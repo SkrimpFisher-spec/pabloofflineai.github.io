@@ -388,13 +388,29 @@
 
     }
 
+    var musicWanted = true;
+
+    function pageIsActive() {
+
+        return document.visibilityState === "visible" && document.hasFocus();
+
+    }
+
     function tryStartMusic() {
 
-        if (!bgMusic) return;
+        if (!bgMusic || !musicWanted || !pageIsActive()) return Promise.resolve();
 
         bgMusic.volume = 0.25;
 
         return bgMusic.play().then(function () {
+
+            if (!musicWanted || !pageIsActive()) {
+
+                bgMusic.pause();
+
+                return;
+
+            }
 
             setMusicPlaying(true);
 
@@ -436,15 +452,33 @@
 
     if (musicBtn && bgMusic) {
 
+        function stopMusicNow() {
+
+            if (!bgMusic.paused) bgMusic.pause();
+
+        }
+
+        function resumeMusicIfWanted() {
+
+            if (!musicWanted || !pageIsActive()) return;
+
+            tryStartMusic();
+
+        }
+
         bgMusic.volume = 0.25;
 
         musicBtn.addEventListener("click", function () {
 
             if (bgMusic.paused) {
 
+                musicWanted = true;
+
                 tryStartMusic();
 
             } else {
+
+                musicWanted = false;
 
                 bgMusic.pause();
 
@@ -463,6 +497,20 @@
         bgMusic.addEventListener("play", function () { setMusicPlaying(true); });
 
         bgMusic.addEventListener("pause", function () { setMusicPlaying(false); });
+
+        document.addEventListener("visibilitychange", function () {
+
+            if (document.visibilityState === "hidden") stopMusicNow();
+
+            else resumeMusicIfWanted();
+
+        });
+
+        window.addEventListener("pagehide", stopMusicNow);
+
+        window.addEventListener("blur", stopMusicNow);
+
+        window.addEventListener("focus", resumeMusicIfWanted);
 
     }
 

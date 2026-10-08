@@ -49,7 +49,7 @@
         var plus = p.plusOneChoice === "yes" && p.plusOneName
             ? " We have " + p.plusOneName + " down as your plus one."
             : "";
-        return "Hello " + who + ", your RSVP is confirmed for Jennifer and James on Sunday, February 7, 2027. The ceremony is at 3:30 PM at The Glade Venue, 871 Pine Hill Road, Cairo, GA 39828. Guests can arrive at 3:00 PM. The reception is 4:00 PM to 9:00 PM and is indoors." + plus + " We cannot wait to celebrate with you.";
+        return "Hello " + who + ", your RSVP is confirmed for Jennifer and James on Sunday, February 7, 2027. The ceremony is at 3:30 PM at The Glade Venue, 871 Pine Hill Road, Cairo, GA 39828. Guests can arrive at 3:00 PM. The reception is 4:00 PM to 9:00 PM and is indoors." + plus + " We cannot wait to celebrate with you!";
     }
 
     function buildFormSubmitBody(p, cfg) {

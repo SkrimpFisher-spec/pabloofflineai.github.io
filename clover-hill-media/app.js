@@ -231,9 +231,59 @@ function extractGameName(url, fallbackTitle) {
 function migrateLinkType(ch) {
     const t = ch.linkType;
     if (t === 'ambiance') return null;
+    if (!t) return '';
     if (t === 'youtube-live') return 'channel';
     if (t === 'twitch-game') return 'twitch-game-live';
-    return t || null;
+    return t;
+}
+
+function guessPlatform(url) {
+    if (/therokuchannel\.roku\.com/i.test(url || '')) return 'roku';
+    if (/pluto\.tv/i.test(url || '')) return 'pluto';
+    if (/twitch\.tv/i.test(url || '')) return 'twitch';
+    if (/youtube\.com|youtu\.be/i.test(url || '')) return 'youtube';
+    return '';
+}
+
+/** Name, tab, and type from a pasted link. A blank name is filled in. */
+function inferChannelFromUrl(url, titleHint) {
+    const trimmed = (url || '').trim();
+    const platformGuess = guessPlatform(trimmed);
+    const linkType = detectLinkType({ url: trimmed, platform: platformGuess, linkType: '' }) || 'channel';
+    const draft = {
+        url: trimmed,
+        platform: platformGuess || 'youtube',
+        linkType,
+        title: (titleHint || '').trim(),
+        gameName: '',
+        twitchChannel: ''
+    };
+
+    if (linkType === 'twitch-game-live' || linkType === 'twitch-streamer') draft.platform = 'twitch';
+    else if (linkType === 'roku-linear') draft.platform = 'roku';
+    else if (linkType === 'youtube-247') draft.platform = 'youtube';
+
+    if (linkType === 'twitch-game-live') {
+        draft.gameName = extractGameName(trimmed, draft.title);
+        if (!draft.title) draft.title = draft.gameName || 'Twitch game';
+    } else if (linkType === 'twitch-streamer') {
+        draft.twitchChannel = extractTwitchLogin(trimmed);
+        if (!draft.title) draft.title = draft.twitchChannel || 'Twitch';
+    } else if (!draft.title) {
+        if (linkType === 'roku-linear') draft.title = 'Roku channel';
+        else if (draft.platform === 'pluto') draft.title = 'Pluto channel';
+        else if (draft.platform === 'youtube') draft.title = 'YouTube';
+        else draft.title = 'New channel';
+    }
+
+    draft.guideCategory = inferDefaultGuideCategory(draft);
+    return draft;
+}
+
+function channelKindLabel(ch) {
+    const platform = (ch.platform || 'link').replace(/^./, (c) => c.toUpperCase());
+    const tab = GUIDE_CATEGORIES[getChannelCategory(ch)] || '';
+    return tab ? `${platform} · ${tab}` : platform;
 }
 
 function detectLinkType(ch) {
@@ -1225,11 +1275,53 @@ function applyExtraField(ch, extra) {
     else ch.guideSubtitle = extra;
 }
 
+function channelDraftFromRow(row) {
+    const draft = readRowDraft(row);
+    return {
+        platform: draft.platform || '',
+        linkType: draft.linkType || 'channel',
+        guideCategory: draft.guideCategory || '',
+        url: draft.url || '',
+        title: draft.title || '',
+        broadcastMode: draft.broadcastMode || 'live'
+    };
+}
+
+function refreshRowKind(row) {
+    const label = row.querySelector('.editor-kind');
+    if (label) label.textContent = channelKindLabel(channelDraftFromRow(row));
+    const broadcast = row.querySelector('[data-broadcast-wrap]');
+    if (broadcast) broadcast.hidden = !supportsBroadcastMode(channelDraftFromRow(row));
+}
+
+function applyGuessToRow(row, guess, keepTitle) {
+    const set = (field, value) => {
+        const el = row.querySelector(`[data-field="${field}"]`);
+        if (!el || value == null) return;
+        el.value = value;
+    };
+    if (!keepTitle) set('title', guess.title);
+    set('platform', guess.platform);
+    set('linkType', guess.linkType);
+    set('guideCategory', guess.guideCategory);
+    const extra = guess.linkType === 'twitch-game-live'
+        ? (guess.gameName || '')
+        : guess.linkType === 'twitch-streamer'
+            ? (guess.twitchChannel || '')
+            : '';
+    set('extra', extra);
+    refreshRowKind(row);
+}
+
 function openEditModal() {
     const editorList = document.getElementById('config-editor-list');
-    document.getElementById('twitch-client-id').value = localStorage.getItem(TWITCH_ID_KEY) || '';
-    document.getElementById('twitch-client-secret').value = localStorage.getItem(TWITCH_SECRET_KEY) || '';
-    document.getElementById('youtube-api-key').value = localStorage.getItem(YOUTUBE_API_KEY) || '';
+    const modal = document.getElementById('edit-modal');
+    const alreadyOpen = modal.classList.contains('flex');
+    if (!alreadyOpen) {
+        document.getElementById('twitch-client-id').value = localStorage.getItem(TWITCH_ID_KEY) || '';
+        document.getElementById('twitch-client-secret').value = localStorage.getItem(TWITCH_SECRET_KEY) || '';
+        document.getElementById('youtube-api-key').value = localStorage.getItem(YOUTUBE_API_KEY) || '';
+    }
     editorList.innerHTML = '';
 
     const editorChannels = sortChannelsForEditor(channels);
@@ -1238,86 +1330,95 @@ function openEditModal() {
         const next = editorChannels[idx + 1];
         const canMoveUp = canSwapChannelOrder(ch, prev);
         const canMoveDown = canSwapChannelOrder(ch, next);
-        const groupLabel = SORT_GROUP_LABELS[getChannelSortGroup(ch)] || 'Channel';
-        const showBroadcast = supportsBroadcastMode(ch);
         const broadcastMode = ch.broadcastMode || 'live';
 
         const row = document.createElement('div');
-        row.className = 'channel-editor-row editor-row-grid p-3 items-start';
+        row.className = 'channel-editor-row editor-row-simple p-3';
         row.dataset.channelId = ch.id;
         row.innerHTML = `
-            <div class="editor-field">
-                <label class="field-label">Guide name</label>
-                <input type="text" value="${escapeAttr(ch.title)}" data-field="title"
-                       class="retro-input w-full px-2 py-1.5 text-xs">
-            </div>
-            <div class="editor-field">
-                <label class="field-label">Guide tab</label>
-                <select data-field="guideCategory" class="retro-input w-full px-1 py-1.5 text-xs">
-                    <option value="streaming" ${getChannelCategory(ch) === 'streaming' ? 'selected' : ''}>Streaming</option>
-                    <option value="livetv" ${getChannelCategory(ch) === 'livetv' ? 'selected' : ''}>Live TV</option>
-                    <option value="vibes" ${getChannelCategory(ch) === 'vibes' ? 'selected' : ''}>Vibes</option>
-                </select>
-            </div>
-            <div class="editor-field">
-                <label class="field-label">Type</label>
-                <select data-field="linkType" class="retro-input w-full px-1 py-1.5 text-xs">
-                    <option value="roku-linear" ${ch.linkType === 'roku-linear' ? 'selected' : ''}>Roku Linear</option>
-                    <option value="youtube-247" ${ch.linkType === 'youtube-247' ? 'selected' : ''}>YouTube 24/7</option>
-                    <option value="twitch-game-live" ${ch.linkType === 'twitch-game-live' ? 'selected' : ''}>Twitch Game → 1st EN</option>
-                    <option value="twitch-streamer" ${ch.linkType === 'twitch-streamer' ? 'selected' : ''}>Twitch Streamer</option>
-                    <option value="channel" ${ch.linkType === 'channel' ? 'selected' : ''}>Direct Link</option>
-                </select>
-                <p class="field-hint">${escapeHtml(groupLabel)}</p>
-                ${showBroadcast ? `
-                <label class="field-label mt-1.5">Guide status</label>
-                <select data-field="broadcastMode" class="retro-input w-full px-1 py-1.5 text-xs">
-                    <option value="live" ${broadcastMode === 'live' ? 'selected' : ''}>Live — check if online</option>
-                    <option value="247" ${broadcastMode === '247' ? 'selected' : ''}>24/7 — always on</option>
-                </select>` : ''}
-            </div>
-            <div class="editor-field">
-                <label class="field-label">Platform</label>
-                <select data-field="platform" class="retro-input w-full px-1 py-1.5 text-xs">
-                    <option value="roku" ${ch.platform === 'roku' ? 'selected' : ''}>Roku</option>
-                    <option value="youtube" ${ch.platform === 'youtube' ? 'selected' : ''}>YouTube</option>
-                    <option value="twitch" ${ch.platform === 'twitch' ? 'selected' : ''}>Twitch</option>
-                    <option value="pluto" ${ch.platform === 'pluto' ? 'selected' : ''}>Pluto</option>
-                </select>
-            </div>
-            <div class="editor-field">
-                <label class="field-label">URL (fallback / direct)</label>
-                <input type="text" value="${escapeAttr(ch.url)}" data-field="url"
-                       placeholder="https://..."
-                       class="retro-input w-full px-2 py-1.5 text-xs">
-            </div>
-            <div class="editor-field">
-                <label class="field-label">Game / user / fallback subtitle</label>
-                <input type="text" value="${escapeAttr(getExtraFieldValue(ch))}" data-field="extra"
-                       placeholder="${ch.linkType === 'roku-linear' ? 'Optional if auto now-playing fails' : ''}"
-                       class="retro-input w-full px-2 py-1.5 text-xs">
-            </div>
+            <input type="text" value="${escapeAttr(ch.title)}" data-field="title" aria-label="Name for ${escapeAttr(ch.title)}"
+                   class="retro-input w-full px-2 py-1.5 text-xs">
+            <input type="text" value="${escapeAttr(ch.url)}" data-field="url" aria-label="Link for ${escapeAttr(ch.title)}"
+                   placeholder="https://..."
+                   class="retro-input w-full px-2 py-1.5 text-xs">
             <div class="editor-actions">
-                <div class="flex gap-0.5">
-                    <button type="button" data-move-up="${ch.id}" ${canMoveUp ? '' : 'disabled'}
-                            class="btn-icon-sm editor-move-btn" title="Move up in group" aria-label="Move ${escapeAttr(ch.title)} up">
-                        <i class="fa-solid fa-chevron-up text-xs" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" data-move-down="${ch.id}" ${canMoveDown ? '' : 'disabled'}
-                            class="btn-icon-sm editor-move-btn" title="Move down in group" aria-label="Move ${escapeAttr(ch.title)} down">
-                        <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
-                    </button>
-                </div>
+                <button type="button" data-move-up="${ch.id}" ${canMoveUp ? '' : 'disabled'}
+                        class="btn-icon-sm editor-move-btn" title="Move up" aria-label="Move ${escapeAttr(ch.title)} up">
+                    <i class="fa-solid fa-chevron-up text-xs" aria-hidden="true"></i>
+                </button>
+                <button type="button" data-move-down="${ch.id}" ${canMoveDown ? '' : 'disabled'}
+                        class="btn-icon-sm editor-move-btn" title="Move down" aria-label="Move ${escapeAttr(ch.title)} down">
+                    <i class="fa-solid fa-chevron-down text-xs" aria-hidden="true"></i>
+                </button>
                 <label class="flex items-center gap-1 cursor-pointer">
-                    <input type="checkbox" data-field="isActive" ${ch.isActive !== false ? 'checked' : ''}>
-                    <span class="field-label">On</span>
+                    <input type="checkbox" data-field="isActive" ${ch.isActive !== false ? 'checked' : ''} aria-label="${escapeAttr(ch.title)} on">
+                    <span class="field-label" style="margin:0">On</span>
                 </label>
-                <button type="button" data-remove="${ch.id}" class="btn-icon-sm editor-delete-btn" title="Remove channel" aria-label="Remove ${escapeAttr(ch.title)}">
+                <button type="button" data-remove="${ch.id}" class="btn-icon-sm editor-delete-btn" title="Remove" aria-label="Remove ${escapeAttr(ch.title)}">
                     <i class="fa-solid fa-trash text-xs" aria-hidden="true"></i>
                 </button>
             </div>
+            <p class="editor-kind">${escapeHtml(channelKindLabel(ch))}</p>
+            <details class="editor-more">
+                <summary>Change how this link is filed</summary>
+                <div class="editor-more-grid">
+                    <div>
+                        <label class="field-label">Guide tab</label>
+                        <select data-field="guideCategory" class="retro-input w-full px-1 py-1.5 text-xs">
+                            <option value="streaming" ${getChannelCategory(ch) === 'streaming' ? 'selected' : ''}>Streaming</option>
+                            <option value="livetv" ${getChannelCategory(ch) === 'livetv' ? 'selected' : ''}>Live TV</option>
+                            <option value="vibes" ${getChannelCategory(ch) === 'vibes' ? 'selected' : ''}>Vibes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="field-label">Type</label>
+                        <select data-field="linkType" class="retro-input w-full px-1 py-1.5 text-xs">
+                            <option value="roku-linear" ${ch.linkType === 'roku-linear' ? 'selected' : ''}>Roku channel</option>
+                            <option value="youtube-247" ${ch.linkType === 'youtube-247' ? 'selected' : ''}>YouTube 24/7</option>
+                            <option value="twitch-game-live" ${ch.linkType === 'twitch-game-live' ? 'selected' : ''}>Twitch game</option>
+                            <option value="twitch-streamer" ${ch.linkType === 'twitch-streamer' ? 'selected' : ''}>Twitch streamer</option>
+                            <option value="channel" ${ch.linkType === 'channel' ? 'selected' : ''}>Direct link</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="field-label">Platform</label>
+                        <select data-field="platform" class="retro-input w-full px-1 py-1.5 text-xs">
+                            <option value="roku" ${ch.platform === 'roku' ? 'selected' : ''}>Roku</option>
+                            <option value="youtube" ${ch.platform === 'youtube' ? 'selected' : ''}>YouTube</option>
+                            <option value="twitch" ${ch.platform === 'twitch' ? 'selected' : ''}>Twitch</option>
+                            <option value="pluto" ${ch.platform === 'pluto' ? 'selected' : ''}>Pluto</option>
+                        </select>
+                    </div>
+                    <div data-broadcast-wrap ${supportsBroadcastMode(ch) ? '' : 'hidden'}>
+                        <label class="field-label">Guide status</label>
+                        <select data-field="broadcastMode" class="retro-input w-full px-1 py-1.5 text-xs">
+                            <option value="live" ${broadcastMode === 'live' ? 'selected' : ''}>Live — check if online</option>
+                            <option value="247" ${broadcastMode === '247' ? 'selected' : ''}>24/7 — always on</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="field-label">Game, user, or subtitle</label>
+                        <input type="text" value="${escapeAttr(getExtraFieldValue(ch))}" data-field="extra"
+                               class="retro-input w-full px-2 py-1.5 text-xs">
+                    </div>
+                </div>
+            </details>
         `;
         editorList.appendChild(row);
+
+        const urlInput = row.querySelector('[data-field="url"]');
+        urlInput.addEventListener('change', () => {
+            if (row.dataset.customized === '1') {
+                refreshRowKind(row);
+                return;
+            }
+            const title = row.querySelector('[data-field="title"]').value;
+            applyGuessToRow(row, inferChannelFromUrl(urlInput.value, title), true);
+        });
+        row.querySelector('.editor-more').addEventListener('change', () => {
+            row.dataset.customized = '1';
+            refreshRowKind(row);
+        });
     });
 
     editorList.querySelectorAll('[data-remove]').forEach(btn => {
@@ -1330,55 +1431,63 @@ function openEditModal() {
         btn.addEventListener('click', () => moveChannelRow(btn.dataset.moveDown, 1));
     });
 
-    A11y.openModal('edit-modal', '#twitch-client-id');
+    if (!alreadyOpen) A11y.openModal('edit-modal', '#add-channel-url');
 }
 
 function closeEditModal() {
     A11y.closeModal('edit-modal');
 }
 
-function addNewChannelRow() {
-    const template = activeFilter === 'livetv'
-        ? {
-            platform: 'roku',
-            linkType: 'roku-linear',
-            guideCategory: 'livetv',
-            url: 'https://therokuchannel.roku.com/watch/',
-            title: 'New Live TV Channel'
-        }
-        : activeFilter === 'vibes'
-            ? {
-                platform: 'youtube',
-                linkType: 'youtube-247',
-                guideCategory: 'vibes',
-                url: 'https://www.youtube.com/watch?v=',
-                title: 'New 24/7 Stream'
-            }
-            : {
-                platform: 'twitch',
-                linkType: 'twitch-game-live',
-                guideCategory: 'streaming',
-                url: 'https://www.twitch.tv/directory/game/',
-                title: 'New Twitch Game',
-                gameName: ''
-            };
+function addChannelFromForm(event) {
+    if (event) event.preventDefault();
+    const nameInput = document.getElementById('add-channel-name');
+    const urlInput = document.getElementById('add-channel-url');
+    const url = urlInput.value.trim();
+    if (!/^https?:\/\//i.test(url)) {
+        showToast('Paste a full link, starting with https://', 'error');
+        urlInput.focus();
+        return;
+    }
 
+    const drafted = collectChannelsFromEditor();
+    if (drafted) channels = drafted;
+
+    const guess = inferChannelFromUrl(url, nameInput.value);
     const created = normalizeChannel({
         id: 'custom-' + Date.now(),
         isActive: true,
-        ...template,
-        sortOrder: getNextSortOrder({ ...template, guideCategory: template.guideCategory || activeFilter })
+        ...guess
     }, channels.length);
-    if (created) channels.push(created);
+    if (!created) {
+        showToast('That link could not be added', 'error');
+        return;
+    }
+    created.sortOrder = getNextSortOrder(created);
+    channels.push(created);
+    nameInput.value = '';
+    urlInput.value = '';
     openEditModal();
+    showToast(`Added ${created.title}`, 'success');
+    urlInput.focus();
+}
+
+function addNewChannelRow() {
+    document.getElementById('add-channel-url')?.focus();
+}
+
+function rememberEditorDraft() {
+    const drafted = collectChannelsFromEditor();
+    if (drafted) channels = drafted;
 }
 
 function removeChannelRow(channelId) {
+    rememberEditorDraft();
     channels = channels.filter(ch => ch.id !== channelId);
     openEditModal();
 }
 
 function moveChannelRow(channelId, direction) {
+    rememberEditorDraft();
     const list = sortChannelsForEditor(channels);
     const idx = list.findIndex(c => c.id === channelId);
     const swapIdx = idx + direction;
@@ -1396,12 +1505,9 @@ function moveChannelRow(channelId, direction) {
     openEditModal();
 }
 
-async function saveConfigurations() {
+function collectChannelsFromEditor() {
     const rows = document.getElementById('config-editor-list')?.querySelectorAll('.channel-editor-row');
-    if (!rows || rows.length === 0) {
-        showToast('Nothing to save — add a channel first', 'error');
-        return;
-    }
+    if (!rows) return null;
 
     const byId = new Map(channels.map(ch => [ch.id, ch]));
     const nextChannels = [];
@@ -1435,6 +1541,16 @@ async function saveConfigurations() {
         groupCounters[key] = normalized.sortOrder + 1;
         nextChannels.push(normalized);
     });
+
+    return nextChannels;
+}
+
+async function saveConfigurations() {
+    const nextChannels = collectChannelsFromEditor();
+    if (!nextChannels || nextChannels.length === 0) {
+        showToast('Nothing to save — add a channel first', 'error');
+        return;
+    }
 
     channels = nextChannels;
 
@@ -1600,6 +1716,7 @@ window.openEditModal = openEditModal;
 window.closeEditModal = closeEditModal;
 window.openAmbianceModal = openAmbianceModal;
 window.closeAmbianceModal = closeAmbianceModal;
+window.addChannelFromForm = addChannelFromForm;
 window.addNewChannelRow = addNewChannelRow;
 window.removeChannelRow = removeChannelRow;
 window.saveConfigurations = saveConfigurations;

@@ -2,7 +2,7 @@
  * Wedding site configuration.
  */
 window.WEDDING_CONFIG = {
-    googleScriptUrl: "",
+    googleScriptUrl: "https://script.google.com/macros/s/AKfycbzFMqUX_Va6jcrcpIP2IjDERcQDw0B5dfE_Uc_ezdBS1uVqgvMpTsjGZEF9I-yw-vz1/exec",
 
     weddingDate: "2027-02-07",
     countdownHour: 15,

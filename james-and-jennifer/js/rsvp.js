@@ -9,7 +9,6 @@
     var declineBtn = document.getElementById("rsvpDeclineBtn");
     var confirmation = document.getElementById("confirmation");
     var confirmMessage = document.getElementById("confirmMessage");
-    var confirmEmailNote = document.getElementById("confirmEmailNote");
     var confirmClose = document.getElementById("confirmClose");
     var cfg = window.WEDDING_CONFIG || {};
 
@@ -69,57 +68,30 @@
         if (declineBtn) declineBtn.classList.toggle("rsvp-step--hidden", !visible);
     }
 
-    function formatRsvpText(p) {
-        if (window.weddingRsvpPayload) return window.weddingRsvpPayload.formatRsvpText(p);
-        return "";
-    }
-
     function deliverRsvp(p) {
         var displayName = p.fullName || (p.firstName + " " + p.lastName).trim();
-        var subjectSuffix = p.attending ? "Attending" : "Declined";
-        var formatted = formatRsvpText(p);
-
-        if (cfg.web3formsKey) {
-            return fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", Accept: "application/json" },
-                body: JSON.stringify({
-                    access_key: cfg.web3formsKey,
-                    subject: "RSVP: " + displayName + " — " + subjectSuffix,
-                    from_name: displayName,
-                    email: p.email || "",
-                    phone: p.phone || "",
-                    message: formatted
-                })
-            }).then(function (res) { return res.json(); })
-              .then(function (data) {
-                  if (!data.success) throw new Error(data.message || "Could not send RSVP.");
-                  return { ok: true, guestNotified: !!p.email };
-              });
-        }
-
-        var email = (cfg.formSubmitEmail || "").trim();
-        if (!email) {
+        var scriptUrl = (cfg.googleScriptUrl || "").trim();
+        if (!scriptUrl) {
             return Promise.reject(new Error(
-                "RSVP is not connected yet. Add your email to js/config.js (formSubmitEmail)."
+                "We could not save your RSVP just now. Please try again in a little while."
             ));
         }
 
         var next = new URL(p.attending ? "rsvp-yes.html" : "rsvp-no.html", window.location.href);
         next.search = "";
         next.hash = "";
-        var postCfg = {
-            formSubmitEmail: email,
-            nextUrl: next.toString()
-        };
         var body = window.weddingRsvpPayload
-            ? window.weddingRsvpPayload.buildFormSubmitBody(p, postCfg)
-            : { name: displayName, message: formatted };
-        delete body._formsubmit_to;
+            ? window.weddingRsvpPayload.buildSheetBody(p, { nextUrl: next.toString() })
+            : { name: displayName, attendance: p.attending ? "Happily Accepts" : "Regretfully Declines", _next: next.toString() };
+
+        var honeypot = form.querySelector('[name="website"]');
+        var honey = form.querySelector('[name="_honey"]');
+        body.website = honeypot ? honeypot.value : "";
+        body._honey = honey ? honey.value : "";
 
         var post = document.createElement("form");
         post.method = "POST";
-        post.action = "https://formsubmit.co/" + email;
+        post.action = scriptUrl;
         post.acceptCharset = "UTF-8";
         post.style.display = "none";
         Object.keys(body).forEach(function (key) {
@@ -135,19 +107,13 @@
         return new Promise(function () {});
     }
 
-    function showConfirmation(message, attending, guestNotified, summary) {
+    function showConfirmation(message, attending, summary) {
         if (!confirmation || !confirmMessage) return;
         confirmMessage.textContent = message;
         var summaryEl = document.getElementById("confirmSummary");
         if (summaryEl) {
             summaryEl.textContent = summary || "";
             summaryEl.hidden = !summary;
-        }
-        if (confirmEmailNote) {
-            confirmEmailNote.textContent = guestNotified
-                ? "A confirmation was sent to your email."
-                : "";
-            confirmEmailNote.hidden = !guestNotified;
         }
         if (window.weddingCalendar) {
             window.weddingCalendar.showInConfirmation(attending);
@@ -209,7 +175,7 @@
         var honeypot = form.querySelector('[name="website"]');
         var honey = form.querySelector('[name="_honey"]');
         if ((honeypot && honeypot.value) || (honey && honey.value)) {
-            showConfirmation("Thank you!", true, false);
+            showConfirmation("Thank you!", true);
             return;
         }
 
@@ -232,7 +198,6 @@
                         ? "We cannot wait to celebrate with you!"
                         : "Thank you for letting us know. You will be missed.",
                     attending,
-                    result.guestNotified,
                     rsvpSummary(payload)
                 );
             })
@@ -347,7 +312,6 @@
             returned === "yes"
                 ? "We cannot wait to celebrate with you!"
                 : "Thank you for letting us know. You will be missed.",
-            returned === "yes",
             returned === "yes",
             returned === "yes" ? "Attendance: Happily Accepts." : "Attendance: Regretfully Declines."
         );

@@ -2,8 +2,7 @@
  * Wedding site configuration.
  */
 window.WEDDING_CONFIG = {
-    formSubmitEmail: "jamesandjenniferwoodrow@gmail.com",
-    web3formsKey: "",
+    googleScriptUrl: "",
 
     weddingDate: "2027-02-07",
     countdownHour: 15,

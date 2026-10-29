@@ -89,19 +89,22 @@
         body.website = honeypot ? honeypot.value : "";
         body._honey = honey ? honey.value : "";
 
-        var params = new URLSearchParams();
+        var post = document.createElement("form");
+        post.method = "POST";
+        post.action = scriptUrl;
+        post.acceptCharset = "UTF-8";
+        post.style.display = "none";
         Object.keys(body).forEach(function (key) {
             if (body[key] === undefined || body[key] === null) return;
-            params.append(key, String(body[key]));
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = String(body[key]);
+            post.appendChild(input);
         });
-
-        return fetch(scriptUrl, {
-            method: "POST",
-            mode: "no-cors",
-            body: params
-        }).then(function () {
-            return { ok: true };
-        });
+        document.body.appendChild(post);
+        post.submit();
+        return new Promise(function () {});
     }
 
     function showConfirmation(message, attending, summary) {

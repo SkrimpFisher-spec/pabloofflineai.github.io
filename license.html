@@ -46,8 +46,8 @@
 
         <h1>LICENSE &mdash; PABLO DESKTOP AND PABLO MOBILE</h1>
         <p><strong>Copyright (c) 2025&ndash;2026 Pablo Offline AI LLC</strong></p>
-        <p><strong>Pablo Desktop</strong> (Windows), <strong>Pablo Home Edition</strong>, and <strong>Pablo Mobile</strong> (Android) are proprietary software. The binding end-user agreement is the <a href="https://www.pablooffline.com/terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>. This page summarizes licensing and <strong>third-party open-source notices</strong>. How we handle data is described in the <a href="https://www.pablooffline.com/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.</p>
-        <p class="meta">Open-source inventory last updated: September 2026. Versions reflect the current Pablo Home Edition / Pablo Desktop build at time of publication.</p>
+        <p><strong>Pablo Desktop</strong> (Windows) and <strong>Pablo Mobile</strong> (Android) are proprietary software. The binding end-user agreement is the <a href="https://www.pablooffline.com/terms.html">Terms of Service</a>. This page summarizes licensing and <a href="#open-source">third-party open-source notices</a>. How we handle data is described in the <a href="https://www.pablooffline.com/privacy.html">Privacy Policy</a>.</p>
+        <p class="meta">Open-source inventory last updated: November 2026 (Pablo Desktop 1.0.153, Pablo Mobile 1.0.8). The full licence texts ship with Pablo Desktop in <code>THIRD-PARTY-NOTICES.txt</code> (open the About window and choose &ldquo;View third-party notices&rdquo;).</p>
         <hr>
 
         <h2>Summary</h2>
@@ -60,158 +60,132 @@
         </ul>
         <hr>
 
-        <h2>Third-Party Open Source Components</h2>
-        <p>Pablo products include open-source and third-party components under the licenses listed below. Pablo Offline AI LLC provides these components &ldquo;AS IS&rdquo; without warranty. Your use of those components is governed by their original licenses.</p>
+        <h2 id="open-source">Third-Party Open Source Components</h2>
+        <p>Pablo products include open-source and third-party components under the licenses listed below. Each component remains the property of its owners. Pablo Offline AI LLC provides these components &ldquo;AS IS&rdquo; without warranty; your use of them is governed by their original licenses. No GPL, LGPL or AGPL component ships in Pablo Desktop or Pablo Mobile.</p>
 
-        <h3>Pablo Desktop &amp; Pablo Home Edition (Windows)</h3>
-        <p>Includes the Pablo desktop UI (where installed), Pablo Home Edition API/runtime, Pablo Control Center, and bundled tools.</p>
-
-        <h3>AI &amp; machine learning</h3>
+        <h3>Pablo Desktop (Windows) &mdash; AI &amp; machine learning</h3>
         <table>
             <thead>
                 <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
             </thead>
             <tbody>
-                <tr><td>llama.cpp</td><td>via LLamaSharp / optional llama-server</td><td>MIT</td><td><a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener noreferrer">github.com/ggml-org/llama.cpp</a></td></tr>
-                <tr><td>LLamaSharp</td><td>0.22.0</td><td>MIT</td><td><a href="https://github.com/SciSharp/LLamaSharp" target="_blank" rel="noopener noreferrer">github.com/SciSharp/LLamaSharp</a></td></tr>
-                <tr><td>whisper.cpp (via Whisper.net runtime)</td><td>1.9.0</td><td>MIT</td><td><a href="https://github.com/ggerganov/whisper.cpp" target="_blank" rel="noopener noreferrer">github.com/ggerganov/whisper.cpp</a></td></tr>
-                <tr><td>Whisper.net</td><td>1.9.0</td><td>MIT</td><td><a href="https://github.com/sandrohanea/whisper.net" target="_blank" rel="noopener noreferrer">github.com/sandrohanea/whisper.net</a></td></tr>
-                <tr><td>ONNX Runtime</td><td>1.20.1</td><td>MIT</td><td><a href="https://github.com/microsoft/onnxruntime" target="_blank" rel="noopener noreferrer">github.com/microsoft/onnxruntime</a></td></tr>
-                <tr><td>Microsoft.ML.OnnxRuntime (.NET bindings)</td><td>1.20.1</td><td>MIT</td><td><a href="https://github.com/microsoft/onnxruntime" target="_blank" rel="noopener noreferrer">github.com/microsoft/onnxruntime</a></td></tr>
+                <tr><td>llama.cpp / ggml (inside the LLamaSharp backends)</td><td>bundled with LLamaSharp 0.22.0</td><td>MIT</td><td><a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener noreferrer">github.com/ggml-org/llama.cpp</a></td></tr>
+                <tr><td>LLamaSharp (CPU and CUDA 12 backends)</td><td>0.22.0</td><td>MIT</td><td><a href="https://github.com/SciSharp/LLamaSharp" target="_blank" rel="noopener noreferrer">github.com/SciSharp/LLamaSharp</a></td></tr>
+                <tr><td>whisper.cpp (inside Whisper.net.Runtime)</td><td>bundled with Whisper.net 1.9.0</td><td>MIT</td><td><a href="https://github.com/ggml-org/whisper.cpp" target="_blank" rel="noopener noreferrer">github.com/ggml-org/whisper.cpp</a></td></tr>
+                <tr><td>Whisper.net / Whisper.net.Runtime</td><td>1.9.0</td><td>MIT</td><td><a href="https://github.com/sandrohanea/whisper.net" target="_blank" rel="noopener noreferrer">github.com/sandrohanea/whisper.net</a></td></tr>
+                <tr><td>ONNX Runtime (Microsoft.ML.OnnxRuntime)</td><td>1.20.1</td><td>MIT</td><td><a href="https://github.com/microsoft/onnxruntime" target="_blank" rel="noopener noreferrer">github.com/microsoft/onnxruntime</a></td></tr>
+                <tr><td>all-MiniLM-L6-v2 sentence-embedding model (bundled)</td><td>ONNX export</td><td>Apache-2.0</td><td><a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2" target="_blank" rel="noopener noreferrer">huggingface.co/sentence-transformers/all-MiniLM-L6-v2</a></td></tr>
+                <tr><td>Microsoft.Extensions.AI.Abstractions</td><td>10.0.0</td><td>MIT</td><td><a href="https://github.com/dotnet/extensions" target="_blank" rel="noopener noreferrer">github.com/dotnet/extensions</a></td></tr>
             </tbody>
         </table>
-        <p class="meta">Optional <strong>llama-server.exe</strong> backends may be downloaded from official llama.cpp releases during setup or updates. Those binaries are also MIT-licensed.</p>
+        <p class="meta">Optional GPU backends may be downloaded from the official llama.cpp releases on GitHub and NVIDIA&rsquo;s CUDA redistributable site; those binaries keep their own licenses (MIT and the NVIDIA CUDA EULA).</p>
 
-        <h3>Runtime, framework &amp; data</h3>
+        <h3>Pablo Desktop &mdash; runtime, framework &amp; data</h3>
         <table>
             <thead>
                 <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
             </thead>
             <tbody>
-                <tr><td>.NET Runtime / ASP.NET Core / Windows Desktop</td><td>8.0.x</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
-                <tr><td>SQLite</td><td>3.x (embedded)</td><td>Public Domain</td><td><a href="https://sqlite.org" target="_blank" rel="noopener noreferrer">sqlite.org</a></td></tr>
-                <tr><td>Microsoft.Data.Sqlite / SQLitePCLRaw</td><td>8.0.0 / 2.1.6</td><td>Apache-2.0 / MIT</td><td><a href="https://github.com/ericsink/SQLitePCL.raw" target="_blank" rel="noopener noreferrer">github.com/ericsink/SQLitePCL.raw</a></td></tr>
+                <tr><td>.NET runtime, ASP.NET Core, Windows Desktop (WPF / Windows Forms), self-contained</td><td>10.0</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
+                <tr><td>Microsoft.Extensions.* , System.Text.Json, System.Management, System.Speech, System.Drawing.Common, System.ServiceModel.Syndication, System.Security.Cryptography.*</td><td>10.0.x</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
+                <tr><td>Microsoft.Data.Sqlite</td><td>10.0.15</td><td>MIT</td><td><a href="https://github.com/dotnet/efcore" target="_blank" rel="noopener noreferrer">github.com/dotnet/efcore</a></td></tr>
+                <tr><td>SQLite3 Multiple Ciphers (database encryption at rest; sqlite3mc.dll)</td><td>2.7.1</td><td>MIT</td><td><a href="https://github.com/utelle/SQLite3MultipleCiphers" target="_blank" rel="noopener noreferrer">github.com/utelle/SQLite3MultipleCiphers</a></td></tr>
+                <tr><td>SQLite (engine inside SQLite3 Multiple Ciphers)</td><td>3.x</td><td>Public domain</td><td><a href="https://sqlite.org/copyright.html" target="_blank" rel="noopener noreferrer">sqlite.org/copyright.html</a></td></tr>
+                <tr><td>SQLitePCLRaw</td><td>3.0.2</td><td>Apache-2.0</td><td><a href="https://github.com/ericsink/SQLitePCL.raw" target="_blank" rel="noopener noreferrer">github.com/ericsink/SQLitePCL.raw</a></td></tr>
+                <tr><td>Microsoft.CodeAnalysis (Roslyn), Microsoft.Build, Microsoft.Build.Locator, Microsoft.VisualStudio.SolutionPersistence</td><td>5.9 / 18.9 / 1.11</td><td>MIT</td><td><a href="https://github.com/dotnet/roslyn" target="_blank" rel="noopener noreferrer">github.com/dotnet/roslyn</a></td></tr>
                 <tr><td>Newtonsoft.Json</td><td>13.0.3</td><td>MIT</td><td><a href="https://github.com/JamesNK/Newtonsoft.Json" target="_blank" rel="noopener noreferrer">github.com/JamesNK/Newtonsoft.Json</a></td></tr>
-                <tr><td>System.Text.Json</td><td>10.0.0</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
-                <tr><td>Microsoft.Extensions.* (hosting, DI, logging, HTTP, options)</td><td>8.0.x&ndash;10.0.x</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
+                <tr><td>Swashbuckle.AspNetCore / Microsoft.OpenApi</td><td>6.9.0 / 1.6.14</td><td>MIT</td><td><a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore" target="_blank" rel="noopener noreferrer">github.com/domaindrivendev/Swashbuckle.AspNetCore</a></td></tr>
+                <tr><td>Wikidata-derived entities database (bundled)</td><td>2026 snapshot</td><td>CC0 1.0</td><td><a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noopener noreferrer">www.wikidata.org/wiki/Wikidata:Licensing</a></td></tr>
             </tbody>
         </table>
 
-        <h3>Logging, networking &amp; utilities</h3>
+        <h3>Pablo Desktop &mdash; utilities, documents &amp; cryptography</h3>
         <table>
             <thead>
                 <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
             </thead>
             <tbody>
-                <tr><td>Serilog</td><td>3.1.1</td><td>Apache-2.0</td><td><a href="https://github.com/serilog/serilog" target="_blank" rel="noopener noreferrer">github.com/serilog/serilog</a></td></tr>
                 <tr><td>Polly</td><td>8.2.1</td><td>BSD-3-Clause</td><td><a href="https://github.com/App-vNext/Polly" target="_blank" rel="noopener noreferrer">github.com/App-vNext/Polly</a></td></tr>
                 <tr><td>HtmlAgilityPack</td><td>1.11.71</td><td>MIT</td><td><a href="https://github.com/zzzprojects/html-agility-pack" target="_blank" rel="noopener noreferrer">github.com/zzzprojects/html-agility-pack</a></td></tr>
-                <tr><td>System.ServiceModel.Syndication</td><td>8.0.0</td><td>MIT</td><td><a href="https://github.com/dotnet/wcf" target="_blank" rel="noopener noreferrer">github.com/dotnet/wcf</a></td></tr>
-                <tr><td>Humanizer</td><td>2.14.1</td><td>MIT</td><td><a href="https://github.com/Humanizer/Humanizer" target="_blank" rel="noopener noreferrer">github.com/Humanizer/Humanizer</a></td></tr>
+                <tr><td>Humanizer.Core</td><td>2.14.1</td><td>MIT</td><td><a href="https://github.com/Humanizer/Humanizer" target="_blank" rel="noopener noreferrer">github.com/Humanizer/Humanizer</a></td></tr>
                 <tr><td>CommunityToolkit.HighPerformance</td><td>8.4.0</td><td>MIT</td><td><a href="https://github.com/CommunityToolkit/dotnet" target="_blank" rel="noopener noreferrer">github.com/CommunityToolkit/dotnet</a></td></tr>
-            </tbody>
-        </table>
-
-        <h3>Smart home (local LAN control)</h3>
-        <table>
-            <thead>
-                <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>TuyaNet (vendored)</td><td>1.0.3</td><td>GPL-3.0</td><td><a href="https://github.com/ClusterM/tuyanet" target="_blank" rel="noopener noreferrer">github.com/ClusterM/tuyanet</a></td></tr>
-            </tbody>
-        </table>
-        <div class="notice">
-            <p><strong>TuyaNet (GPL-3.0):</strong> Pablo includes a vendored build of TuyaNet for local Tuya device control. Under GPL-3.0, you may obtain corresponding source code from the upstream project above or by contacting <a href="mailto:PabloOfflineAI@proton.me">PabloOfflineAI@proton.me</a>. Pablo&rsquo;s proprietary application code remains separately licensed under the Terms of Service; only the TuyaNet library portion is GPL-licensed.</p>
-        </div>
-
-        <h3>Document processing</h3>
-        <table>
-            <thead>
-                <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>iText 7 (itext7)</td><td>8.0.5</td><td>AGPL-3.0</td><td><a href="https://github.com/itext/itext7" target="_blank" rel="noopener noreferrer">github.com/itext/itext7</a></td></tr>
-            </tbody>
-        </table>
-        <div class="notice">
-            <p><strong>iText 7 (AGPL-3.0):</strong> Pablo uses iText for PDF text extraction in inbox/document processing. iText is dual-licensed (AGPL-3.0 or commercial). If AGPL terms apply to your use, source for iText is available at the link above. Contact iText Software for a commercial license if you need terms outside AGPL.</p>
-        </div>
-
-        <h3>Security &amp; cryptography</h3>
-        <table>
-            <thead>
-                <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>NSec.Cryptography</td><td>24.4.0</td><td>MIT</td><td><a href="https://github.com/ektrah/nsec.cryptography" target="_blank" rel="noopener noreferrer">github.com/ektrah/nsec.cryptography</a></td></tr>
+                <tr><td>PdfPig (PDF text extraction)</td><td>0.1.16</td><td>Apache-2.0</td><td><a href="https://github.com/UglyToad/PdfPig" target="_blank" rel="noopener noreferrer">github.com/UglyToad/PdfPig</a></td></tr>
+                <tr><td>Jint / Esprima / Acornima (JavaScript parsing)</td><td>4.2.2 / 3.0.5 / 1.1.1</td><td>BSD-2-Clause / BSD-3-Clause</td><td><a href="https://github.com/sebastienros/jint" target="_blank" rel="noopener noreferrer">github.com/sebastienros/jint</a></td></tr>
+                <tr><td>QRCoder</td><td>1.4.3</td><td>MIT</td><td><a href="https://github.com/codebude/QRCoder" target="_blank" rel="noopener noreferrer">github.com/codebude/QRCoder</a></td></tr>
+                <tr><td>NSec.Cryptography</td><td>24.4.0</td><td>MIT</td><td><a href="https://github.com/ektrah/nsec" target="_blank" rel="noopener noreferrer">github.com/ektrah/nsec</a></td></tr>
                 <tr><td>libsodium</td><td>1.0.19</td><td>ISC</td><td><a href="https://github.com/jedisct1/libsodium" target="_blank" rel="noopener noreferrer">github.com/jedisct1/libsodium</a></td></tr>
             </tbody>
         </table>
 
-        <h3>Engineering &amp; developer tools (bundled with Pablo Home Edition)</h3>
+        <h3>Pablo Desktop &mdash; vendor redistributables</h3>
         <table>
             <thead>
                 <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
             </thead>
             <tbody>
-                <tr><td>Roslyn (Microsoft.CodeAnalysis)</td><td>4.11.0</td><td>MIT</td><td><a href="https://github.com/dotnet/roslyn" target="_blank" rel="noopener noreferrer">github.com/dotnet/roslyn</a></td></tr>
-                <tr><td>Microsoft.Build.Locator</td><td>1.7.8</td><td>MIT</td><td><a href="https://github.com/dotnet/msbuildlocator" target="_blank" rel="noopener noreferrer">github.com/dotnet/msbuildlocator</a></td></tr>
-                <tr><td>ripgrep (<code>rg.exe</code>, bundled for code search)</td><td>14.1.0</td><td>MIT OR Apache-2.0</td><td><a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener noreferrer">github.com/BurntSushi/ripgrep</a></td></tr>
+                <tr><td>Microsoft Edge WebView2 SDK (WebView2Loader.dll)</td><td>1.0.2849.39</td><td>Microsoft Software License Terms</td><td><a href="https://www.nuget.org/packages/Microsoft.Web.WebView2/1.0.2849.39/License" target="_blank" rel="noopener noreferrer">www.nuget.org/packages/Microsoft.Web.WebView2/1.0.2849.39/License</a></td></tr>
+                <tr><td>NVIDIA CUDA 12 runtime redistributables (cudart, cublas, cublasLt)</td><td>12.x</td><td>NVIDIA CUDA Toolkit EULA, Attachment A</td><td><a href="https://docs.nvidia.com/cuda/eula/index.html" target="_blank" rel="noopener noreferrer">docs.nvidia.com/cuda/eula/index.html</a></td></tr>
             </tbody>
         </table>
-
-        <h3>Desktop UI (where installed)</h3>
-        <table>
-            <thead>
-                <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>WPF / Windows Forms</td><td>8.0.x</td><td>MIT</td><td><a href="https://github.com/dotnet/wpf" target="_blank" rel="noopener noreferrer">github.com/dotnet/wpf</a></td></tr>
-                <tr><td>Microsoft Edge WebView2</td><td>1.0.x</td><td>Microsoft Software License (redistributable runtime)</td><td><a href="https://developer.microsoft.com/microsoft-edge/webview2/" target="_blank" rel="noopener noreferrer">developer.microsoft.com/microsoft-edge/webview2</a></td></tr>
-                <tr><td>QRCoder</td><td>1.4.3</td><td>MIT</td><td><a href="https://github.com/codebude/QRCoder" target="_blank" rel="noopener noreferrer">github.com/codebude/QRCoder</a></td></tr>
-                <tr><td>System.Drawing.Common</td><td>8.0.0</td><td>MIT</td><td><a href="https://github.com/dotnet/winforms" target="_blank" rel="noopener noreferrer">github.com/dotnet/winforms</a></td></tr>
-                <tr><td>System.Speech (Windows speech recognition / synthesis)</td><td>8.0.0</td><td>MIT</td><td><a href="https://github.com/dotnet/runtime" target="_blank" rel="noopener noreferrer">github.com/dotnet/runtime</a></td></tr>
-            </tbody>
-        </table>
+        <p class="meta">Tuya smart plugs are controlled by Pablo&rsquo;s own implementation of the Tuya local protocol; earlier builds that bundled the GPL-3.0 TuyaNet library and the AGPL-3.0 iText library have been superseded and those components are no longer shipped.</p>
 
         <h3>Pablo Mobile (Android)</h3>
-        <p>Pablo Mobile includes open-source libraries from the Android and Jetpack ecosystems, including:</p>
         <table>
             <thead>
                 <tr><th>Component</th><th>Version</th><th>License</th><th>Source</th></tr>
             </thead>
             <tbody>
-                <tr><td>AndroidX / Jetpack Compose / Material 3</td><td>2024.02 BOM</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
-                <tr><td>Navigation Compose</td><td>2.7.7</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
+                <tr><td>AndroidX / Jetpack Compose / Material 3 (Compose BOM)</td><td>2024.02.00</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
+                <tr><td>Activity Compose, Fragment KTX, Lifecycle, Navigation Compose, WorkManager</td><td>1.9.3 / 1.8.5 / 2.7.0 / 2.7.7 / 2.9.0</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
                 <tr><td>Room</td><td>2.6.1</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
+                <tr><td>DataStore Preferences, Security Crypto</td><td>1.0.0 / 1.1.0-alpha06</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
                 <tr><td>OkHttp</td><td>4.12.0</td><td>Apache-2.0</td><td><a href="https://github.com/square/okhttp" target="_blank" rel="noopener noreferrer">github.com/square/okhttp</a></td></tr>
                 <tr><td>Gson</td><td>2.10.1</td><td>Apache-2.0</td><td><a href="https://github.com/google/gson" target="_blank" rel="noopener noreferrer">github.com/google/gson</a></td></tr>
-                <tr><td>Kotlin Coroutines</td><td>1.7.3</td><td>Apache-2.0</td><td><a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener noreferrer">github.com/Kotlin/kotlinx.coroutines</a></td></tr>
-                <tr><td>DataStore Preferences</td><td>1.0.0</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
-                <tr><td>Security Crypto</td><td>1.1.0-alpha06</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
+                <tr><td>Kotlin standard library and kotlinx.coroutines</td><td>1.7.3</td><td>Apache-2.0</td><td><a href="https://github.com/Kotlin/kotlinx.coroutines" target="_blank" rel="noopener noreferrer">github.com/Kotlin/kotlinx.coroutines</a></td></tr>
                 <tr><td>Coil (image loading)</td><td>2.5.0</td><td>Apache-2.0</td><td><a href="https://github.com/coil-kt/coil" target="_blank" rel="noopener noreferrer">github.com/coil-kt/coil</a></td></tr>
-                <tr><td>CameraX</td><td>1.4.2</td><td>Apache-2.0</td><td><a href="https://github.com/androidx/androidx" target="_blank" rel="noopener noreferrer">github.com/androidx/androidx</a></td></tr>
-                <tr><td>ML Kit Barcode Scanning</td><td>17.3.0</td><td>Google Terms of Service</td><td><a href="https://developers.google.com/ml-kit" target="_blank" rel="noopener noreferrer">developers.google.com/ml-kit</a></td></tr>
-                <tr><td>Google Play Billing Library</td><td>6.2.1</td><td>Google Play Services terms</td><td><a href="https://developer.android.com/google/play/billing" target="_blank" rel="noopener noreferrer">developer.android.com/google/play/billing</a></td></tr>
+                <tr><td>Google Play Billing Library</td><td>8.3.0</td><td>Android Software Development Kit License</td><td><a href="https://developer.android.com/google/play/billing" target="_blank" rel="noopener noreferrer">developer.android.com/google/play/billing</a></td></tr>
             </tbody>
         </table>
-        <p class="meta">Google Play distributes Pablo Mobile; additional transitive open-source notices may appear in the app&rsquo;s Play Store listing or in-device OSS disclosures where required by Google.</p>
-
+        <p class="meta">Apache-2.0 components are used under the Apache License 2.0 (<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener noreferrer">full text</a>). Google Play distributes Pablo Mobile.</p>
         <hr>
 
-        <h2>AI Model Weights (User-Supplied)</h2>
-        <p>AI model weights you add to <strong>Pablo Desktop</strong> are subject to their original licenses. Common examples include:</p>
+        <h2 id="models">Optional AI Models (downloaded by you, not bundled)</h2>
+        <p>Pablo Desktop&rsquo;s model manager can download the models below from Hugging Face. They are not part of Pablo: each is licensed to you directly by its publisher, and downloading one means you accept that license. Pablo Offline AI LLC is not affiliated with or endorsed by these publishers.</p>
+        <table>
+            <thead>
+                <tr><th>Model</th><th>License</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Llama 3.2 3B Instruct, Llama 3.1 8B Instruct</td><td>Llama 3.2 / 3.1 Community License + Acceptable Use Policy</td><td><a href="https://www.llama.com/llama3_2/license/" target="_blank" rel="noopener noreferrer">www.llama.com/llama3_2/license/</a></td></tr>
+                <tr><td>Gemma 2 2B Instruct</td><td>Gemma Terms of Use + Prohibited Use Policy</td><td><a href="https://ai.google.dev/gemma/terms" target="_blank" rel="noopener noreferrer">ai.google.dev/gemma/terms</a></td></tr>
+                <tr><td>Phi-3.5 Mini Instruct</td><td>MIT</td><td><a href="https://huggingface.co/microsoft/Phi-3.5-mini-instruct" target="_blank" rel="noopener noreferrer">huggingface.co/microsoft/Phi-3.5-mini-instruct</a></td></tr>
+                <tr><td>Mistral Nemo 12B Instruct</td><td>Apache-2.0</td><td><a href="https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407" target="_blank" rel="noopener noreferrer">huggingface.co/mistralai/Mistral-Nemo-Instruct-2407</a></td></tr>
+                <tr><td>Qwen 2.5 7B Instruct, Qwen 2.5 Coder 7B Instruct</td><td>Apache-2.0</td><td><a href="https://huggingface.co/Qwen/Qwen2.5-7B-Instruct" target="_blank" rel="noopener noreferrer">huggingface.co/Qwen/Qwen2.5-7B-Instruct</a></td></tr>
+                <tr><td>TinyLlama 1.1B Chat</td><td>Apache-2.0</td><td><a href="https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0" target="_blank" rel="noopener noreferrer">huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v1.0</a></td></tr>
+                <tr><td>Whisper speech-recognition models (ggml)</td><td>MIT</td><td><a href="https://github.com/openai/whisper" target="_blank" rel="noopener noreferrer">github.com/openai/whisper</a></td></tr>
+            </tbody>
+        </table>
+        <div class="notice">
+            <p><strong>Built with Llama.</strong> Llama 3.2 and Llama 3.1 are licensed under the Llama 3.2 / Llama 3.1 Community License, Copyright &copy; Meta Platforms, Inc. All Rights Reserved. Gemma is provided under and subject to the Gemma Terms of Use found at <a href="https://ai.google.dev/gemma/terms" target="_blank" rel="noopener noreferrer">ai.google.dev/gemma/terms</a>.</p>
+        </div>
+        <p>Models you add yourself (any GGUF file) are subject to their own licenses; you are responsible for complying with them. The current Pablo Desktop release does not offer models whose licenses forbid commercial use.</p>
+        <hr>
+
+        <h2>Data and content sources</h2>
         <ul>
-            <li>Llama models: Meta Community License</li>
-            <li>Qwen models: Apache 2.0 / Qwen License</li>
-            <li>Mistral models: Apache 2.0</li>
+            <li>Wikipedia summaries are &copy; Wikipedia contributors, CC BY-SA 4.0 (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">license</a>).</li>
+            <li>MusicBrainz metadata is CC0. Wikidata content is CC0.</li>
+            <li>US weather and tropical storm data from the National Weather Service and National Hurricane Center are public domain.</li>
+            <li>News headlines and links belong to their publishers and open on the publisher&rsquo;s own site.</li>
         </ul>
-        <p>Check individual model documentation for specific terms. Pablo Offline AI LLC does not ship proprietary model weights with the application.</p>
         <hr>
 
-        <h2>Source Code Requests (Copyleft Components)</h2>
-        <p>For GPL- or AGPL-licensed components listed above, corresponding source code is available from the upstream projects linked in the tables. You may also request copies of vendored source used in Pablo builds by emailing <a href="mailto:PabloOfflineAI@proton.me">PabloOfflineAI@proton.me</a>.</p>
+        <h2>Trademarks</h2>
+        <p>Pablo and Pablo Offline AI are trademarks of Pablo Offline AI LLC. Windows, Microsoft Edge and WebView2 are trademarks of Microsoft. Android and Google Play, Google Calendar and Gemma are trademarks of Google LLC. Llama is a trademark of Meta Platforms, Inc. NVIDIA and CUDA are trademarks of NVIDIA Corporation. Spotify is a trademark of Spotify AB. Other names are trademarks of their respective owners. Their use here identifies compatibility only and does not imply endorsement.</p>
+        <hr>
+
+        <h2>Source Code Requests</h2>
+        <p>Pablo does not ship copyleft components. Source for the open-source components above is available from the linked upstream projects. Questions: <a href="mailto:PabloOfflineAI@proton.me">PabloOfflineAI@proton.me</a>.</p>
         <hr>
 
         <h2>Contact</h2>

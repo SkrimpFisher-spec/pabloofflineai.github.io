@@ -7,7 +7,7 @@
     <meta name="description" content="Pablo is AI chat that runs on your computer—not on someone else's servers. Ask questions, get answers, remember context, control smart home, and use a free Android companion. No account. No subscription. Free Windows download; one-time license unlocks the full app.">
     <meta name="keywords" content="offline ai chat, private ai assistant, ai on your computer, windows ai chat, smart home ai, pablo offline ai, no subscription ai, encrypted ai memory">
     <link rel="canonical" href="https://www.pablooffline.com/">
-    <meta name="theme-color" content="#f8fafc">
+    <meta name="theme-color" content="#fbf9f4">
 
     <!-- Open Graph -->
     <meta property="og:title" content="Pablo Offline AI: AI Chat on Your PC">
@@ -18,7 +18,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -27,28 +27,18 @@
         }
 
         :root {
-            --snow: #f8fafc;
-            --frost: #eef2f7;
-            --ice: #e2e8f0;
-            --glass: rgba(255, 255, 255, 0.55);
-            --glass-strong: rgba(255, 255, 255, 0.78);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-outline: rgba(15, 23, 42, 0.06);
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --text-soft: #94a3b8;
-            --accent: #0c8bce;
-            --accent-hover: #0a6fa8;
-            --accent-dim: rgba(12, 139, 206, 0.12);
-            --border: rgba(15, 23, 42, 0.08);
-            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 8px 32px rgba(15, 23, 42, 0.07);
-            --shadow-lg: 0 24px 64px rgba(15, 23, 42, 0.1);
-            --gradient-1: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-            --gradient-2: linear-gradient(135deg, #38bdf8 0%, #0c8bce 100%);
-            --radius: 20px;
-            --radius-sm: 14px;
-            --blur: blur(28px) saturate(160%);
+            --paper: #fbf9f4;
+            --paper-deep: #f3efe5;
+            --ink: #24231f;
+            --ink-soft: #57534a;
+            --ink-faint: #8a857a;
+            --rule: #e2dccf;
+            --blue: #1d5fa6;
+            --blue-dark: #164a82;
+            --highlight: #ffec99;
+            --green: #2f7d4f;
+            --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         html {
@@ -57,552 +47,429 @@
         }
 
         body {
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            color: var(--text);
-            line-height: 1.55;
-            font-weight: 400;
+            font-family: var(--serif);
+            font-size: 1.125rem;
+            line-height: 1.65;
+            color: var(--ink);
+            background: var(--paper);
             overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background:
-                radial-gradient(ellipse 120% 90% at 50% -25%, rgba(186, 230, 253, 0.65) 0%, transparent 58%),
-                radial-gradient(ellipse 70% 50% at 105% 5%, rgba(224, 242, 254, 0.85) 0%, transparent 52%),
-                radial-gradient(ellipse 55% 45% at -5% 55%, rgba(241, 245, 249, 0.95) 0%, transparent 48%),
-                radial-gradient(ellipse 80% 60% at 70% 100%, rgba(226, 232, 240, 0.5) 0%, transparent 50%),
-                linear-gradient(168deg, #f8fafc 0%, #eef2f7 42%, #e8edf3 100%);
-            pointer-events: none;
+        img {
+            max-width: 100%;
+            height: auto;
         }
 
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.35) 0%, transparent 2px),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.25) 0%, transparent 1.5px);
-            background-size: 120px 120px, 180px 180px;
-            opacity: 0.45;
-            pointer-events: none;
+        a {
+            color: var(--blue);
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: var(--blue-dark);
+        }
+
+        .hl {
+            background: linear-gradient(transparent 58%, var(--highlight) 58%);
+            padding: 0 0.1em;
         }
 
         /* Navigation */
         nav {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
             z-index: 1000;
-            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-sm);
+            align-items: baseline;
+            gap: 1.5rem;
+            padding: 0.9rem 5%;
+            background: var(--paper);
+            border-bottom: 1px solid var(--rule);
         }
 
         .logo {
-            font-size: 1.35rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            color: var(--text);
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--ink);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
-        .logo-icon {
-            width: 34px;
-            height: 34px;
-            background: var(--gradient-1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+        .logo span {
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--ink-faint);
+            margin-left: 0.4rem;
+            letter-spacing: 0.02em;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.75rem;
+            gap: 1.5rem;
             list-style: none;
-            align-items: center;
+            flex-wrap: wrap;
         }
 
         .nav-links a {
-            color: var(--text-muted);
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--ink-soft);
             text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: color 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .nav-cta {
-            background: var(--gradient-1);
-            color: #fff !important;
-            padding: 0.55rem 1.35rem;
-            border-radius: 999px;
-            font-weight: 600 !important;
-            box-shadow: 0 4px 16px rgba(14, 165, 233, 0.28);
-        }
-
-        .nav-cta:hover {
-            filter: brightness(1.05);
-            transform: translateY(-1px);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: clamp(6rem, 14vh, 9rem) 5% clamp(4rem, 10vh, 6rem);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: min(100%, 720px);
-            height: 420px;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.85) 0%, rgba(224, 242, 254, 0.35) 45%, transparent 70%);
-            pointer-events: none;
-            filter: blur(2px);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .btn-primary:hover,
-            .btn-secondary:hover,
-            .btn-silver:hover,
-            .screenshot-card:hover,
-            .download-card:hover,
-            .security-card:hover { transform: none; }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            line-height: 1;
-            margin-bottom: clamp(0.85rem, 2vw, 1.15rem);
-            max-width: min(36rem, 92vw);
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-tagline {
-            font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-            font-weight: 500;
-            color: var(--text);
-            letter-spacing: 0.01em;
-            margin-bottom: clamp(1rem, 2.5vw, 1.35rem);
-            max-width: 36rem;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.4;
-        }
-
-        .hero-blurb {
-            font-size: clamp(1.02rem, 2.1vw, 1.12rem);
-            font-weight: 400;
-            color: var(--text-muted);
-            max-width: 36rem;
-            margin: 0 auto clamp(2rem, 5vw, 2.75rem);
-            line-height: 1.65;
-            text-wrap: pretty;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 0.85rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.95rem 1.85rem;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--gradient-1);
-            color: #fff;
-            box-shadow: 0 6px 24px rgba(14, 165, 233, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 36px rgba(14, 165, 233, 0.35);
-        }
-
-        .btn-secondary {
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            color: var(--text);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-secondary:hover {
-            background: #fff;
-            transform: translateY(-2px);
-        }
-
-        /* Primary buy CTA with subtitle */
-        .btn-cta-buy {
-            flex-direction: column;
-            align-items: center;
-            gap: 0.35rem;
-            padding-top: 0.85rem;
-            padding-bottom: 0.85rem;
-        }
-
-        .btn-cta-buy .btn-buy-line {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-cta-buy .btn-buy-sub {
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            opacity: 0.92;
-            line-height: 1.2;
-        }
-
-        /* Metallic silver secondary download buttons */
-        .btn-silver {
-            background: linear-gradient(180deg, #e8e8e8 0%, #c0c0c0 50%, #a8a8a8 100%);
-            color: #333;
-            border: 1px solid #999;
-            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1);
-        }
-
-        .btn-silver:hover {
-            background: linear-gradient(180deg, #f2f2f2 0%, #d4d4d4 50%, #c4c4c4 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
-        }
-
-        .btn-silver .btn-icon {
-            color: #333;
-            flex-shrink: 0;
-        }
-
-        .btn-icon {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Section Styling */
-        section {
-            padding: clamp(5rem, 12vw, 9rem) 5%;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 38rem;
-            margin: 0 auto clamp(3rem, 7vw, 4.5rem);
-        }
-
-        .section-label {
-            text-transform: uppercase;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.22em;
-            color: var(--accent);
-            margin-bottom: 0.85rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 4.5vw, 2.75rem);
-            font-weight: 600;
-            letter-spacing: -0.025em;
-            margin-bottom: 0.85rem;
-            line-height: 1.12;
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            font-weight: 400;
-            line-height: 1.6;
-            text-wrap: pretty;
-        }
-
-        .chip-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-top: 1.25rem;
-        }
-
-        .chip {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            padding: 0.4rem 0.75rem;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid var(--glass-outline);
-            color: var(--text-muted);
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* How It Works */
-        .how-it-works {
-            background: transparent;
-        }
-
-        .architecture {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: clamp(1.25rem, 3vw, 2rem);
-            align-items: stretch;
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0 0.5rem;
-        }
-
-        .component-card {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: clamp(1.75rem, 4vw, 2.25rem);
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .component-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.5), transparent);
-        }
-
-        .component-icon {
-            width: 52px;
-            height: 52px;
-            background: var(--accent-dim);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.15rem;
-        }
-
-        .component-icon svg {
-            width: 26px;
-            height: 26px;
-            color: var(--accent);
-        }
-
-        .component-card h3 {
-            font-size: 1.35rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.35rem;
-        }
-
-        .component-card .platform {
-            color: var(--accent);
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 0.65rem;
-        }
-
-        .component-card .lede {
-            color: var(--text-muted);
-            margin-bottom: 0;
-            font-size: 0.95rem;
-            line-height: 1.55;
-            text-wrap: pretty;
-        }
-
-        .component-card .lede a {
-            color: var(--accent);
-            font-weight: 500;
+            color: var(--ink);
             text-decoration: underline;
         }
 
-        .component-card .lede a:hover {
-            color: var(--accent-hover);
+        .nav-links a.nav-download {
+            color: var(--blue);
+            font-weight: 600;
+            text-decoration: underline;
         }
 
-        .component-features {
-            list-style: none;
+        /* Page layout */
+        .wrap {
+            max-width: 46rem;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        .component-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-            color: var(--text-muted);
+        .wrap-wide {
+            max-width: 62rem;
+        }
+
+        section {
+            padding: clamp(3.5rem, 8vw, 5.5rem) 0;
+            border-top: 1px solid var(--rule);
+            scroll-margin-top: 3.25rem;
+        }
+
+        .label {
+            font-family: var(--sans);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 0.6rem;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 0.35rem;
+        }
+
+        p + p {
+            margin-top: 1rem;
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: var(--ink-soft);
+        }
+
+        .muted {
+            color: var(--ink-soft);
+        }
+
+        .footnote {
             font-size: 0.9rem;
+            font-style: italic;
+            color: var(--ink-faint);
+            margin-top: 0.4rem;
         }
 
-        .component-features li svg {
-            width: 18px;
-            height: 18px;
-            color: var(--accent);
-            flex-shrink: 0;
+        /* Hero */
+        .hero {
+            border-top: none;
+            padding-top: clamp(3.5rem, 10vw, 6rem);
         }
 
-        .connection-line {
+        .hero h1 {
+            font-size: clamp(3rem, 9vw, 4.75rem);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: clamp(1.2rem, 2.6vw, 1.45rem);
+            font-style: italic;
+            color: var(--ink-soft);
+            margin-bottom: 1.75rem;
+        }
+
+        /* Actions */
+        .actions {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             align-items: center;
+            gap: 1rem 2rem;
+            margin-top: 2.25rem;
+        }
+
+        .actions.center {
             justify-content: center;
-            gap: 0.75rem;
-            min-width: 48px;
         }
 
-        .connection-line .line {
-            width: 2px;
-            flex: 1;
-            min-height: 48px;
-            max-height: 100px;
-            background: linear-gradient(to bottom, transparent, rgba(14, 165, 233, 0.35), transparent);
-            border-radius: 2px;
+        .btn-buy {
+            display: inline-block;
+            font-family: var(--sans);
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background: var(--blue);
+            padding: 0.8rem 1.4rem;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+            line-height: 1.35;
         }
 
-        .connection-line .icon {
-            width: 44px;
-            height: 44px;
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-sm);
+        .btn-buy:hover {
+            color: #fff;
+            background: var(--blue-dark);
         }
 
-        .connection-line svg {
-            width: 20px;
-            height: 20px;
-            color: var(--accent);
+        .btn-buy small {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .text-link {
+            font-family: var(--sans);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--blue);
+            text-decoration: underline;
+        }
+
+        /* How it works */
+        .steps {
+            list-style: none;
+            counter-reset: step;
+            margin: 2.25rem 0 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 2.75rem;
+        }
+
+        .steps li + li {
+            margin-top: 1.5rem;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: -0.15rem;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--blue);
+        }
+
+        .steps h3 {
+            margin-bottom: 0.2rem;
+        }
+
+        .steps p {
+            color: var(--ink-soft);
+        }
+
+        .runs-on {
+            margin: 3rem 0 0;
+        }
+
+        .runs-on-root {
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .runs-on-root small {
+            display: block;
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--ink-soft);
+        }
+
+        .tree {
+            list-style: none;
+            margin: 0.75rem 0 0 0.6rem;
+        }
+
+        .tree li {
+            position: relative;
+            padding: 0.6rem 0 0.6rem 2rem;
+        }
+
+        .tree li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            border-left: 1.5px solid var(--ink-faint);
+        }
+
+        .tree li:last-child::before {
+            bottom: auto;
+            height: 1.55rem;
+        }
+
+        .tree li::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.55rem;
+            width: 1.4rem;
+            border-top: 1.5px solid var(--ink-faint);
+        }
+
+        .tree strong {
+            display: block;
+        }
+
+        .tree p {
+            color: var(--ink-soft);
+        }
+
+        .why {
+            margin-top: 3rem;
+        }
+
+        /* Text columns (features, security, about) */
+        .columns {
+            columns: 2 20rem;
+            column-gap: 3.5rem;
+            margin-top: 2.25rem;
+        }
+
+        .item {
+            break-inside: avoid;
+            margin-bottom: 1.9rem;
+        }
+
+        .item p {
+            color: var(--ink-soft);
+            font-size: 1.05rem;
+        }
+
+        .say {
+            font-style: italic;
+            color: var(--ink-soft);
+            margin-top: 0.5rem;
+            font-size: 1.02rem;
+        }
+
+        /* Comparison */
+        table.compare {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            font-size: 1.05rem;
+        }
+
+        table.compare th,
+        table.compare td {
+            padding: 0.7rem 0.5rem;
+            border-bottom: 1px solid var(--rule);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        table.compare th {
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            border-bottom: 1.5px solid var(--ink-faint);
+        }
+
+        table.compare th:first-child,
+        table.compare td:first-child {
+            padding-left: 0;
+        }
+
+        table.compare th:not(:first-child),
+        table.compare td:not(:first-child) {
+            text-align: center;
+            width: 8.5rem;
+        }
+
+        table.compare td.yes {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        table.compare td.no {
+            color: var(--ink-faint);
         }
 
         /* Screenshots */
-        .screenshots {
-            background: transparent;
-        }
-
-        .screenshot-grid {
+        .shots {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: clamp(1.25rem, 3vw, 1.75rem);
-            max-width: 1180px;
-            margin: 0 auto;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 2.5rem;
+            margin-top: 2.25rem;
         }
 
-        .screenshot-card {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: transform 0.35s ease, box-shadow 0.35s ease;
-            box-shadow: var(--shadow-md);
-        }
-
-        .screenshot-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .screenshot-placeholder {
-            aspect-ratio: 16/10;
-            background: linear-gradient(145deg, rgba(224, 242, 254, 0.5) 0%, rgba(241, 245, 249, 0.9) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            border-bottom: 1px solid var(--glass-outline);
-            overflow: hidden;
-        }
-        .screenshot-placeholder img {
+        .shots figure img {
+            display: block;
             width: 100%;
-            height: 100%;
+            aspect-ratio: 16 / 10;
             object-fit: cover;
             object-position: top center;
-            display: block;
+            border: 1px solid var(--rule);
+        }
+
+        .shots figcaption {
+            margin-top: 0.65rem;
+            font-size: 1rem;
+            color: var(--ink-soft);
+        }
+
+        .shots figcaption strong {
+            color: var(--ink);
         }
 
         a.screenshot-fullsize-link {
             display: block;
-            text-decoration: none;
-            color: inherit;
-            border-bottom: 1px solid var(--border);
             cursor: zoom-in;
         }
+
         a.screenshot-fullsize-link:focus {
             outline: none;
         }
+
         a.screenshot-fullsize-link:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-        a.screenshot-fullsize-link:hover .screenshot-placeholder img {
-            opacity: 0.92;
-        }
-        a.screenshot-fullsize-link .screenshot-placeholder {
-            border-bottom: none;
+            outline: 2px solid var(--blue);
+            outline-offset: 3px;
         }
 
-        /* Screenshot lightbox overlay */
         .screenshot-lightbox {
             position: fixed;
             inset: 0;
@@ -611,854 +478,218 @@
             align-items: center;
             justify-content: center;
             padding: 3.5rem 1.25rem 1.25rem;
-            background: rgba(248, 250, 252, 0.72);
-            backdrop-filter: blur(16px) saturate(140%);
-            -webkit-backdrop-filter: blur(16px) saturate(140%);
+            background: rgba(251, 249, 244, 0.96);
             cursor: pointer;
-            box-sizing: border-box;
         }
+
         .screenshot-lightbox[hidden] {
             display: none !important;
         }
+
         .screenshot-lightbox-close {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 2.75rem;
-            height: 2.75rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            color: var(--text);
-            font-size: 1.65rem;
+            top: 0.75rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            font-family: var(--sans);
+            font-size: 2.25rem;
             line-height: 1;
+            color: var(--ink);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             z-index: 10002;
-            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow-md);
         }
-        .screenshot-lightbox-close:hover {
-            background: #fff;
-            border-color: rgba(14, 165, 233, 0.35);
-        }
-        .screenshot-lightbox-close:focus {
-            outline: none;
-        }
+
         .screenshot-lightbox-close:focus-visible {
-            outline: 2px solid var(--accent);
+            outline: 2px solid var(--blue);
             outline-offset: 2px;
         }
+
         .screenshot-lightbox-inner {
-            position: relative;
             max-width: min(92vw, 1600px);
             max-height: 88vh;
             cursor: default;
         }
+
         .screenshot-lightbox-inner img {
+            display: block;
             max-width: 92vw;
             max-height: 88vh;
             width: auto;
             height: auto;
-            object-fit: contain;
-            display: block;
             margin: 0 auto;
-            border-radius: var(--radius-sm);
-            box-shadow: 0 32px 80px rgba(15, 23, 42, 0.18);
-            border: 1px solid var(--glass-border);
+            object-fit: contain;
+            border: 1px solid var(--rule);
         }
 
-        .screenshot-card-content {
-            padding: 1.5rem;
+        /* Call to action */
+        .cta {
+            text-align: center;
         }
 
-        .screenshot-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+        .cta p {
+            color: var(--ink-soft);
         }
 
-        .screenshot-card p {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            line-height: 1.5;
+        /* FAQ */
+        .faq details {
+            border-bottom: 1px solid var(--rule);
+            padding: 1rem 0;
         }
 
-        #faq details summary::-webkit-details-marker {
+        .faq details:first-of-type {
+            border-top: 1px solid var(--rule);
+            margin-top: 1.5rem;
+        }
+
+        .faq summary {
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none;
+        }
+
+        .faq summary::-webkit-details-marker {
             display: none;
         }
 
-        /* Feature showcase (deep capabilities) */
-        .feature-showcase {
-            background: transparent;
+        .faq summary::before {
+            content: '+';
+            display: inline-block;
+            width: 1.4rem;
+            font-family: var(--sans);
+            color: var(--blue);
         }
 
-        .command-examples {
-            font-family: ui-monospace, "Cascadia Mono", "Consolas", monospace;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 0.85rem;
-            line-height: 1.7;
-            border-left: 2px solid rgba(14, 165, 233, 0.35);
-            padding-left: 0.85rem;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
+        .faq details[open] summary::before {
+            content: '\2013';
         }
 
-        .model-source-icon img {
-            width: 38px;
-            height: 38px;
-            display: block;
-            object-fit: contain;
+        .faq details p {
+            color: var(--ink-soft);
+            margin: 0.5rem 0 0 1.4rem;
+            font-size: 1.05rem;
         }
 
-        .models-ecosystem-note {
-            margin-top: 1.75rem;
-            font-size: 0.72rem;
-            color: var(--text-soft);
-            line-height: 1.45;
-            max-width: 32rem;
-            margin-left: auto;
-            margin-right: auto;
+        /* About */
+        .about h3 {
+            margin-top: 2.25rem;
+            margin-bottom: 0.6rem;
         }
 
-        .models-ecosystem-note a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 500;
+        .about .columns h3 {
+            margin-top: 0;
+            margin-bottom: 0.35rem;
         }
 
-        .models-ecosystem-note a:hover {
-            text-decoration: underline;
+        .about p {
+            color: var(--ink-soft);
         }
 
-        /* Product tour carousel (feature highlights) */
-        .product-tour {
-            max-width: 920px;
-            margin: 0 auto clamp(2.5rem, 6vw, 3.5rem);
-            padding: 0 0.5rem;
-        }
-
-        .product-tour-inner {
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .product-tour-viewport {
-            overflow: hidden;
-            position: relative;
-        }
-
-        .product-tour-track {
-            display: flex;
-            transition: transform 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
-            will-change: transform;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .product-tour-track {
-                transition: none;
-            }
-        }
-
-        .product-tour-slide {
-            flex: 0 0 100%;
-            min-width: 0;
-            padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.35rem, 4vw, 2.5rem);
-            box-sizing: border-box;
-        }
-
-        .product-tour-kicker {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 0.75rem;
-        }
-
-        .product-tour-slide h3 {
-            font-size: clamp(1.45rem, 3.2vw, 1.85rem);
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 0.85rem;
-            max-width: 32rem;
-        }
-
-        .product-tour-slide p {
-            color: var(--text-muted);
-            font-size: clamp(0.95rem, 1.8vw, 1.05rem);
-            line-height: 1.65;
-            max-width: 38rem;
-            text-wrap: pretty;
-        }
-
-        .product-tour-footnote {
-            margin-top: 1rem;
-            font-size: 0.72rem;
-            color: var(--text-soft);
-            line-height: 1.45;
-            max-width: 36rem;
-        }
-
-        .product-tour-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 0.85rem 1rem 1.15rem;
-            border-top: 1px solid var(--glass-outline);
-            background: rgba(255, 255, 255, 0.35);
-        }
-
-        .product-tour-nav {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--glass-border);
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text);
-            box-shadow: var(--shadow-sm);
-            transition: background 0.2s, border-color 0.2s, transform 0.2s;
-        }
-
-        .product-tour-nav:hover:not(:disabled) {
-            background: #fff;
-            border-color: rgba(14, 165, 233, 0.35);
-        }
-
-        .product-tour-nav:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-        }
-
-        .product-tour-nav svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .product-tour-dots {
-            display: flex;
-            gap: 0.45rem;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: min(100%, 14rem);
-        }
-
-        .product-tour-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            border: none;
-            padding: 0;
-            background: var(--ice);
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-        }
-
-        .product-tour-dot[aria-current="true"] {
-            background: var(--accent);
-            transform: scale(1.15);
-        }
-
-        .product-tour-dot:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        .product-tour-hint {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-soft);
-            padding: 0 1rem 1rem;
-            margin: 0;
-        }
-
-        /* Security Section */
-        .security {
-            background: transparent;
-        }
-
-        .security-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: clamp(1rem, 2.5vw, 1.35rem);
-            max-width: 1180px;
-            margin: 0 auto;
-        }
-
-        .security-card {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: 1.5rem 1.35rem;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .security-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .security-card svg {
-            width: 36px;
-            height: 36px;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .security-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.5rem;
-        }
-
-        .security-card p {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            line-height: 1.55;
-        }
-
-        /* Comparison */
-        .comparison {
-            background: transparent;
-        }
-
-        .comparison-table {
-            max-width: 880px;
-            margin: 0 auto;
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-radius: var(--radius);
-            border: 1px solid var(--glass-border);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .comparison-header {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            background: rgba(224, 242, 254, 0.55);
-            border-bottom: 1px solid var(--glass-outline);
-        }
-
-        .comparison-header > div {
-            padding: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            color: var(--text);
-            font-size: 0.9rem;
-        }
-
-        .comparison-header > div:first-child {
-            text-align: left;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .comparison-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            border-bottom: 1px solid var(--glass-outline);
-        }
-
-        .comparison-row:last-child {
-            border-bottom: none;
-        }
-
-        .comparison-row > div {
-            padding: 1.1rem 1.35rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .comparison-row > div:first-child {
-            justify-content: flex-start;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .check {
-            width: 26px;
-            height: 26px;
-            background: rgba(14, 165, 233, 0.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .check svg {
-            width: 14px;
-            height: 14px;
-            color: var(--accent);
-        }
-
-        .cross {
-            width: 26px;
-            height: 26px;
-            background: rgba(225, 29, 72, 0.08);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cross svg {
-            width: 14px;
-            height: 14px;
-            color: #e11d48;
-        }
-
-        /* Models Section */
-        .models {
-            background: transparent;
-        }
-
-        .models-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .models-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: clamp(1rem, 3vw, 1.5rem);
-            margin-bottom: clamp(2rem, 5vw, 2.75rem);
-            text-align: left;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .models-split-card {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: 1.35rem 1.25rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .models-split-card h4 {
-            color: var(--accent);
-            margin-bottom: 0.45rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .models-split-card p {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            line-height: 1.5;
-        }
-
-        .model-sources {
-            display: flex;
-            justify-content: center;
-            gap: clamp(1.5rem, 4vw, 2.5rem);
-            margin-top: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .model-source {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.65rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        a.model-source:hover {
-            transform: translateY(-3px);
-            opacity: 0.92;
-        }
-
-        .model-source-icon {
-            width: 64px;
-            height: 64px;
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .model-source span {
-            color: var(--text-muted);
-            font-size: 0.8125rem;
-            font-weight: 500;
-        }
-
-        .model-count {
-            font-size: clamp(2.5rem, 6vw, 3.25rem);
-            font-weight: 600;
-            letter-spacing: -0.03em;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 2rem 0 0.35rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: transparent;
-            text-align: center;
-            padding: clamp(5rem, 14vw, 9rem) 5%;
-        }
-
-        .cta-panel {
-            max-width: 40rem;
-            margin: 0 auto;
-            padding: clamp(2.5rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 2.5rem);
-            background: var(--glass-strong);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .cta-section h2 {
-            font-size: clamp(1.75rem, 4vw, 2.35rem);
-            font-weight: 600;
-            letter-spacing: -0.025em;
-            margin-bottom: 0.85rem;
-        }
-
-        .cta-section p {
-            color: var(--text-muted);
-            font-size: 1.02rem;
-            max-width: 28rem;
-            margin: 0 auto 1.75rem;
-            line-height: 1.55;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        .signoff {
+            margin-top: 2rem;
+            font-style: italic;
         }
 
         /* Footer */
         footer {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-top: 1px solid var(--glass-border);
-            padding: clamp(3rem, 8vw, 4rem) 5% 2rem;
+            border-top: 1px solid var(--rule);
+            padding: 3rem 0 2.5rem;
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--ink-soft);
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
+            gap: 2.5rem;
         }
 
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-            max-width: 300px;
+        .footer-grid p {
+            margin-top: 0.75rem;
+            max-width: 20rem;
         }
 
-        .footer-links h5 {
-            font-size: 0.9rem;
+        footer h5 {
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            color: var(--text);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
             margin-bottom: 0.75rem;
         }
 
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
+        footer ul {
+            list-style: none;
         }
 
-        .footer-links a:hover {
-            color: var(--accent-hover);
+        footer li + li {
+            margin-top: 0.45rem;
+        }
+
+        footer a {
+            color: var(--ink-soft);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--blue);
+            text-decoration: underline;
         }
 
         .footer-bottom {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
-        }
-
-        .footer-bottom p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        /* Images */
-        img {
-            max-width: 100%;
-            height: auto;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--rule);
         }
 
         .footer-legal {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
-        .footer-legal a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s;
-        }
-
-        .footer-legal a:hover {
-            color: var(--accent);
-        }
-
-        /* FAQ */
-        .faq-section {
-            max-width: 40rem;
-            margin: 0 auto;
-            padding: clamp(3rem, 8vw, 4.5rem) 1.5rem;
-        }
-
-        .faq-section h2 {
-            font-size: clamp(1.65rem, 3.5vw, 2rem);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-        }
-
-        .faq-section details {
-            border-bottom: 1px solid var(--glass-outline);
-            padding: 1.1rem 0;
-        }
-
-        .faq-section summary {
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text);
-            list-style: none;
-            letter-spacing: -0.01em;
-        }
-
-        .faq-section details p {
-            color: var(--text-muted);
-            margin-top: 0.65rem;
-            line-height: 1.6;
-            font-size: 0.92rem;
-        }
-
-        /* About Pablo Offline */
-        .about-section {
-            padding: clamp(4rem, 10vw, 6.5rem) 5%;
-            background: transparent;
-        }
-
-        .about-inner {
-            max-width: 52rem;
-            margin: 0 auto;
-        }
-
-        .about-prose {
-            color: var(--text-muted);
-            font-size: 1.02rem;
-            line-height: 1.65;
-            text-wrap: pretty;
-        }
-
-        .about-prose p + p {
-            margin-top: 1.15rem;
-        }
-
-        .about-prose strong {
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .about-pillars {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: clamp(1rem, 2.5vw, 1.35rem);
-            margin: clamp(2.25rem, 5vw, 3rem) 0;
-        }
-
-        .about-pillar {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius-sm);
-            padding: clamp(1.35rem, 3vw, 1.65rem);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .about-pillar h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.55rem;
-            color: var(--text);
-        }
-
-        .about-pillar p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-
-        .about-closing {
-            background: var(--glass);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: clamp(1.5rem, 4vw, 2rem);
-            box-shadow: var(--shadow-md);
-        }
-
-        .about-closing p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .about-closing p + p {
-            margin-top: 0.85rem;
-        }
-
-        .about-community {
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(255, 255, 255, 0.55) 100%);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border: 1px solid rgba(14, 165, 233, 0.18);
-            border-radius: var(--radius);
-            padding: clamp(1.5rem, 4vw, 2.25rem);
-            margin: clamp(2rem, 5vw, 2.75rem) 0;
-            box-shadow: var(--shadow-md);
-        }
-
-        .about-community h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.85rem;
-            color: var(--text);
-        }
-
-        .about-community p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .about-community p + p {
-            margin-top: 0.85rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .architecture {
-                grid-template-columns: 1fr;
-            }
-
-            .connection-line {
-                flex-direction: row;
-                padding: 1rem 0;
-            }
-
-            .connection-line .line {
-                width: 80px;
-                height: 2px;
-                background: linear-gradient(to right, transparent, var(--accent), transparent);
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .nav-links {
+        @media (max-width: 1100px) {
+            .nav-links li {
                 display: none;
+            }
+
+            .nav-links li.keep {
+                display: list-item;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 600px) {
-            .about-pillars {
+            body {
+                font-size: 1.06rem;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .footer-grid,
+            .shots {
                 grid-template-columns: 1fr;
             }
 
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .comparison-header,
-            .comparison-row {
-                grid-template-columns: 1.5fr 1fr 1fr;
-            }
-
-            .comparison-row > div {
-                padding: 1rem;
-                font-size: 0.85rem;
-            }
-
-            .models-split {
-                grid-template-columns: 1fr;
+            table.compare th:not(:first-child),
+            table.compare td:not(:first-child) {
+                width: 5.5rem;
             }
         }
     </style>
@@ -1466,726 +697,416 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="#" class="logo">
-            <div class="logo-icon">P</div>
-            Pablo
-        </a>
+        <a href="#" class="logo">Pablo<span>Offline AI</span></a>
         <ul class="nav-links">
-            <li><a href="#how-it-works">How It Works</a></li>
+            <li class="keep"><a href="#how-it-works">How It Works</a></li>
             <li><a href="#features">Features</a></li>
             <li><a href="#security">Security</a></li>
             <li><a href="#screenshots">Screenshots</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="buy.html">Buy License</a></li>
-            <li><a href="downloadpage.html" class="nav-cta">Download</a></li>
+            <li class="keep"><a href="buy.html">Buy License</a></li>
+            <li class="keep"><a href="downloadpage.html" class="nav-download">Download</a></li>
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <main>
+    <!-- Hero -->
     <section class="hero">
-        <h1>PABLO</h1>
-        <p class="hero-tagline">Personal Assistant but Local Offline</p>
-        <p class="hero-blurb">Pablo is a personal assistant on your Windows PC. Ask questions, give commands, get recipes, process documents as large as textbooks, run briefings, and control smart home gear. Your conversations and memories stay on your machine and build over time. You own every file. One-time license.<br>Once Pablo is running at home, every other endpoint can stay lightweight. Android apps, widgets, and smart home devices do not need AI built into them. Pablo on your PC is the brain that powers them.</p>
-        <div class="hero-ctas">
-            <a href="buy.html" class="btn btn-primary btn-cta-buy">
-                <span class="btn-buy-line">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
-                    </svg>
-                    Buy Pablo Desktop License ($14.99)
-                </span>
-                <span class="btn-buy-sub">One-time. Never expires.</span>
-            </a>
-            <a href="downloadpage.html" class="btn btn-silver">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                </svg>
-                Download for Windows
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-silver" target="_blank" rel="noopener noreferrer">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                </svg>
-                Download for Android
-            </a>
+        <div class="wrap">
+            <h1>Pablo</h1>
+            <p class="tagline">Personal Assistant but Local Offline</p>
+            <p class="lead">Pablo is a personal assistant that lives on your Windows PC. Ask questions, give commands, get recipes, read documents as large as textbooks, run a morning briefing, and switch off the lights. Your conversations and memories stay on your machine and build over time. You own every file, and you pay once.</p>
+            <p class="lead">And because Pablo lives on your PC, <span class="hl">lots of other things can run on Pablo</span>: your phone, your home-screen widgets, your smart lights. None of them need AI of their own. They just ask the Pablo at home. <a href="#how-it-works">Here is how that works.</a></p>
+            <div class="actions">
+                <a href="buy.html" class="btn-buy">Buy Pablo Desktop License ($14.99)<small>One-time. Never expires.</small></a>
+                <a href="downloadpage.html" class="text-link">Download for Windows &rarr;</a>
+                <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="text-link" target="_blank" rel="noopener noreferrer">Get the Android app &rarr;</a>
+            </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="section-header">
-            <p class="section-label">How It Works</p>
-            <h2 class="section-title">Your PC does the thinking</h2>
-            <p class="section-subtitle">
-                <strong>Pablo Desktop</strong> is the app on Windows. You chat, it answers using AI models that run on your hardware, not in a data center. It also remembers what you tell it, processes documents as large as textbooks, pulls your weather and calendar, and can control smart-home gear. You pick which AI models to use (Llama, Mistral, Qwen, and more).<br><br>
-                <strong>Pablo Mobile</strong> (free on Google Play) is the Android app: chat, home-screen widgets, and briefings on your phone—powered by the Pablo running on your PC. Use it at home or away. Your phone is not a second AI in the cloud; it is your pocket window into the one on your desk.
-            </p>
+    <section id="how-it-works">
+        <div class="wrap">
+            <p class="label">How it works</p>
+            <h2>Pablo runs on your PC.<br>Everything else runs on Pablo.</h2>
+            <p class="lead">Most AI lives in a company's data center, and every app or gadget that wants to be &ldquo;smart&rdquo; has to call out to it. Pablo turns that around. The thinking happens on the computer you already own, and everything else in your life can lean on it.</p>
+
+            <ol class="steps">
+                <li>
+                    <h3>You install Pablo on your PC.</h3>
+                    <p>That is where the real work happens: the AI, your memories, your documents, and your settings. Nothing is sent to a company server.</p>
+                </li>
+                <li>
+                    <h3>Pablo stays ready at home.</h3>
+                    <p>While your PC is on and Pablo is running, it is there for you and for anything you connect to it, whether you are at your desk, on the couch, or out running errands.</p>
+                </li>
+                <li>
+                    <h3>Other things run on Pablo.</h3>
+                    <p>Your phone, your widgets, and your lights do not need AI built into them. They ask the Pablo on your PC, so they all share the same memory and the same smarts.</p>
+                </li>
+            </ol>
+
+            <div class="runs-on">
+                <p class="runs-on-root"><span class="hl">Your PC, running Pablo</span><small>does the thinking and keeps your memories. From there, it powers:</small></p>
+                <ul class="tree">
+                    <li>
+                        <strong>Pablo Mobile, the free Android app</strong>
+                        <p>Chat with your Pablo from your phone, at home or away. Your phone is not a second AI in the cloud. It is a window into the one on your desk.</p>
+                    </li>
+                    <li>
+                        <strong>Home-screen widgets</strong>
+                        <p>Weather, calendar, news, and quick commands on your Android home screen. Glance down and you are caught up.</p>
+                    </li>
+                    <li>
+                        <strong>Daily briefings</strong>
+                        <p>Weather, news from sources you pick, and your upcoming calendar, put together by Pablo and ready on your desktop and your phone.</p>
+                    </li>
+                    <li>
+                        <strong>Smart lights and plugs</strong>
+                        <p>Say &ldquo;turn off the living room lights&rdquo; and it happens on your home network. TP-Link Kasa today, with more brands on the way.</p>
+                    </li>
+                    <li>
+                        <strong>More on the way</strong>
+                        <p>We are building more things that run on Pablo. When they arrive, they will connect to the Pablo you already have.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="why">
+                <h3>Why this matters</h3>
+                <p class="muted">Because the hard work happens once, on your PC, everything else gets to stay simple and private. The phone app is small. Your lights do not report to a cloud voice assistant. And you pay once for Pablo Desktop instead of paying every month, for every gadget.</p>
+                <p class="muted">Pablo Desktop is a free download and a one-time <strong>$14.99</strong> license. Pablo Mobile is free on Google Play. <a href="buy.html">Buy your license here.</a></p>
+            </div>
         </div>
+    </section>
 
-        <div class="architecture">
-            <div class="component-card">
-                <div class="component-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                        <line x1="8" y1="21" x2="16" y2="21"/>
-                        <line x1="12" y1="17" x2="12" y2="21"/>
-                    </svg>
-                </div>
-                <h3>Pablo Desktop</h3>
-                <p class="platform">Windows</p>
-                <p class="lede">Pablo Desktop is AI chat and more, sized to your computer. Pick the AI models you want, use different strengths for coding, photos, writing, and wellness, and keep your memories, documents, fact-checking library, and smart-home control in one private app. Requires a one-time $14.99 license. Download is free. Buy your license at <a href="https://www.pablooffline.com/buy.html">pablooffline.com/buy.html</a>.</p>
-                <div class="chip-row" aria-label="Desktop highlights">
-                    <span class="chip">Your choice of models</span>
-                    <span class="chip">Experts for each task</span>
-                    <span class="chip">Built-in fact library</span>
-                    <span class="chip">Your files, on-device</span>
-                    <span class="chip">Encrypted memory</span>
-                    <span class="chip">Smart home ready</span>
-                    <span class="chip">One-time desktop license</span>
-                </div>
-            </div>
+    <!-- Features -->
+    <section id="features">
+        <div class="wrap wrap-wide">
+            <p class="label">What Pablo can do</p>
+            <h2>One assistant, plenty to do.</h2>
+            <p class="lead">The same privacy promise throughout: your words stay on your computer, not on a company server.</p>
 
-            <div class="connection-line">
-                <div class="line"></div>
-                <div class="icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
+            <div class="columns">
+                <div class="item">
+                    <h3>It remembers the plot.</h3>
+                    <p>Most AI forgets you five minutes later. Pablo remembers what matters, checks facts before guessing, and keeps answers tied to your life, not a generic internet average, no matter which AI model you choose.</p>
                 </div>
-                <div class="line"></div>
-            </div>
-
-            <div class="component-card">
-                <div class="component-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                        <line x1="12" y1="18" x2="12.01" y2="18"/>
-                    </svg>
+                <div class="item">
+                    <h3>Everything in one conversation.</h3>
+                    <p>Calendar, weather, smart home, documents, and briefings can all feed the same chat without dumping your whole life into every reply. Focus on one file, and Pablo keeps the rest out of the way.</p>
                 </div>
-                <h3>Pablo Mobile</h3>
-                <p class="platform">Android &middot; free add-on</p>
-                <p class="lede">Free on Google Play: chat with Pablo from your phone, check weather and news at a glance, and get daily briefings—all from the Pablo already running on your PC. Works at home or when you are out and about.</p>
-                <div class="chip-row" aria-label="Mobile highlights">
-                    <span class="chip">Home-screen widgets</span>
-                    <span class="chip">Daily briefings</span>
-                    <span class="chip">Optional calendar</span>
-                    <span class="chip">Chat from anywhere</span>
-                    <span class="chip">Free app</span>
+                <div class="item">
+                    <h3>Memory you can watch grow.</h3>
+                    <p>Pablo stores what you teach it as connected memories, ideas linked together, so recall feels natural instead of like a keyword search. Your memories are encrypted on your PC, and when you tell Pablo to forget something, it is deleted.</p>
+                    <p class="footnote">We call this structured on-device memory a &ldquo;cortex.&rdquo; It is software architecture, not a claim of sentience.</p>
+                </div>
+                <div class="item">
+                    <h3>The right AI for each job.</h3>
+                    <p>Use one AI for photos, another for code, another for long writing. Pablo works with many AI models, picks the one that fits each question, and respects what your computer can handle.</p>
+                </div>
+                <div class="item">
+                    <h3>A built-in fact library.</h3>
+                    <p>Pablo comes with a library of about two million factual articles and references. When you ask a question, it checks real information first instead of just guessing, with no internet needed.</p>
+                </div>
+                <div class="item">
+                    <h3>Your documents.</h3>
+                    <p>Add files from your computer, even ones as large as textbooks. Search stays on your machine, so you are not uploading sensitive PDFs to a website.</p>
+                </div>
+                <div class="item">
+                    <h3>Briefings that meet you at the door.</h3>
+                    <p>News from sources you care about, weather, and optional calendar context, pulled together on your PC so your phone and desktop stay in step with your day, not an ad-driven feed.</p>
+                </div>
+                <div class="item">
+                    <h3>Smart home, in plain language.</h3>
+                    <p>Turn off the lights, dim the kitchen, or flip a smart plug. It happens on your home network. No cloud voice assistant listening in.</p>
+                    <p class="say">&ldquo;Turn off the living room lights.&rdquo;<br>&ldquo;Dim the kitchen to 40%.&rdquo;<br>&ldquo;Turn on Party Mode.&rdquo;</p>
+                </div>
+                <div class="item">
+                    <h3>It keeps an eye on itself.</h3>
+                    <p>Pablo tracks its own health so it can spot trouble early and recover calmly, more like a helpful co-pilot than a chatbot faking confidence.</p>
+                    <p class="footnote">Inside the app we call this self-monitoring layer &ldquo;consciousness.&rdquo; It is not philosophical AI consciousness.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Deep product features -->
-    <section class="feature-showcase" id="features">
-        <div class="section-header">
-            <p class="section-label">Capabilities</p>
-            <h2 class="section-title">One app. Lots you can do.</h2>
-            <p class="section-subtitle">
-                Same privacy story: your words stay on your computer, not on a company server.
-            </p>
-        </div>
+    <!-- Security -->
+    <section id="security">
+        <div class="wrap wrap-wide">
+            <p class="label">Private by design</p>
+            <h2>Built to stay private.</h2>
+            <p class="lead">Encryption, no spying, and an app that keeps working even if we disappear tomorrow.</p>
 
-        <div class="product-tour" id="product-tour" aria-roledescription="carousel" aria-label="Pablo product highlights">
-            <div class="product-tour-inner">
-                <div class="product-tour-viewport">
-                    <div class="product-tour-track" id="productTourTrack">
-                        <article class="product-tour-slide" aria-label="Slide 1 of 7">
-                            <p class="product-tour-kicker">Why Pablo</p>
-                            <h3>An environment that remembers the plot.</h3>
-                            <p>Most AI forgets you five minutes later. Pablo <strong>remembers what matters</strong>, checks facts before guessing, and keeps answers tied to <em>your</em> life—not a generic internet average—no matter which AI model you choose.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 2 of 7">
-                            <p class="product-tour-kicker">Depth</p>
-                            <h3>Everything in one conversation.</h3>
-                            <p>Calendar, weather, smart home, documents, and briefings can all feed the same chat—without dumping your whole life into every reply. Focus on one file, and Pablo keeps the rest out of the way.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 3 of 7">
-                            <p class="product-tour-kicker">Memory</p>
-                            <h3>A cortex you can watch grow.</h3>
-                            <p>Pablo stores what you teach it as <strong>connected memories</strong>—ideas linked together—so recall feels natural, not random keyword search. On desktop you can watch your memory grow over time.</p>
-                            <p class="product-tour-footnote">&ldquo;Cortex&rdquo; is our name for structured on-device memory; it is software architecture, not a claim of sentience.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 4 of 7">
-                            <p class="product-tour-kicker">Experts</p>
-                            <h3>Different strengths for different jobs.</h3>
-                            <p>Use one AI for photos, another for code, another for long writing—<strong>modes built for the task</strong>, each with the model you want. Pablo picks what fits and respects what your computer can handle.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 5 of 7">
-                            <p class="product-tour-kicker">Day one</p>
-                            <h3>Briefings that meet you at the door.</h3>
-                            <p>News from sources you care about, weather, and optional calendar context, pulled together locally so your phone and desktop stay in sync with <strong>your</strong> day, not an ad-driven feed.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 6 of 7">
-                            <p class="product-tour-kicker">Reliability</p>
-                            <h3>Self-monitoring you can read at a glance.</h3>
-                            <p>Pablo tracks its own health so it can <strong>spot trouble early</strong> and recover calmly—more like a helpful co-pilot than a chatbot faking confidence.</p>
-                            <p class="product-tour-footnote">We use &ldquo;consciousness&rdquo; in-engine for this self-monitoring layer; it is not philosophical AI consciousness.</p>
-                        </article>
-                        <article class="product-tour-slide" aria-label="Slide 7 of 7">
-                            <p class="product-tour-kicker">Ownership</p>
-                            <h3>Your desk. Your models. Your data.</h3>
-                            <p><strong>No subscription.</strong> Encrypted storage for sensitive memories, plus an Android app to chat with your PC from anywhere. Download the Windows installer and unlock with a one-time license—you are done renting your attention to a browser tab.</p>
-                        </article>
-                    </div>
+            <div class="columns">
+                <div class="item">
+                    <h3>Encrypted at rest</h3>
+                    <p>Your conversations, memories, and personal data are encrypted on disk using AES-256 encryption. Even if someone copies your files, they can't read them. The encryption key is tied to your Windows account and can't be used by anyone else.</p>
                 </div>
-                <div class="product-tour-controls">
-                    <button type="button" class="product-tour-nav" id="productTourPrev" aria-label="Previous highlight">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-                    </button>
-                    <div class="product-tour-dots" id="productTourDots" role="tablist" aria-label="Slides"></div>
-                    <button type="button" class="product-tour-nav" id="productTourNext" aria-label="Next highlight">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-                    </button>
+                <div class="item">
+                    <h3>Zero data collection</h3>
+                    <p>No tracking. No analytics. No accounts. We do not run servers that store your chats, which means there is nothing to hack, nothing to subpoena, and nothing to sell. We literally cannot see your data.</p>
                 </div>
-                <p class="product-tour-hint">Click next or use the dots, keyboard arrows work when this card is focused.</p>
-            </div>
-        </div>
-
-        <div class="security-grid">
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                </svg>
-                <h4>Right AI for each job</h4>
-                <p>Pablo works with many AI models. Swap in different ones for coding, creative writing, understanding photos, and more—Pablo picks the right fit for each question.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                    <line x1="8" y1="7" x2="16" y2="7"/>
-                    <line x1="8" y1="11" x2="14" y2="11"/>
-                </svg>
-                <h4>Memory on your machine</h4>
-                <p>Pablo remembers your preferences over time in encrypted on-device memory. When you tell it to forget something, it is deleted.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                </svg>
-                <h4>Knowledge base</h4>
-                <p>Pablo comes with a built-in library of about two million factual articles and references. When you ask a question, it checks real information first instead of just guessing, so you get answers you can actually trust, no internet needed.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                </svg>
-                <h4>Briefings</h4>
-                <p>Get a quick daily rundown of your weather, news from sources you pick, and your upcoming calendar events. All pulled together by Pablo on your desktop.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
-                    <line x1="12" y1="18" x2="12.01" y2="18"/>
-                </svg>
-                <h4>Widgets on your phone</h4>
-                <p>Weather, calendar, news, and quick commands on your Android home screen—pulled from the Pablo on your PC. Glance down and you are caught up.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    <polyline points="9 22 9 12 15 12 15 22"/>
-                </svg>
-                <h4>Smart home at home</h4>
-                <p>Tell Pablo to turn off the lights, dim the kitchen, or flip a smart plug—it happens on your home network. Works with TP-Link Kasa today, with more brands on the way. No cloud voice assistant listening in.</p>
-                <div class="command-examples">
-                    Turn off the living room lights.<br>
-                    Dim the kitchen to 40%.<br>
-                    Turn on Party Mode.
+                <div class="item">
+                    <h3>Yours forever</h3>
+                    <p>Pablo runs on your computer with no dependency on our company. If we shut down tomorrow, your AI keeps working. No license server to go dark, no subscription to expire, no update that bricks your install.</p>
                 </div>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="9" y1="15" x2="15" y2="15"/>
-                </svg>
-                <h4>Your documents</h4>
-                <p>Add files from your computer; search stays on your machine—you are not uploading sensitive PDFs to a website.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="16 18 22 12 16 6"/>
-                    <polyline points="8 6 2 12 8 18"/>
-                </svg>
-                <h4>Android app, anywhere</h4>
-                <p>Chat with Pablo from your phone—at home on the couch or away on the road. The Android app talks to your PC, not to our servers.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Security Section -->
-    <section class="security" id="security">
-        <div class="section-header">
-            <p class="section-label">Security First</p>
-            <h2 class="section-title">Built to stay private</h2>
-            <p class="section-subtitle">
-                Encryption, no spying, and an app that keeps working even if we disappear tomorrow.
-            </p>
-        </div>
-
-        <div class="security-grid">
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <h4>Encrypted at Rest</h4>
-                <p>Your conversations, memories, and personal data are encrypted on disk using military-grade AES-256 encryption. Even if someone copies your files, they can't read them. The encryption key is tied to your Windows account and can't be used by anyone else.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="M9 12l2 2 4-4"/>
-                </svg>
-                <h4>Zero Data Collection</h4>
-                <p>No tracking. No analytics. No accounts. We do not run servers that store your chats, which means there is nothing to hack, nothing to subpoena, and nothing to sell. We literally cannot see your data.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                </svg>
-                <h4>Yours Forever</h4>
-                <p>Pablo runs on your computer with no dependency on our company. If we shut down tomorrow, your AI keeps working. No license server to go dark, no subscription to expire, no update that bricks your install. Once it is yours, you own your access to AI.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
-                </svg>
-                <h4>Verified Downloads</h4>
-                <p>Every AI model and system component Pablo downloads is verified with a cryptographic checksum before it runs. If a file has been tampered with in transit, Pablo rejects it. No backdoors. No compromised binaries.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="3 6 5 6 21 6"/>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                    <line x1="10" y1="11" x2="10" y2="17"/>
-                    <line x1="14" y1="11" x2="14" y2="17"/>
-                </svg>
-                <h4>When You Say Forget, It's Gone</h4>
-                <p>Tell Pablo to forget something and it's permanently erased from your computer, not just hidden. The data is wiped and the freed space is overwritten so it can't be recovered, even with forensic tools. No cloud backup holding onto it. Your delete means delete.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
-                </svg>
-                <h4>Works Without Internet</h4>
-                <p>Once installed, Pablo runs without internet. Chat, memory, and smart home control all work offline. Calendar and weather need a connection to refresh, but the AI itself never requires the cloud.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                    <line x1="18" y1="8" x2="23" y2="8"/>
-                </svg>
-                <h4>No Account Required</h4>
-                <p>No email, no password, no sign-up. Install and use. Pablo Offline AI LLC doesn't know who you are and doesn't need to. There's no user profile on any server because there is no server.</p>
-            </div>
-
-            <div class="security-card">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 6L6 18M6 6l12 12"/>
-                    <circle cx="12" cy="12" r="10"/>
-                </svg>
-                <h4>No Training on Your Data</h4>
-                <p>Your conversations are never uploaded, analyzed, or fed into model training. Unlike cloud AI services that improve their models using what you type, Pablo's AI runs locally and your words stay your words. Nothing you say makes someone else's product better.</p>
+                <div class="item">
+                    <h3>Verified downloads</h3>
+                    <p>Every AI model and system component Pablo downloads is verified with a cryptographic checksum before it runs. If a file has been tampered with in transit, Pablo rejects it.</p>
+                </div>
+                <div class="item">
+                    <h3>When you say forget, it's gone</h3>
+                    <p>Tell Pablo to forget something and it's permanently erased from your computer, not just hidden. The data is wiped and the freed space is overwritten so it can't be recovered, even with forensic tools. No cloud backup holding onto it.</p>
+                </div>
+                <div class="item">
+                    <h3>Works without internet</h3>
+                    <p>Once installed, Pablo runs without internet. Chat, memory, and smart home control all work offline. Calendar and weather need a connection to refresh, but the AI itself never requires the cloud.</p>
+                </div>
+                <div class="item">
+                    <h3>No account required</h3>
+                    <p>No email, no password, no sign-up. Install and use. Pablo Offline AI LLC doesn't know who you are and doesn't need to. There's no user profile on any server because there is no server.</p>
+                </div>
+                <div class="item">
+                    <h3>No training on your data</h3>
+                    <p>Your conversations are never uploaded, analyzed, or fed into model training. Pablo's AI runs locally and your words stay your words. Nothing you say makes someone else's product better.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Comparison -->
-    <section class="comparison">
-        <div class="section-header">
-            <p class="section-label">Compare</p>
-            <h2 class="section-title">Your PC vs. a website</h2>
-            <p class="section-subtitle">
-                Same idea—type and get answers. Different place where it happens.
-            </p>
-        </div>
+    <section>
+        <div class="wrap">
+            <p class="label">Compare</p>
+            <h2>Your PC vs. a website.</h2>
+            <p class="lead">Same idea: you type and get answers. The difference is where it happens.</p>
 
-        <div class="comparison-table">
-            <div class="comparison-header">
-                <div>Feature</div>
-                <div>Pablo</div>
-                <div>Online AI chat</div>
-            </div>
-            <div class="comparison-row">
-                <div>Data stays on your device</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Works without internet</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>No account required</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>No monthly subscription</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Choose your own AI model</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Right AI for coding, photos, wellness, and more</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Pick AI models that fit your computer</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Remembers context and checks facts on your PC</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>No usage limits or throttling</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
-            <div class="comparison-row">
-                <div>Conversations not used for training</div>
-                <div><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-                <div><span class="cross"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></div>
-            </div>
+            <table class="compare">
+                <thead>
+                    <tr><th scope="col"></th><th scope="col">Pablo</th><th scope="col">Online AI chat</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Data stays on your device</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Works without internet</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>No account required</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>No monthly subscription</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Choose your own AI model</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Right AI for coding, photos, wellness, and more</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Pick AI models that fit your computer</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Remembers context and checks facts on your PC</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>No usage limits or throttling</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                    <tr><td>Conversations not used for training</td><td class="yes">Yes</td><td class="no">No</td></tr>
+                </tbody>
+            </table>
         </div>
     </section>
 
-    <!-- Models Section -->
-    <section class="models">
-        <div class="section-header">
-            <p class="section-label">Pick your AI</p>
-            <h2 class="section-title">Your models. Your rules.</h2>
-            <p class="section-subtitle">
-                Pablo is the app; the AI brains are yours. Pick models that fit your computer and swap them anytime.
-            </p>
-        </div>
+    <!-- Models -->
+    <section>
+        <div class="wrap">
+            <p class="label">Pick your AI</p>
+            <h2>Your models. Your rules.</h2>
+            <p class="lead">Pablo is the assistant; the AI models are yours. Pick models that fit your computer and swap them anytime. There are more than <span class="hl">1,000,000 compatible models</span> in public repositories.</p>
 
-        <div class="models-content">
-            <div class="models-split">
-                <div class="models-split-card">
-                    <h4>Guided</h4>
-                    <p>Setup wizard reads your computer and recommends a good starting model. Change any of them later.</p>
+            <div class="columns">
+                <div class="item">
+                    <h3>Guided</h3>
+                    <p>The setup wizard reads your computer and recommends a good starting model. Change it any time later.</p>
                 </div>
-                <div class="models-split-card">
-                    <h4>BYO</h4>
-                    <p>Download compatible AI models from public hubs. Use a code-focused model for programming, a vision model for photos, a fast one for everyday chat.</p>
+                <div class="item">
+                    <h3>Bring your own</h3>
+                    <p>Download compatible AI models from public hubs. Use a code-focused model for programming, a vision model for photos, and a fast one for everyday chat.</p>
                 </div>
             </div>
 
-            <div class="model-count">1,000,000+</div>
-            <p style="color: var(--text-muted); font-size: 1.02rem; font-weight: 500;">compatible models in public repos</p>
-
-            <div class="model-sources">
-                <a class="model-source" href="https://huggingface.co/models" target="_blank" rel="noopener noreferrer">
-                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/huggingface.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
-                    <span>Hugging Face</span>
-                </a>
-                <a class="model-source" href="https://ai.meta.com/llama/" target="_blank" rel="noopener noreferrer">
-                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/meta.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
-                    <span>Meta Llama</span>
-                </a>
-                <a class="model-source" href="https://mistral.ai/" target="_blank" rel="noopener noreferrer">
-                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/mistralai.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
-                    <span>Mistral AI</span>
-                </a>
-                <a class="model-source" href="https://github.com/QwenLM" target="_blank" rel="noopener noreferrer">
-                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/alibabacloud.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
-                    <span>Qwen</span>
-                </a>
-                <a class="model-source" href="https://ai.google.dev/gemma" target="_blank" rel="noopener noreferrer">
-                    <div class="model-source-icon"><img src="https://cdn.jsdelivr.net/npm/simple-icons@16.0.0/icons/google.svg" alt="" width="38" height="38" loading="lazy" decoding="async" aria-hidden="true"></div>
-                    <span>Google Gemma</span>
-                </a>
-            </div>
-            <p class="models-ecosystem-note">Brand icons from <a href="https://github.com/simple-icons/simple-icons" target="_blank" rel="noopener noreferrer">Simple Icons</a> (CC0). Trademarks belong to their owners. Qwen is linked to its open ecosystem; tile uses the Alibaba Cloud mark as the closest standard glyph in the set.</p>
+            <p class="muted">Popular places to find models: <a href="https://huggingface.co/models" target="_blank" rel="noopener noreferrer">Hugging Face</a>, <a href="https://ai.meta.com/llama/" target="_blank" rel="noopener noreferrer">Meta Llama</a>, <a href="https://mistral.ai/" target="_blank" rel="noopener noreferrer">Mistral AI</a>, <a href="https://github.com/QwenLM" target="_blank" rel="noopener noreferrer">Qwen</a>, and <a href="https://ai.google.dev/gemma" target="_blank" rel="noopener noreferrer">Google Gemma</a>. Trademarks belong to their owners.</p>
         </div>
     </section>
 
     <!-- Screenshots -->
-    <section class="screenshots" id="screenshots">
-        <div class="section-header">
-            <p class="section-label">See It In Action</p>
-            <h2 class="section-title">In the apps</h2>
-            <p class="section-subtitle">
-                Click a shot to enlarge. Escape or the backdrop closes it.
-            </p>
-        </div>
+    <section id="screenshots">
+        <div class="wrap wrap-wide">
+            <p class="label">See it in action</p>
+            <h2>In the apps.</h2>
+            <p class="lead">Click a picture to enlarge it. Press Escape or click the background to close it.</p>
 
-        <div class="screenshot-grid">
-            <div class="screenshot-card">
-                <a href="/Intelligent%20Conversation.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Local AI chat">
-                    <div class="screenshot-placeholder">
+            <div class="shots">
+                <figure>
+                    <a href="/Intelligent%20Conversation.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Local AI chat">
                         <img src="/Intelligent%20Conversation.png" alt="Pablo: local AI chat" loading="lazy" decoding="async">
-                    </div>
-                </a>
-                <div class="screenshot-card-content">
-                    <h4>Chat</h4>
-                    <p>Runs on your PC. Nothing sent to a company server.</p>
-                </div>
-            </div>
-
-            <div class="screenshot-card">
-                <a href="/Smart%20Home.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Smart home">
-                    <div class="screenshot-placeholder">
+                    </a>
+                    <figcaption><strong>Chat.</strong> Runs on your PC. Nothing sent to a company server.</figcaption>
+                </figure>
+                <figure>
+                    <a href="/Smart%20Home.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Smart home">
                         <img src="/Smart%20Home.png" alt="Pablo: smart home control" loading="lazy" decoding="async">
-                    </div>
-                </a>
-                <div class="screenshot-card-content">
-                    <h4>Smart home</h4>
-                    <p>Kasa today. Say it in plain language—it stays in your home.</p>
-                </div>
-            </div>
-
-            <div class="screenshot-card">
-                <a href="/Mobile%20App.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Pablo Mobile">
-                    <div class="screenshot-placeholder">
+                    </a>
+                    <figcaption><strong>Smart home.</strong> Kasa today. Say it in plain language and it stays in your home.</figcaption>
+                </figure>
+                <figure>
+                    <a href="/Mobile%20App.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Pablo Mobile">
                         <img src="/Mobile%20App.png" alt="Pablo Mobile app" loading="lazy" decoding="async">
-                    </div>
-                </a>
-                <div class="screenshot-card-content">
-                    <h4>Mobile</h4>
-                    <p>Chat, briefings, and widgets on your phone—powered by the Pablo on your PC, at home or away.</p>
-                </div>
-            </div>
-
-            <div class="screenshot-card">
-                <a href="/Document%20Manager.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Document manager">
-                    <div class="screenshot-placeholder">
+                    </a>
+                    <figcaption><strong>Mobile.</strong> Chat, briefings, and widgets on your phone, powered by the Pablo on your PC.</figcaption>
+                </figure>
+                <figure>
+                    <a href="/Document%20Manager.png" class="screenshot-fullsize-link" aria-label="Enlarge screenshot: Document manager">
                         <img src="/Document%20Manager.png" alt="Pablo: document manager" loading="lazy" decoding="async">
-                    </div>
-                </a>
-                <div class="screenshot-card-content">
-                    <h4>Documents</h4>
-                    <p>Search your files on your computer—no upload to a website.</p>
-                </div>
+                    </a>
+                    <figcaption><strong>Documents.</strong> Search your files on your computer, with no upload to a website.</figcaption>
+                </figure>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="download">
-        <div class="cta-panel">
-        <h2>Start on your PC</h2>
-        <p>Download Pablo Desktop v1.0.127 for free, buy a license to unlock the full app, and get the Android app from Google Play.</p>
-        <div class="cta-buttons">
-            <a href="buy.html" class="btn btn-primary btn-cta-buy">
-                <span class="btn-buy-line">
-                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0 1 10 0v2"/>
-                    </svg>
-                    Buy Pablo Desktop License ($14.99)
-                </span>
-                <span class="btn-buy-sub">One-time. Never expires.</span>
-            </a>
-            <a href="downloadpage.html" class="btn btn-silver">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                </svg>
-                Download for Windows
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="btn btn-silver" target="_blank" rel="noopener noreferrer">
-                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                </svg>
-                Download for Android
-            </a>
-        </div>
+    <!-- Call to action -->
+    <section class="cta" id="download">
+        <div class="wrap">
+            <h2>Start on your PC.</h2>
+            <p>Download Pablo Desktop v1.0.153 for free, buy a license to unlock the full app, and get the Android app from Google Play.</p>
+            <div class="actions center">
+                <a href="buy.html" class="btn-buy">Buy Pablo Desktop License ($14.99)<small>One-time. Never expires.</small></a>
+                <a href="downloadpage.html" class="text-link">Download for Windows &rarr;</a>
+                <a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" class="text-link" target="_blank" rel="noopener noreferrer">Get the Android app &rarr;</a>
+            </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="faq-section">
-        <h2>Questions</h2>
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="wrap">
+            <p class="label">Questions</p>
+            <h2>Good questions.</h2>
 
-        <details>
-            <summary>What is Pablo Offline AI?</summary>
-            <p>Pablo is AI chat for Windows that runs on your computer instead of on someone else's servers. You type questions and get answers—like popular online chat services—but your words stay on your PC. Pablo can also remember context, search your files, show briefings, control smart-home devices, and connect to a free Android app on your phone. No account required. The installer is free; a one-time license unlocks the full desktop app. The Android companion is free. No subscription.</p>
-        </details>
+            <details>
+                <summary>What is Pablo Offline AI?</summary>
+                <p>Pablo is AI chat for Windows that runs on your computer instead of on someone else's servers. You type questions and get answers&mdash;like popular online chat services&mdash;but your words stay on your PC. Pablo can also remember context, search your files, show briefings, control smart-home devices, and connect to a free Android app on your phone. No account required. The installer is free; a one-time license unlocks the full desktop app. The Android companion is free. No subscription.</p>
+            </details>
 
-        <details>
-            <summary>What are expert modes?</summary>
-            <p>Pablo can use different AI models for different jobs—everyday chat, coding, understanding photos, wellness, creative writing, and more. Instead of one generic chatbot for everything, Pablo sends each question to the mode that fits best.</p>
-        </details>
+            <details>
+                <summary>What are expert modes?</summary>
+                <p>Pablo can use different AI models for different jobs&mdash;everyday chat, coding, understanding photos, wellness, creative writing, and more. Instead of one generic chatbot for everything, Pablo sends each question to the mode that fits best.</p>
+            </details>
 
-        <details>
-            <summary>Does Pablo work without internet?</summary>
-            <p>Yes. Once installed, Pablo runs completely offline. Conversations, smart home control, and reminders all work without internet. Calendar and weather features require a connection to sync data, but the AI itself never needs the cloud.</p>
-        </details>
+            <details>
+                <summary>Does Pablo work without internet?</summary>
+                <p>Yes. Once installed, Pablo runs completely offline. Conversations, smart home control, and reminders all work without internet. Calendar and weather features require a connection to sync data, but the AI itself never needs the cloud.</p>
+            </details>
 
-        <details>
-            <summary>Can Pablo control my smart home?</summary>
-            <p>Pablo integrates with TP-Link Kasa smart home devices. Say "turn on the living room lights" and Pablo handles it on your home network. More smart home brands are planned.</p>
-        </details>
+            <details>
+                <summary>Can Pablo control my smart home?</summary>
+                <p>Pablo integrates with TP-Link Kasa smart home devices. Say "turn on the living room lights" and Pablo handles it on your home network. More smart home brands are planned.</p>
+            </details>
 
-        <details>
-            <summary>How is Pablo different from online AI chat?</summary>
-            <p>Online AI chat runs on company servers—you send your words out, they send answers back. Pablo runs on your Windows PC. The conversation never has to leave your house. You are not renting access month to month, and your chats are not used to train someone else's product. Pablo also does more than chat: documents, briefings, smart home, and a phone companion that talks to your PC.</p>
-        </details>
+            <details>
+                <summary>How is Pablo different from online AI chat?</summary>
+                <p>Online AI chat runs on company servers&mdash;you send your words out, they send answers back. Pablo runs on your Windows PC. The conversation never has to leave your house. You are not renting access month to month, and your chats are not used to train someone else's product. Pablo also does more than chat: documents, briefings, smart home, and a phone companion that talks to your PC.</p>
+            </details>
 
-        <details>
-            <summary>What AI model does Pablo use?</summary>
-            <p>Pablo does not ship one locked-in AI. You choose compatible models sized to your computer or graphics card. The default install includes Phi-3.5-mini to get started quickly. Use a code model for programming, a vision model for photos, and swap anytime.</p>
-        </details>
+            <details>
+                <summary>What AI model does Pablo use?</summary>
+                <p>Pablo does not ship one locked-in AI. You choose compatible models sized to your computer or graphics card. The default install includes Phi-3.5-mini to get started quickly. Use a code model for programming, a vision model for photos, and swap anytime.</p>
+            </details>
 
-        <details>
-            <summary>Do I need a powerful GPU?</summary>
-            <p>No. Pablo figures out your computer automatically—NVIDIA graphics card (fastest), Intel, or CPU-only. A dedicated NVIDIA card with plenty of graphics memory gives the best experience, but Pablo runs on any modern Windows PC.</p>
-        </details>
+            <details>
+                <summary>Do I need a powerful GPU?</summary>
+                <p>No. Pablo figures out your computer automatically&mdash;NVIDIA graphics card (fastest), Intel, or CPU-only. A dedicated NVIDIA card with plenty of graphics memory gives the best experience, but Pablo runs on any modern Windows PC.</p>
+            </details>
 
-        <details>
-            <summary>Is Pablo free?</summary>
-            <p>Pablo Desktop requires a one-time <strong>$14.99</strong> license, purchased at <a href="https://www.pablooffline.com/buy.html">pablooffline.com/buy.html</a>. The download and Android companion app are both <strong>free</strong>. No subscription. No ads, ever.</p>
-        </details>
+            <details>
+                <summary>Is Pablo free?</summary>
+                <p>Pablo Desktop requires a one-time <strong>$14.99</strong> license, purchased at <a href="https://www.pablooffline.com/buy.html">pablooffline.com/buy.html</a>. The download and Android companion app are both <strong>free</strong>. No subscription. No ads, ever.</p>
+            </details>
+        </div>
     </section>
 
-    <!-- About Pablo Offline -->
-    <section id="about" class="about-section">
-        <div class="about-inner">
-            <div class="section-header">
-                <p class="section-label">About Pablo Offline</p>
-                <h2 class="section-title">No sponsors. No ads. No nonsense.</h2>
-                <p class="section-subtitle">
-                    Pablo Offline AI is indie, ad-free, and sponsor-free. A community turned a shared dream into software people install, use, and recommend.
-                </p>
-            </div>
+    <!-- About -->
+    <section id="about" class="about">
+        <div class="wrap">
+            <p class="label">About Pablo Offline</p>
+            <h2>No sponsors. No ads. No nonsense.</h2>
+            <p class="lead">Pablo Offline AI is indie, ad-free, and sponsor-free. A community turned a shared dream into software people install, use, and recommend.</p>
 
-            <div class="about-prose">
-                <p>
-                    Pablo runs on your computer and is funded by the people who use it. We do not take money from cloud providers, chip makers, software vendors, or advertisers.
-                </p>
-                <p>
-                    We ship without pre-installed bloat, suggested cloud services, or banners in your chat. Every feature has to protect <em>your</em> privacy and keep <em>you</em> in control.
-                </p>
-            </div>
+            <p>Pablo runs on your computer and is funded by the people who use it. We do not take money from cloud providers, chip makers, software vendors, or advertisers.</p>
+            <p>We ship without pre-installed bloat, suggested cloud services, or banners in your chat. Every feature has to protect <em>your</em> privacy and keep <em>you</em> in control.</p>
 
-            <div class="about-community">
-                <h3>From community dream to thriving reality</h3>
-                <p>
-                    Pablo began as an idea passed around by people who wanted AI that stayed local. Developers contributed code. Testers ran early builds on their own PCs. Donors helped cover hosting and tooling. License buyers and gift-givers put real money behind the project. Together they turned a shared vision into a product you can download today.
-                </p>
-                <p>
-                    That momentum shows. People run Pablo on Windows every day. The free Android companion on Google Play extends the same private setup to their phones. Bug reports, feature requests, and word of mouth shape each release. The community did not just kick-start Pablo. It keeps Pablo growing.
-                </p>
-            </div>
+            <h3>From community dream to thriving reality</h3>
+            <p>Pablo began as an idea passed around by people who wanted AI that stayed local. Developers contributed code. Testers ran early builds on their own PCs. Donors helped cover hosting and tooling. License buyers and gift-givers put real money behind the project. Together they turned a shared vision into a product you can download today.</p>
+            <p>That momentum shows. People run Pablo on Windows every day. The free Android companion on Google Play extends the same private setup to their phones. Bug reports, feature requests, and word of mouth shape each release. The community did not just kick-start Pablo. It keeps Pablo growing.</p>
 
-            <div class="about-pillars" aria-label="How Pablo stays independent">
-                <article class="about-pillar">
+            <div class="columns" aria-label="How Pablo stays independent">
+                <div class="item">
                     <h3>No software sponsors</h3>
                     <p>Pablo ships without vendor bundles, subsidies, or paid placement. We build what private AI needs.</p>
-                </article>
-                <article class="about-pillar">
+                </div>
+                <div class="item">
                     <h3>No hardware sponsors</h3>
                     <p>Chip makers and PC brands do not write our roadmap. Pablo runs on NVIDIA, Intel, or CPU because that matches the hardware people actually own.</p>
-                </article>
-                <article class="about-pillar">
+                </div>
+                <div class="item">
                     <h3>No ads, ever</h3>
                     <p>Pablo will never run ads, sponsored answers, or paid slots inside your conversations. We will never sell your attention.</p>
-                </article>
-                <article class="about-pillar">
+                </div>
+                <div class="item">
                     <h3>Community powered</h3>
                     <p>Contributors write code, file bugs, suggest features, and help new users get started. Donations and license sales fund the work. The people who believed in private AI early are the same ones keeping it strong now.</p>
-                </article>
+                </div>
             </div>
 
-            <div class="about-prose">
-                <p>
-                    Your conversations stay on your machine. They are never training data for a sponsor&rsquo;s model. Our roadmap follows feedback from users and contributors who use Pablo in their own homes every day.
-                </p>
-            </div>
-
-            <div class="about-closing">
-                <p>
-                    Private AI that keeps your keystrokes local exists because a community made it happen: coders, early testers, donors, and customers who bought a license to support the full desktop app. Their work turned a dream into something real, popular, and still moving forward.
-                </p>
-                <p>
-                    If you use Pablo, contribute, report a bug, or chip in: thank you. You are part of why private, offline, ad-free AI is here and growing.
-                </p>
-            </div>
+            <p>Your conversations stay on your machine. They are never training data for a sponsor&rsquo;s model. Our roadmap follows feedback from users and contributors who use Pablo in their own homes every day.</p>
+            <p>Private AI that keeps your keystrokes local exists because a community made it happen: coders, early testers, donors, and customers who bought a license to support the full desktop app. Their work turned a dream into something real, popular, and still moving forward.</p>
+            <p class="signoff">If you use Pablo, contribute, report a bug, or chip in: thank you. You are part of why private, offline, ad-free AI is here and growing.</p>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <a href="#" class="logo">
-                    <div class="logo-icon">P</div>
-                    Pablo
-                </a>
-                <p>AI chat on your computer. Your conversations stay yours. No account. No subscription. Built for people who want answers without sending every word to a company server.</p>
+        <div class="wrap wrap-wide">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="logo">Pablo</a>
+                    <p>AI chat on your computer. Your conversations stay yours. No account. No subscription. Built for people who want answers without sending every word to a company server.</p>
+                </div>
+                <div>
+                    <h5>Product</h5>
+                    <ul>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#security">Security</a></li>
+                        <li><a href="#screenshots">Screenshots</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="buy.html">Buy License</a></li>
+                        <li><a href="downloadpage.html">Download</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="https://huggingface.co/models" target="_blank">AI Models</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" target="_blank">Android app</a></li>
+                        <li><a href="mailto:PabloOfflineAI@proton.me">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#about">About Pablo Offline</a></li>
+                        <li><a href="mailto:PabloOfflineAI@proton.me">Contact</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="footer-links">
-                <h5>Product</h5>
-                <ul>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#security">Security</a></li>
-                    <li><a href="#screenshots">Screenshots</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="buy.html">Buy License</a></li>
-                    <li><a href="downloadpage.html">Download</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-                <h5>Resources</h5>
-                <ul>
-                    <li><a href="https://huggingface.co/models" target="_blank">AI Models</a></li>
-                    <li><a href="https://play.google.com/store/apps/details?id=com.pabloofflineai.mobile&amp;hl=en_US" target="_blank">Android app</a></li>
-                    <li><a href="/cdn-cgi/l/email-protection#9cccfdfef0f3d3fafaf0f5f2f9ddd5dceceef3e8f3f2b2f1f9">Support</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#about">About Pablo Offline</a></li>
-                    <li><a href="/cdn-cgi/l/email-protection#7b2b1a191714341d1d1712151e3a323b0b09140f141555161e">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2025-2026 Pablo Offline AI LLC. All rights reserved.</p>
-            <div class="footer-legal">
-                <a href="https://www.pablooffline.com/privacy.html" target="_blank">Privacy Policy</a>
-                <a href="https://www.pablooffline.com/terms.html" target="_blank">Terms of Service</a>
-                <a href="https://www.pablooffline.com/license.html" target="_blank">License</a>
+            <div class="footer-bottom">
+                <p>&copy; 2025-2026 Pablo Offline AI LLC. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="https://www.pablooffline.com/privacy.html" target="_blank">Privacy Policy</a>
+                    <a href="https://www.pablooffline.com/terms.html" target="_blank">Terms of Service</a>
+                    <a href="https://www.pablooffline.com/license.html" target="_blank">License</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -2200,7 +1121,7 @@
   "description": "Private AI chat for Windows on your own computer: choose your AI models, encrypted memory, built-in fact library, documents, briefings, smart home, and an Android app to chat from anywhere. No company servers for your chats; free installer; one-time license unlocks the full desktop app.",
   "url": "https://www.pablooffline.com/",
   "downloadUrl": "https://www.pablooffline.com/downloadpage.html",
-  "softwareVersion": "1.0.127",
+  "softwareVersion": "1.0.153",
   "author": {
     "@type": "Organization",
     "name": "Pablo Offline AI LLC",
@@ -2362,58 +1283,5 @@
         });
     })();
     </script>
-
-    <script>
-    (function () {
-        var track = document.getElementById('productTourTrack');
-        var prevBtn = document.getElementById('productTourPrev');
-        var nextBtn = document.getElementById('productTourNext');
-        var dotsHost = document.getElementById('productTourDots');
-        var root = document.getElementById('product-tour');
-        if (!track || !prevBtn || !nextBtn || !dotsHost || !root) return;
-
-        var slides = track.querySelectorAll('.product-tour-slide');
-        var n = slides.length;
-        var i = 0;
-
-        function go(index) {
-            i = ((index % n) + n) % n;
-            track.style.transform = 'translateX(' + (-i * 100) + '%)';
-            var dots = dotsHost.querySelectorAll('.product-tour-dot');
-            dots.forEach(function (d, j) {
-                d.setAttribute('aria-current', j === i ? 'true' : 'false');
-                d.setAttribute('tabindex', j === i ? '0' : '-1');
-            });
-        }
-
-        for (var j = 0; j < n; j++) {
-            (function (index) {
-                var b = document.createElement('button');
-                b.type = 'button';
-                b.className = 'product-tour-dot';
-                b.setAttribute('aria-label', 'Go to slide ' + (index + 1) + ' of ' + n);
-                b.addEventListener('click', function () { go(index); });
-                dotsHost.appendChild(b);
-            })(j);
-        }
-
-        prevBtn.addEventListener('click', function () { go(i - 1); });
-        nextBtn.addEventListener('click', function () { go(i + 1); });
-
-        root.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                go(i - 1);
-            } else if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                go(i + 1);
-            }
-        });
-
-        root.setAttribute('tabindex', '0');
-        go(0);
-    })();
-    </script>
 </body>
 </html>
-
